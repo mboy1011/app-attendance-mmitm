@@ -4,15 +4,15 @@ class Query {
         require('config.php');
         $sql = mysqli_query($db,"SELECT * FROM ");
     }
-    public function addUser($name,$uname,$passwd,$type,$fid)
+    public function addUser($name,$uname,$passwd)
     {
         require('config.php');
-        $enc_pass = password_has($pass,PASSWORD_BCRYPT);
-        $sql = mysqli_query($db,"SELECT * FROM users WHERE username=$uname");
+        $enc_pass = password_hash($passwd,PASSWORD_BCRYPT);
+        $sql = mysqli_query($db,"SELECT * FROM users WHERE username='$uname'");
         if($sql->num_rows>0){
-            return false;
+            return 'exists';
         }else{
-            $res = mysqli_query($db,"INSERT INTO users(`name`,username,`password`,`type`,faculty_id) VALUES ('".$name."','".$uname."','".$passwd."','".$unatypeme."','".$fid."')");
+            $res = mysqli_query($db,"INSERT INTO users(`name`,username,`password`) VALUES ('".$name."','".$uname."','".$enc_pass."')");
             if (!$res) {
                 return false;
             }else{
