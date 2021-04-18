@@ -116,28 +116,36 @@ require('session.php');
                       <th>Username</th>
                       <th>Password</th>
                       <th>Type</th>
-                      <th>Date Added</th>
+                      <th>Faculty ID</th>
                       <th>Action</th>
                   </tr>
               </thead>
               <tbody>
+                <?php
+                $result = mysqli_query($db,"SELECT * FROM users");
+                $i=1;
+                while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                ?>
                   <tr>
                     <td>
                       <label>
-                        <input type="checkbox" class="chBx" data-id="" />
+                        <input type="checkbox" class="chBx" data-id="<?PHP echo $row['id']?>" />
                         <span></span>
                       </label>
                     </td>
-                    <td>1234</td>
-                    <td>1234</td>
-                    <td>123</td>
-                    <td>1234</td>
-                    <td>1234</td>
+                    <td><?PHP echo $row['id']?></td>
+                    <td><?PHP echo $row['username']?></td>
+                    <td><?PHP echo $row['password']?></td>
+                    <td><?PHP echo $row['type']?></td>
+                    <td><?PHP echo $row['faculty_id']?></td>
                     <td>
                       <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
                       <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
                     </td>
                   </tr>
+                  <?php 
+                    } //end while
+                ?>
               </tbody>
           </table>
           </div>
