@@ -9,7 +9,7 @@ if($req=='addUser'){
     require("query.php");
     $oop = new Query();
     $sql = $oop->addUser($name,$un,$pw);
-    if ($sql=='exists') {
+    if ($sql==1) {
         echo 'exists';
     }else if(!$sql){
         echo 'failed';

@@ -13,6 +13,8 @@ require('session.php');
     <link rel="stylesheet" href="../assets/css/materializecss-icons.css">
     <!-- Style CSS -->
     <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- jQueryMaterializeCSS -->
+    <link rel="stylesheet" href="../assets/css/jq-data-material.css">
      <!--Let browser know website is optimized for mobile-->
      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
      <style>
@@ -33,7 +35,7 @@ require('session.php');
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Register</a>
+              <a href="#!" class="brand-logo center green-text">Register User</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -73,7 +75,7 @@ require('session.php');
               <div class="divider"></div>
             </div>
         </li>
-        <li>
+        <li class="active">
             <div class="collapsible-header white-text"><i class="material-icons right white-text">badge</i>Users</div>
             <div class="collapsible-body white darken-5">
               <a href="add_user.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Users</a>
@@ -90,44 +92,57 @@ require('session.php');
       
   </header>
   <main>
-  <div class="container">
-    <div class="row"></div>
-    <div class="row">
-        <div class="col s12" id="reg-form">
-        <div class="row">
-            <div class="input-field col s6">
-            <input id="first_name" type="text" class="validate" required>
-            <label for="first_name">First Name</label>
+  <div class="row">
+      <div id="man" class="col s12">
+        <div class="card material-table">
+            <div class="table-header">
+              <span class="table-title">User Accounts</span>
+              <div class="actions">
+                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
+                <a href="#insertModal" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+              </div>
             </div>
+        <table id="datatable" class="responsive-table">
+              <thead>
+                  <tr>
+                      <th>
+                        <label>
+                          <input type="checkbox" id="mChBx" />
+                          <span>Select All</span>
+                        </label>
+                      </th>
+                      <th>ID</th>
+                      <th>Username</th>
+                      <th>Password</th>
+                      <th>Type</th>
+                      <th>Date Added</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" class="chBx" data-id="" />
+                        <span></span>
+                      </label>
+                    </td>
+                    <td>1234</td>
+                    <td>1234</td>
+                    <td>123</td>
+                    <td>1234</td>
+                    <td>1234</td>
+                    <td>
+                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
+                      <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
+                    </td>
+                  </tr>
+              </tbody>
+          </table>
+          </div>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="email" type="email" class="validate" required>
-            <label for="email">Email</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="password" type="password" class="validate" minlength="6" required>
-            <label for="password">Password</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="password-conf" type="password" class="validate" minlength="6" required>
-            <label for="password-conf">Password Confirm</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-            <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Register
-                <i class="material-icons right">done</i>
-            </button>
-            </div>
-        </div>
-    </div>
-    </div>
-    
+      </div>
     </div>
   </main>
   <footer class="page-footer">
@@ -155,11 +170,16 @@ require('session.php');
     <!-- MCSS Offline -->
     <script src="../assets/js/materialize-css.min.js"></script>
     <script src="../assets/js/axios.min.js"></script>
+    <!-- jQueryMaterilizeCSS -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/jq-data-material.js"></script>
+
     <script type="text/javascript" charset="utf-8">
         M.AutoInit();
         //SideNave
-        let slout = document.querySelector("#slide-out");
         let men = document.querySelector("#menu");
+        let slout = document.querySelector("#slide-out");
         men.addEventListener('click',()=>{
         if(slout.M_Sidenav.isOpen == false){
             slout.M_Sidenav.open(); 
@@ -167,7 +187,7 @@ require('session.php');
             document.getElementsByTagName('main')[0].style.paddingLeft = "300px";
             document.getElementsByTagName('header')[0].style.paddingLeft = "300px";
         }else if(slout.M_Sidenav.isOpen == true){
-        slout.M_Sidenav.close();
+            slout.M_Sidenav.close();
             document.getElementsByTagName('footer')[0].style.paddingLeft = 0;
             document.getElementsByTagName('main')[0].style.paddingLeft = 0;
             document.getElementsByTagName('header')[0].style.paddingLeft = 0;
@@ -175,36 +195,33 @@ require('session.php');
         })
         //
         // AXIOS AJAX
-        let btn = document.querySelector("#regBtn");
-        btn.addEventListener('click',()=>{
-            let nm = document.querySelector("#first_name");
-            let un = document.querySelector("#email");
-            let pw = document.querySelector("#password");
-            let pwc = document.querySelector("#password-conf");
-            if(pw.value==pwc.value){
-                axios.post('post.php',{
-                    req:'addUser',nm:nm.value,un:un.value,pw:pw.value
-                }).then((response)=>{
-                    console.log(response);
-                    if(response.data=="exists"){
-                        M.toast({html:"Email Already Exist!"});
-                    }else if(response.data == "failed"){
-                        M.toast({html:"Failed to register user!"});
-                    }else if(response.data=='success'){
-                        M.toast({html:"Successfully Registered!"});
-                        nm.value="";
-                        un.value="";
-                        pw.value="";
-                        pwc.value="";
-                    }
-                }).catch((error)=>{
-                    console.log(error)
-                });
-            }else{
-                M.toast({html:"Password doesn't matched!"});
-            }
-            // console.log("CLICKED");
-        });
+        
+        // 
+        // CheckBox
+    let mChBx = document.querySelector("#mChBx");
+    let chBx = document.querySelectorAll(".chBx");
+    mChBx.addEventListener('click',function(){
+      if(mChBx.checked == true){
+        for (let i = 0; i < chBx.length; i++) {
+          chBx[i].checked = true;            
+        }
+      }else{
+        for (let i = 0; i < chBx.length; i++) {
+          chBx[i].checked = false;            
+        }
+      }
+    });
+    let modal = document.querySelectorAll(".modal");
+    let delData = [];
+    let check = (e)=>{
+      for (let i = 0; i < chBx.length; i++) {
+        if(chBx[i].checked == true){
+          delData.push(chBx[i].dataset.id);
+        }          
+      }
+    }
+    
+    // 
     </script>
 </body>
 </html>
