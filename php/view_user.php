@@ -54,7 +54,7 @@ require('session.php');
             <a href="#email"><span class="white-text email">admin@gcc.com</span></a>
           </div>
         </li>
-        <li><a href="#" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
+        <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
         <li><a href="#" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
         <li>
             <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Students</div>

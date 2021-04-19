@@ -7,7 +7,7 @@ require('session.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Attendance</title>
      <!-- MCSS Offline -->
      <link rel="stylesheet" href="../assets/css/materializecss.min.css">
     <link rel="stylesheet" href="../assets/css/materializecss-icons.css">
@@ -90,7 +90,48 @@ require('session.php');
       
   </header>
   <main>
-  
+  <div class="container">
+    <div class="row">
+        <div class="input-field col s12">
+        <select>
+            <option value="" disabled selected>Choose Faculty</option>
+            <option value="1">Leah Jean Bacus</option>
+        </select>
+        <label>Faculty</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+        <select>
+            <option value="" disabled selected>Choose Subject</option>
+            <option value="1">OOP</option>
+        </select>
+        <label>Subject</label>
+        </div>
+    </div>
+    <div class="row">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Lyjieme T. Barro</td>
+                <td>
+                <a class="waves-effect waves-light btn modal-trigger green" href="#"><i class="material-icons white-text">check</i></a>
+                <a class="waves-effect waves-light btn modal-trigger red" href="#"><i class="material-icons white-text">close</i></a>
+                <a class="waves-effect waves-light btn modal-trigger orange" href="#"><i class="material-icons white-text">timer_off</i></a></td>
+                </td>
+            </tr>       
+        </tbody>
+    </table>
+    </div>
+  </div>
   </main>
   <footer class="page-footer">
     <div class="container">
