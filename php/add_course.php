@@ -53,7 +53,7 @@ require('session.php');
           </div>
         </li>
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
-        <li>
+        <li class="active">
             <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Courses</div>
             <div class="collapsible-body white darken-5">
               <a href="add_course.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Course</a>
@@ -89,7 +89,7 @@ require('session.php');
               <div class="divider"></div>
             </div>
         </li>
-        <li class="active">
+        <li>
             <div class="collapsible-header white-text"><i class="material-icons right white-text">badge</i>Users</div>
             <div class="collapsible-body white darken-5">
               <a href="add_user.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Users</a>
