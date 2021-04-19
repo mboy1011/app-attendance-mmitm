@@ -96,31 +96,20 @@ require('session.php');
         <div class="col s12" id="reg-form">
         <div class="row">
             <div class="input-field col s6">
-            <input id="first_name" type="text" class="validate" required>
-            <label for="first_name">First Name</label>
+            <input id="course_name" type="text" class="validate" required>
+            <label for="course_name">Course</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-            <input id="email" type="email" class="validate" required>
-            <label for="email">Email</label>
+            <input id="text" type="text" class="validate" required>
+            <label for="text">Description</label>
             </div>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="password" type="password" class="validate" minlength="6" required>
-            <label for="password">Password</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="password-conf" type="password" class="validate" minlength="6" required>
-            <label for="password-conf">Password Confirm</label>
-            </div>
-        </div>
+        
         <div class="row">
             <div class="input-field col s6">
-            <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Register
+            <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
                 <i class="material-icons right">done</i>
             </button>
             </div>
