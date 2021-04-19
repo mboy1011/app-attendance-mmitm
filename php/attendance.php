@@ -121,20 +121,14 @@ require('session.php');
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Action</th>
+                <th>Student Name</th>
+                <th>Present</th>
+                <th>Absent</th>
+                <th>Late</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Lyjieme T. Barro</td>
-                <td>
-                <a class="waves-effect waves-light btn modal-trigger green" href="#"><i class="material-icons white-text">check</i></a>
-                <a class="waves-effect waves-light btn modal-trigger red" href="#"><i class="material-icons white-text">close</i></a>
-                <a class="waves-effect waves-light btn modal-trigger orange" href="#"><i class="material-icons white-text">timer_off</i></a></td>
-                </td>
-            </tr>       
+        <tbody id="tbody">
+                 
         </tbody>
     </table>
     </div>
@@ -214,7 +208,33 @@ require('session.php');
                 console.log(error)
             });
         });
-        
+        let sub = document.querySelector("#sub");
+        sub.addEventListener('change',()=>{
+            let tb = document.querySelector("#tbody");
+            let pbtn = document.createElement('a');
+            let abtn = document.createElement('a');
+            let lbtn = document.createElement('a');
+            let picon = document.createElement('i');
+            let aicon = document.createElement('i');
+            let licon = document.createElement('i');
+            picon.setAttribute('class','material-icons white-text');
+            aicon.setAttribute('class','material-icons white-text');
+            licon.setAttribute('class','material-icons white-text');
+            pbtn.setAttribute('class','waves-effect waves-light btn green');
+            abtn.setAttribute('class','waves-effect waves-light btn red');
+            lbtn.setAttribute('class','waves-effect waves-light btn orange');
+            
+            for (let i = 0; i < 1; i++) {
+                tb.insertRow(i);
+                tb.rows[i].insertCell(0).innerText = '2';
+                tb.rows[i].insertCell(1).innerText = 'Jim';
+                tb.rows[i].insertCell(2).appendChild(pbtn).appendChild(picon).innerText='check';
+                tb.rows[i].insertCell(3).appendChild(abtn).appendChild(aicon).innerText='close';
+                tb.rows[i].insertCell(4).appendChild(lbtn).appendChild(licon).innerText='timer_off';
+                // console.log(i+""+tb.rows.length);
+            }
+            
+        });
     </script>
 </body>
 </html>
