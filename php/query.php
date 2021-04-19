@@ -40,7 +40,7 @@ class Query {
             return 1;
         }else{
             $enc_pass = password_hash($passwd,PASSWORD_BCRYPT);
-           
+            $date = date('Y/m/d h:i:s', time());
             $res = mysqli_query($db,"INSERT INTO courses(id,'course','description',date_created) VALUES ('".$course_name."','".$course_desc."','$date');
             if (!$res) {
                 return false;
