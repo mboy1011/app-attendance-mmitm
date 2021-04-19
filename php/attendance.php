@@ -127,6 +127,7 @@ require('session.php');
                 <th>Late</th>
             </tr>
         </thead>
+        <input type="hidden" name="" class="pbtn abtn lbtn" data-id="n/a">
         <tbody id="tbody">
                  
         </tbody>
@@ -208,6 +209,9 @@ require('session.php');
                 console.log(error)
             });
         });
+        // 
+        
+        // 
         let sub = document.querySelector("#sub");
         sub.addEventListener('change',()=>{
             let tb = document.querySelector("#tbody");
@@ -231,9 +235,12 @@ require('session.php');
                     picon.setAttribute('class','material-icons white-text');
                     aicon.setAttribute('class','material-icons white-text');
                     licon.setAttribute('class','material-icons white-text');
-                    pbtn.setAttribute('class','waves-effect waves-light btn green');
-                    abtn.setAttribute('class','waves-effect waves-light btn red');
-                    lbtn.setAttribute('class','waves-effect waves-light btn orange');
+                    pbtn.setAttribute('class','pbtn waves-effect waves-light btn green');
+                    abtn.setAttribute('class','abtn waves-effect waves-light btn red');
+                    lbtn.setAttribute('class','lbtn waves-effect waves-light btn orange');
+                    pbtn.setAttribute('data-id',obj[i].sid);
+                    abtn.setAttribute('data-id',obj[i].sid);
+                    lbtn.setAttribute('data-id',obj[i].sid);
                 tb.insertRow(i);
                 tb.rows[i].insertCell(0).innerText = i;
                 tb.rows[i].insertCell(1).innerText = obj[i].name;
@@ -242,10 +249,21 @@ require('session.php');
                 tb.rows[i].insertCell(4).appendChild(lbtn).appendChild(licon).innerText='timer_off';
                 // console.log(i+""+tb.rows.length);
                 }
+            check();
             }).catch((error)=>{
                 console.log(error);
-            })           
-        });
+            })      
+        });   
+        function check() {
+            let prbtn = document.querySelectorAll(".pbtn");
+            let abbtn = document.querySelectorAll(".abtn");
+            let labtn = document.querySelectorAll(".lbtn");
+            for(i=0;i<prbtn.length;i++){
+                prbtn[i].addEventListener('click',function(e){this.parentElement.parentElement.remove();console.log(this.dataset.id);})
+                abbtn[i].addEventListener('click',function(e){this.parentElement.parentElement.remove();console.log(this.dataset.id);})
+                labtn[i].addEventListener('click',function(e){this.parentElement.parentElement.remove();console.log(this.dataset.id);})
+            }
+        }
     </script>
 </body>
 </html>
