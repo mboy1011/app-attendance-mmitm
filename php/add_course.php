@@ -182,8 +182,8 @@ require('session.php');
         // AXIOS AJAX
         let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
-            let course_name = document.querySelector("#first_name");
-            let course_desc = document.querySelector("#email");
+            let course_name = document.querySelector("#course_name");
+            let course_desc = document.querySelector("#course_desc");
            
             if(course_name!="" && course_desc!=""){
                 axios.post('post.php',{
