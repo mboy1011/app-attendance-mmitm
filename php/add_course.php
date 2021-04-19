@@ -184,10 +184,10 @@ require('session.php');
         btn.addEventListener('click',()=>{
             let course_name = document.querySelector("#course_name");
             let course_desc = document.querySelector("#course_desc");
-           
+            let date = date('Y/m/d h:i:s', time());
             if(course_name!="" && course_desc!=""){
                 axios.post('post.php',{
-                    req:'addCourse',course_name:course_name.value,course_desc:course_desc.value
+                    req:'addCourse',course_name:course_name.value,course_desc:course_desc.value,date:date.value
                 }).then((response)=>{
                     console.log(response);
                     if(response.data=="exists"){
