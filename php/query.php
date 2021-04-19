@@ -32,5 +32,15 @@ class Query {
             }
         }
     }
+    public function getSubject($id)
+    {
+        require('config.php');
+        $sql = mysqli_query($db,"SELECT class_subject.id as 'class_id',subjects.sub_name FROM class_subject join subjects on class_subject.subject_id=subjects.id left join faculty on faculty.id=class_subject.faculty_id WHERE faculty_id='$id'");
+        $data=array();
+        while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
+            array_push($data,$row);
+        }
+        return json_encode($data);
+    }
 }
 ?>

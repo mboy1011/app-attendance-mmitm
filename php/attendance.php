@@ -93,18 +93,25 @@ require('session.php');
   <div class="container">
     <div class="row">
         <div class="input-field col s12">
-        <select>
+        <select id="fac" name="fac">
             <option value="" disabled selected>Choose Faculty</option>
-            <option value="1">Leah Jean Bacus</option>
+            <?PHP
+                require("config.php");
+                $sql = mysqli_query($db, "SELECT * FROM faculty");
+                while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
+            ?>
+                <option value="<?php echo $row['id'];?>"><?php echo $row['name'];?></option>
+            <?PHP
+                }
+            ?>
         </select>
         <label>Faculty</label>
         </div>
     </div>
     <div class="row">
         <div class="input-field col s12">
-        <select>
-            <option value="" disabled selected>Choose Subject</option>
-            <option value="1">OOP</option>
+        <select id="sub" name="sub">
+            
         </select>
         <label>Subject</label>
         </div>
@@ -178,6 +185,35 @@ require('session.php');
         })
         //
         // AXIOS AJAX
+        // 
+        let fac = document.querySelector("#fac");
+        fac.addEventListener('change',()=>{
+            axios.post('post.php',{
+                req:'getSubject',fa:fac.options[fac.selectedIndex].value
+            }).then((response)=>{
+                console.log(response.data);
+                let obj = response.data;
+                let sub = document.querySelector("#sub");
+                sub.M_FormSelect.$selectOptions.empty();
+                sub.M_FormSelect.$selectOptions.remove();
+                let opt1 = document.createElement("option");
+                opt1.text = 'Choose Subject';
+                opt1.value = 0;
+                sub.options.add(opt1); 
+                for (let i = 0; i < obj.length; i++) {
+                    // console.log(obj[i].brgyDesc);
+                    let opt = document.createElement("option");
+                    opt.text = obj[i].sub_name;
+                    opt.value = obj[i].class_id;
+                    sub.options.add(opt);
+                }
+                // Load Form Select MaterializeCSS
+                var elems = document.querySelectorAll('select');
+                M.FormSelect.init(elems);
+            }).catch((error)=>{
+                console.log(error)
+            });
+        });
         
     </script>
 </body>

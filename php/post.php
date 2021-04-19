@@ -16,5 +16,11 @@ if($req=='addUser'){
     }else{
         echo 'success';
     }
+}else if($req=='getSubject'){
+    $id = $data['fa'];
+    require("query.php");
+    $oop = new Query();
+    $sql = $oop->getSubject($id);
+    echo $sql;
 }
 ?>
