@@ -32,5 +32,22 @@ class Query {
             }
         }
     }
+    public function addCourse($course_name,$course_desc)
+    {
+        require('config.php');
+        $sql = mysqli_query($db,"SELECT * FROM users WHERE username='$uname'");
+        if($sql->num_rows>0){
+            return 1;
+        }else{
+            $enc_pass = password_hash($passwd,PASSWORD_BCRYPT);
+            $date = date('Y/m/d h:i:s', time());
+            $res = mysqli_query($db,"INSERT INTO course(id,'course','description',date_created) VALUES ("",'".$course_name."','".$course_desc."','$date');
+            if (!$res) {
+                return false;
+            }else{
+                return true;
+            }
+        }
+    }
 }
 ?>

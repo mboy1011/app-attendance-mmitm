@@ -118,8 +118,8 @@ require('session.php');
         </div>
         <div class="row">
             <div class="input-field col s12">
-            <input id="text" type="text" class="validate" required>
-            <label for="text">Description</label>
+            <input id="course_desc" type="text" class="validate" required>
+            <label for="course_desc">Description</label>
             </div>
         </div>
         
@@ -182,31 +182,29 @@ require('session.php');
         // AXIOS AJAX
         let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
-            let nm = document.querySelector("#first_name");
-            let un = document.querySelector("#email");
-            let pw = document.querySelector("#password");
-            let pwc = document.querySelector("#password-conf");
-            if(pw.value==pwc.value){
+            let course_name = document.querySelector("#first_name");
+            let course_desc = document.querySelector("#email");
+           
+            if(course_name!="" && course_desc!=""){
                 axios.post('post.php',{
-                    req:'addUser',nm:nm.value,un:un.value,pw:pw.value
+                    req:'addCourse',course_name:course_name.value,course_desc:course_desc.value
                 }).then((response)=>{
                     console.log(response);
                     if(response.data=="exists"){
-                        M.toast({html:"Email Already Exist!"});
+                        M.toast({html:"Course Already Exist!"});
                     }else if(response.data == "failed"){
-                        M.toast({html:"Failed to register user!"});
+                        M.toast({html:"Failed to register Course!"});
                     }else if(response.data=='success'){
                         M.toast({html:"Successfully Registered!"});
-                        nm.value="";
-                        un.value="";
-                        pw.value="";
-                        pwc.value="";
+                        course_name.value="";
+                        course_desc.value="";
+                      
                     }
                 }).catch((error)=>{
                     console.log(error)
                 });
             }else{
-                M.toast({html:"Password doesn't matched!"});
+                M.toast({html:"Data doesn't matched!"});
             }
             // console.log("CLICKED");
         });
