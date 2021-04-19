@@ -73,6 +73,7 @@ require('session.php');
               <div class="divider"></div>
             </div>
         </li>
+        <li><a href="#" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
         <li>
             <div class="collapsible-header white-text"><i class="material-icons right white-text">badge</i>Users</div>
             <div class="collapsible-body white darken-5">
