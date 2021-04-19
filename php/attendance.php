@@ -185,7 +185,7 @@ require('session.php');
             axios.post('post.php',{
                 req:'getSubject',fa:fac.options[fac.selectedIndex].value
             }).then((response)=>{
-                console.log(response.data);
+                // console.log(response.data);
                 let obj = response.data;
                 let sub = document.querySelector("#sub");
                 sub.M_FormSelect.$selectOptions.empty();
@@ -211,29 +211,40 @@ require('session.php');
         let sub = document.querySelector("#sub");
         sub.addEventListener('change',()=>{
             let tb = document.querySelector("#tbody");
-            let pbtn = document.createElement('a');
-            let abtn = document.createElement('a');
-            let lbtn = document.createElement('a');
-            let picon = document.createElement('i');
-            let aicon = document.createElement('i');
-            let licon = document.createElement('i');
-            picon.setAttribute('class','material-icons white-text');
-            aicon.setAttribute('class','material-icons white-text');
-            licon.setAttribute('class','material-icons white-text');
-            pbtn.setAttribute('class','waves-effect waves-light btn green');
-            abtn.setAttribute('class','waves-effect waves-light btn red');
-            lbtn.setAttribute('class','waves-effect waves-light btn orange');
-            
-            for (let i = 0; i < 1; i++) {
+            if(tb.rows.length>0){
+                document.querySelectorAll("table tbody tr").forEach(function(e){e.remove()})
+                // console.log("not empty!");
+            }
+            // AXIOS
+            axios.post('post.php',{
+                req:'getStudents',cid:sub.value
+            }).then((response)=>{
+                // console.log(response.data);
+                let obj = response.data;
+                for (let i = 0; i < obj.length; i++) {
+                    let pbtn = document.createElement('a');
+                    let abtn = document.createElement('a');
+                    let lbtn = document.createElement('a');
+                    let picon = document.createElement('i');
+                    let aicon = document.createElement('i');
+                    let licon = document.createElement('i');
+                    picon.setAttribute('class','material-icons white-text');
+                    aicon.setAttribute('class','material-icons white-text');
+                    licon.setAttribute('class','material-icons white-text');
+                    pbtn.setAttribute('class','waves-effect waves-light btn green');
+                    abtn.setAttribute('class','waves-effect waves-light btn red');
+                    lbtn.setAttribute('class','waves-effect waves-light btn orange');
                 tb.insertRow(i);
-                tb.rows[i].insertCell(0).innerText = '2';
-                tb.rows[i].insertCell(1).innerText = 'Jim';
+                tb.rows[i].insertCell(0).innerText = i;
+                tb.rows[i].insertCell(1).innerText = obj[i].name;
                 tb.rows[i].insertCell(2).appendChild(pbtn).appendChild(picon).innerText='check';
                 tb.rows[i].insertCell(3).appendChild(abtn).appendChild(aicon).innerText='close';
                 tb.rows[i].insertCell(4).appendChild(lbtn).appendChild(licon).innerText='timer_off';
                 // console.log(i+""+tb.rows.length);
-            }
-            
+                }
+            }).catch((error)=>{
+                console.log(error);
+            })           
         });
     </script>
 </body>

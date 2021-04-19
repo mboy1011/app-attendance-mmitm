@@ -42,6 +42,16 @@ class Query {
         }
         return json_encode($data);
     }
+    public function getStudents($id)
+    {
+        require('config.php');
+        $sql = mysqli_query($db,"SELECT s.id as 'sid',s.class_id as 'cid',s.name  FROM students as s join class_subject as cs on cs.id=s.class_id where s.class_id='$id'");
+        $data=array();
+        while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
+            array_push($data,$row);
+        }
+        return json_encode($data);
+    }
     public function addCourse($course_name,$course_desc)
     {
         require('config.php');

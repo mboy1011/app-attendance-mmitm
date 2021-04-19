@@ -22,5 +22,11 @@ if($req=='addUser'){
     $oop = new Query();
     $sql = $oop->getSubject($id);
     echo $sql;
+}else if($req=='getStudents'){
+    require("query.php");
+    $oop = new Query();
+    $id = $data['cid'];
+    $sql = $oop->getStudents($id);
+    echo $sql;    
 }
 ?>
