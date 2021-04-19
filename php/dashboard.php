@@ -53,7 +53,15 @@ require('session.php');
           </div>
         </li>
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
-        <li><a href="add_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
+        <li>
+            <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Courses</div>
+            <div class="collapsible-body white darken-5">
+              <a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Course</a>
+              <div class="divider"></div>
+              <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Course</a></div>
+              <div class="divider"></div>
+            </div>
+        </li>
         <li>
             <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Students</div>
             <div class="collapsible-body white darken-5">
