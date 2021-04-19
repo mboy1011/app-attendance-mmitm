@@ -7,7 +7,7 @@ require('session.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Add Course</title>
      <!-- MCSS Offline -->
      <link rel="stylesheet" href="../assets/css/materializecss.min.css">
     <link rel="stylesheet" href="../assets/css/materializecss-icons.css">
@@ -33,7 +33,7 @@ require('session.php');
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Register</a>
+              <a href="#!" class="brand-logo center green-text">Add Course</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -53,12 +53,12 @@ require('session.php');
           </div>
         </li>
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
-        <li>
+        <li class="active">
             <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Courses</div>
             <div class="collapsible-body white darken-5">
               <a href="add_course.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Course</a>
               <div class="divider"></div>
-              <div><a href="view_course.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Course</a></div>
+              <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Course</a></div>
               <div class="divider"></div>
             </div>
         </li>
@@ -89,7 +89,6 @@ require('session.php');
               <div class="divider"></div>
             </div>
         </li>
-        <li><a href="#" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
         <li>
             <div class="collapsible-header white-text"><i class="material-icons right white-text">badge</i>Users</div>
             <div class="collapsible-body white darken-5">
@@ -107,7 +106,34 @@ require('session.php');
       
   </header>
   <main>
-  
+  <div class="container">
+    <div class="row"></div>
+    <div class="row">
+        <div class="col s12" id="reg-form">
+        <div class="row">
+            <div class="input-field col s6">
+            <input id="course_name" type="text" class="validate" required>
+            <label for="course_name">Course</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+            <input id="course_desc" type="text" class="validate" required>
+            <label for="course_desc">Description</label>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="input-field col s6">
+            <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
+                <i class="material-icons right">done</i>
+            </button>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    </div>
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -154,7 +180,34 @@ require('session.php');
         })
         //
         // AXIOS AJAX
-        
+        let btn = document.querySelector("#regBtn");
+        btn.addEventListener('click',()=>{
+            let course_name = document.querySelector("#course_name");
+            let course_desc = document.querySelector("#course_desc");
+            
+            if(course_name!="" && course_desc!=""){
+                axios.post('post.php',{
+                    req:'addCourse',course_name:course_name.value,course_desc:course_desc.value
+                }).then((response)=>{
+                    console.log(response);
+                    if(response.data=="exists"){
+                        M.toast({html:"Course Already Exist!"});
+                    }else if(response.data == "failed"){
+                        M.toast({html:"Failed to register Course!"});
+                    }else if(response.data=='success'){
+                        M.toast({html:"Successfully Added!"});
+                        course_name.value="";
+                        course_desc.value="";
+                      
+                    }
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            }else{
+                M.toast({html:"Data doesn't matched!"});
+            }
+            // console.log("CLICKED");
+        });
     </script>
 </body>
 </html>

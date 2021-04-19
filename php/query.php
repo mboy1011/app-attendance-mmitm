@@ -32,6 +32,7 @@ class Query {
             }
         }
     }
+<<<<<<< HEAD
     public function getSubject($id)
     {
         require('config.php');
@@ -41,6 +42,24 @@ class Query {
             array_push($data,$row);
         }
         return json_encode($data);
+=======
+    public function addCourse($course_name,$course_desc)
+    {
+        require('config.php');
+        $sql = mysqli_query($db,"SELECT * FROM users WHERE username='$uname'");
+        if($sql->num_rows>0){
+            return 1;
+        }else{
+            $enc_pass = password_hash($passwd,PASSWORD_BCRYPT);
+           
+            $res = mysqli_query($db,"INSERT INTO courses('course','description') VALUES ('".$course_name."','".$course_desc."');
+            if (!$res) {
+                return false;
+            }else{
+                return true;
+            }
+        }
+>>>>>>> d6727dc91f206dc22c1f7524f72f93f5070ece5d
     }
 }
 ?>
