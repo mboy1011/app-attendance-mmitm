@@ -185,7 +185,7 @@ require('session.php');
             let course_name = document.querySelector("#course_name");
             let course_desc = document.querySelector("#course_desc");
             
-            if(course_name!="" && course_desc!=""){
+            if(course_name.value!="" && course_desc.value!=""){
                 axios.post('post.php',{
                     req:'addCourse',course_name:course_name.value,course_desc:course_desc.value
                 }).then((response)=>{
@@ -204,7 +204,7 @@ require('session.php');
                     console.log(error)
                 });
             }else{
-                M.toast({html:"Data doesn't matched!"});
+                M.toast({html:"Empty!"});
             }
             // console.log("CLICKED");
         });

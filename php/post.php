@@ -16,5 +16,9 @@ if($req=='addUser'){
     }else{
         echo 'success';
     }
+}else if($req=='addCourse'){
+    $course_name=$data['course_name'];
+    $course_desc=$data['course_desc'];
+    requ
 }
 ?>
