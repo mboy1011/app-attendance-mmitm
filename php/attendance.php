@@ -93,18 +93,25 @@ require('session.php');
   <div class="container">
     <div class="row">
         <div class="input-field col s12">
-        <select>
+        <select id="fac" name="fac">
             <option value="" disabled selected>Choose Faculty</option>
-            <option value="1">Leah Jean Bacus</option>
+            <?PHP
+                require("config.php");
+                $sql = mysqli_query($db, "SELECT * FROM faculty");
+                while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
+            ?>
+                <option value="<?php echo $row['id'];?>"><?php echo $row['name'];?></option>
+            <?PHP
+                }
+            ?>
         </select>
         <label>Faculty</label>
         </div>
     </div>
     <div class="row">
         <div class="input-field col s12">
-        <select>
-            <option value="" disabled selected>Choose Subject</option>
-            <option value="1">OOP</option>
+        <select id="sub" name="sub">
+            
         </select>
         <label>Subject</label>
         </div>
@@ -114,20 +121,15 @@ require('session.php');
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Action</th>
+                <th>Student Name</th>
+                <th>Present</th>
+                <th>Absent</th>
+                <th>Late</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Lyjieme T. Barro</td>
-                <td>
-                <a class="waves-effect waves-light btn modal-trigger green" href="#"><i class="material-icons white-text">check</i></a>
-                <a class="waves-effect waves-light btn modal-trigger red" href="#"><i class="material-icons white-text">close</i></a>
-                <a class="waves-effect waves-light btn modal-trigger orange" href="#"><i class="material-icons white-text">timer_off</i></a></td>
-                </td>
-            </tr>       
+        <input type="hidden" name="" class="pbtn abtn lbtn" data-id="n/a">
+        <tbody id="tbody">
+                 
         </tbody>
     </table>
     </div>
@@ -178,7 +180,90 @@ require('session.php');
         })
         //
         // AXIOS AJAX
+        // 
+        let fac = document.querySelector("#fac");
+        fac.addEventListener('change',()=>{
+            axios.post('post.php',{
+                req:'getSubject',fa:fac.options[fac.selectedIndex].value
+            }).then((response)=>{
+                // console.log(response.data);
+                let obj = response.data;
+                let sub = document.querySelector("#sub");
+                sub.M_FormSelect.$selectOptions.empty();
+                sub.M_FormSelect.$selectOptions.remove();
+                let opt1 = document.createElement("option");
+                opt1.text = 'Choose Subject';
+                opt1.value = 0;
+                sub.options.add(opt1); 
+                for (let i = 0; i < obj.length; i++) {
+                    // console.log(obj[i].brgyDesc);
+                    let opt = document.createElement("option");
+                    opt.text = obj[i].sub_name;
+                    opt.value = obj[i].class_id;
+                    sub.options.add(opt);
+                }
+                // Load Form Select MaterializeCSS
+                var elems = document.querySelectorAll('select');
+                M.FormSelect.init(elems);
+            }).catch((error)=>{
+                console.log(error)
+            });
+        });
+        // 
         
+        // 
+        let sub = document.querySelector("#sub");
+        sub.addEventListener('change',()=>{
+            let tb = document.querySelector("#tbody");
+            if(tb.rows.length>0){
+                document.querySelectorAll("table tbody tr").forEach(function(e){e.remove()})
+                // console.log("not empty!");
+            }
+            // AXIOS
+            axios.post('post.php',{
+                req:'getStudents',cid:sub.value
+            }).then((response)=>{
+                // console.log(response.data);
+                let obj = response.data;
+                for (let i = 0; i < obj.length; i++) {
+                    let pbtn = document.createElement('a');
+                    let abtn = document.createElement('a');
+                    let lbtn = document.createElement('a');
+                    let picon = document.createElement('i');
+                    let aicon = document.createElement('i');
+                    let licon = document.createElement('i');
+                    picon.setAttribute('class','material-icons white-text');
+                    aicon.setAttribute('class','material-icons white-text');
+                    licon.setAttribute('class','material-icons white-text');
+                    pbtn.setAttribute('class','pbtn waves-effect waves-light btn green');
+                    abtn.setAttribute('class','abtn waves-effect waves-light btn red');
+                    lbtn.setAttribute('class','lbtn waves-effect waves-light btn orange');
+                    pbtn.setAttribute('data-id',obj[i].sid);
+                    abtn.setAttribute('data-id',obj[i].sid);
+                    lbtn.setAttribute('data-id',obj[i].sid);
+                tb.insertRow(i);
+                tb.rows[i].insertCell(0).innerText = i;
+                tb.rows[i].insertCell(1).innerText = obj[i].name;
+                tb.rows[i].insertCell(2).appendChild(pbtn).appendChild(picon).innerText='check';
+                tb.rows[i].insertCell(3).appendChild(abtn).appendChild(aicon).innerText='close';
+                tb.rows[i].insertCell(4).appendChild(lbtn).appendChild(licon).innerText='timer_off';
+                // console.log(i+""+tb.rows.length);
+                }
+            check();
+            }).catch((error)=>{
+                console.log(error);
+            })      
+        });   
+        function check() {
+            let prbtn = document.querySelectorAll(".pbtn");
+            let abbtn = document.querySelectorAll(".abtn");
+            let labtn = document.querySelectorAll(".lbtn");
+            for(i=0;i<prbtn.length;i++){
+                prbtn[i].addEventListener('click',function(e){this.parentElement.parentElement.remove();console.log(this.dataset.id);})
+                abbtn[i].addEventListener('click',function(e){this.parentElement.parentElement.remove();console.log(this.dataset.id);})
+                labtn[i].addEventListener('click',function(e){this.parentElement.parentElement.remove();console.log(this.dataset.id);})
+            }
+        }
     </script>
 </body>
 </html>

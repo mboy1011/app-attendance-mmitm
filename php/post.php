@@ -16,6 +16,7 @@ if($req=='addUser'){
     }else{
         echo 'success';
     }
+<<<<<<< HEAD
 }else if($req=='addCourse'){
     $course_name=$data['course_name'];
     $course_desc=$data['course_desc'];
@@ -32,5 +33,19 @@ if($req=='addUser'){
     }else{
         echo 'success';
     }
+=======
+}else if($req=='getSubject'){
+    $id = $data['fa'];
+    require("query.php");
+    $oop = new Query();
+    $sql = $oop->getSubject($id);
+    echo $sql;
+}else if($req=='getStudents'){
+    require("query.php");
+    $oop = new Query();
+    $id = $data['cid'];
+    $sql = $oop->getStudents($id);
+    echo $sql;    
+>>>>>>> 5b279fcf7bf7640b6081f118755ad3c566032675
 }
 ?>
