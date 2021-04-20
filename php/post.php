@@ -19,6 +19,18 @@ if($req=='addUser'){
 }else if($req=='addCourse'){
     $course_name=$data['course_name'];
     $course_desc=$data['course_desc'];
-    requ
+    require("query.php");
+    $course_name=$data['course_name'];
+    $course_desc=$data['course_desc'];
+    $oop=new Query();
+
+    $sql=$oop->addCourse($course_name,$course_desc);
+    if ($sql==1) {
+        echo 'exists';
+    }else if(!$sql){
+        echo 'failed';
+    }else{
+        echo 'success';
+    }
 }
 ?>
