@@ -20,8 +20,7 @@ if($req=='addUser'){
     $course_name=$data['course_name'];
     $course_desc=$data['course_desc'];
     require("query.php");
-    $course_name=$data['course_name'];
-    $course_desc=$data['course_desc'];
+    
     $oop=new Query();
 
     $sql=$oop->addCourse($course_name,$course_desc);
