@@ -188,19 +188,6 @@ require('session.php');
             if(course_name.value!="" && course_desc.value!=""){
                 axios.post('post.php',{
                     req:'addCourse',course_name:course_name.value,course_desc:course_desc.value
-                }).then((response)=>{
-                    console.log(response);
-                  
-                    if(response.data=="exists"){
-                        M.toast({html:"Course Already Exist!"});
-                    }else if(response.data == "failed"){
-                        M.toast({html:"Failed to register Course!"});
-                    }else if(response.data=='success'){
-                        M.toast({html:"Successfully Added!"});
-                        course_name.value="";
-                        course_desc.value="";
-                      
-                    }
                 }).catch((error)=>{
                     console.log(error)
                 });
