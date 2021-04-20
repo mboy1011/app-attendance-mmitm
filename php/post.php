@@ -22,14 +22,12 @@ if($req=='addUser'){
     require("query.php");
     $oop=new Query();
     $sql=$oop->addCourse($course_name,$course_desc);
-    
-    if ($sql==1) {
-        echo 'exists';
-    }else if(!$sql){
+     if(!$sql){
         echo 'failed';
     }else{
         echo 'success';
     }
+
 }else if($req=='getSubject'){
     $id = $data['fa'];
     require("query.php");
