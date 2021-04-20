@@ -55,17 +55,13 @@ class Query {
     public function addCourse($course_name,$course_desc)
     {
         require('config.php');
-        $sql = mysqli_query($db,"SELECT * FROM users WHERE username='$uname'");
-        if($sql->num_rows>0){
-            return 1;
-        }else{           
-            $res = mysqli_query($db,"INSERT INTO courses('course','description') VALUES ('".$course_name."','".$course_desc."')");
-            if (!$res) {
+        $sql = mysqli_query($db,"INSERT INTO courses('course','description') VALUES ('".$course_name."','".$course_desc."')");
+            if (!$sql) {
                 return false;
             }else{
                 return true;
             }
         }
     }
-}
+
 ?>
