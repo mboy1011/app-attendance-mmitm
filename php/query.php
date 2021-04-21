@@ -59,7 +59,11 @@ class Query {
         if($sql->num_rows>0){
             return 1;
         }else{
+<<<<<<< HEAD
             $res = mysqli_query($db,"INSERT INTO courses(`course`,`description`) VALUES ('".$course_name."','".$course_desc."')");
+=======
+            $res = mysqli_query(q   $db,"INSERT INTO courses(`course`,'description') VALUES ('".$course_name."','".$course_desc."')");
+>>>>>>> 9b9e95946d03e756e757b0b17945df224322148e
             if (!$res) {
                 return 2;
             }else{
@@ -67,6 +71,21 @@ class Query {
             }
         }
   }
+  public function addStudent($id_number,$name,$class_id)
+  {
+      require('config.php');
+      $sql = mysqli_query($db,"SELECT * FROM students");
+      if($sql->num_rows>0){
+          return 1;
+      }else{
+          $res = mysqli_query($db,"INSERT INTO students(`id_no`,'class_id','name') VALUES ('".$id_number."','".$class_id."','".$name."')");
+          if (!$res) {
+              return false;
+          }else{
+              return true;
+          }
+      }
+}
 }
 
 ?>

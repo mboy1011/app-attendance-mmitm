@@ -65,7 +65,7 @@ require('session.php');
         <li>
             <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Students</div>
             <div class="collapsible-body white darken-5">
-              <a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Students</a>
+              <a href="add_student.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Students</a>
               <div class="divider"></div>
               <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Students</a></div>
               <div class="divider"></div>
