@@ -6,14 +6,16 @@ if($req=='addUser'){
     $name = $data['nm'];
     $un = $data['un'];
     $pw = $data['pw'];
+    $id = $data['id'];
+    $ty = $data['ty'];
     require("query.php");
     $oop = new Query();
-    $sql = $oop->addUser($name,$un,$pw);
+    $sql = $oop->addUser($name,$un,$pw,$id,$ty);
     if ($sql==1) {
         echo 'exists';
-    }else if(!$sql){
+    }else if($sql==2){
         echo 'failed';
-    }else{
+    }else if($sql==3){
         echo 'success';
     }
 }else if($req=='addCourse'){
@@ -22,10 +24,12 @@ if($req=='addUser'){
     require("query.php");
     $oop=new Query();
     $sql=$oop->addCourse($course_name,$course_desc);
-     if(!$sql){
-        echo 'failed';
-    }else{
-        echo 'success';
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
     }
 
 }else if($req=='getSubject'){

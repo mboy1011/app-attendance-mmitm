@@ -35,7 +35,7 @@ require('session.php');
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Register User</a>
+              <a href="#!" class="brand-logo center green-text">Course</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -55,17 +55,33 @@ require('session.php');
           </div>
         </li>
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
-        <li><a href="#" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
+        <li>
+            <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Courses</div>
+            <div class="collapsible-body white darken-5">
+              <a href="add_course.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Course</a>
+              <div class="divider"></div>
+              <div><a href="view_course.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Course</a></div>
+              <div class="divider"></div>
+            </div>
+        </li>
         <li>
             <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Students</div>
             <div class="collapsible-body white darken-5">
-              <a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Students</a>
+              <a href="add_student.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Students</a>
               <div class="divider"></div>
               <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Students</a></div>
               <div class="divider"></div>
             </div>
         </li>
-        <li><a href="#" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>
+        <li>
+            <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Class</div>
+            <div class="collapsible-body white darken-5">
+              <a href="add_class.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Class</a>
+              <div class="divider"></div>
+              <div><a href="view_class.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Classes</a></div>
+              <div class="divider"></div>
+            </div>
+        </li>
         <li>
             <div class="collapsible-header white-text"><i class="material-icons right white-text">assignment_ind</i>Faculty</div>
             <div class="collapsible-body white darken-5">
@@ -75,7 +91,8 @@ require('session.php');
               <div class="divider"></div>
             </div>
         </li>
-        <li class="active">
+        <li><a href="#" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
+        <li>
             <div class="collapsible-header white-text"><i class="material-icons right white-text">badge</i>Users</div>
             <div class="collapsible-body white darken-5">
               <a href="add_user.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Users</a>
@@ -96,7 +113,7 @@ require('session.php');
       <div id="man" class="col s12">
         <div class="card material-table">
             <div class="table-header">
-              <span class="table-title">User Accounts</span>
+              <span class="table-title">Courses</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
                 <a href="#insertModal" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
@@ -113,16 +130,14 @@ require('session.php');
                         </label>
                       </th>
                       <th>ID</th>
-                      <th>Username</th>
-                      <th>Password</th>
-                      <th>Type</th>
-                      <th>Faculty ID</th>
-                      <th>Action</th>
+                      <th>Course</th>
+                      <th>Description</th>
+                      <th>Date_Created</th>
                   </tr>
               </thead>
               <tbody>
                 <?php
-                $result = mysqli_query($db,"SELECT * FROM users");
+                $result = mysqli_query($db,"SELECT * FROM courses");
                 $i=1;
                 while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
                 ?>
@@ -134,10 +149,10 @@ require('session.php');
                       </label>
                     </td>
                     <td><?PHP echo $row['id']?></td>
-                    <td><?PHP echo $row['username']?></td>
-                    <td><?PHP echo $row['password']?></td>
-                    <td><?PHP echo $row['type']?></td>
-                    <td><?PHP echo $row['faculty_id']?></td>
+                    <td><?PHP echo $row['course']?></td>
+                    <td><?PHP echo $row['description']?></td>
+                    <td><?PHP echo $row['date_created']?></td>
+                   
                     <td>
                       <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
                       <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
