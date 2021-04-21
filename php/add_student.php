@@ -108,7 +108,7 @@
   <main>
   <div class="container">
     <div class="row">
-        <form class="col s12" id="reg-form">
+        
           <div class="row">
              <div class="input-field col s12">
                 <input id="id_number" type="text" class="validate" required>
@@ -142,12 +142,7 @@
                 <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
                 <i class="material-icons right">done</i>
                 </button>
-            </div>
-
-
-            </form> 
-         
-      
+            </div>    
 </div>          
      
   </main>
@@ -201,9 +196,10 @@
             let id_number = document.querySelector("#id_number");
             let name = document.querySelector("#name");
             let class_id = document.querySelector("#class_id");
-            if(course_name.value!="" && course_desc.value!=""){
+
+            if(id_number.value!="" && name.value!="" && class_id.value!=""){
                 axios.post('post.php',{
-                    req:'addStudent',id_number:id_number.value,name:name.value,class_id:class_id.value
+                    req:'addStudent',id_number:id_number.value,class_id:class_id.value,name:name.value
                 }).then((response)=>{
                     console.log(response.data);
                     if(response.data=="dup"){
