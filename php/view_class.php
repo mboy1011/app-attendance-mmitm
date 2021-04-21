@@ -132,7 +132,7 @@ require('session.php');
                       <th>ID</th>
                       <th>Class</th>
                       <th>Action</th>
-                      <th>
+                      
                   </tr>
               </thead>
               <tbody>
