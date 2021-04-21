@@ -59,11 +59,7 @@ class Query {
         if($sql->num_rows>0){
             return 1;
         }else{
-<<<<<<< HEAD
             $res = mysqli_query($db,"INSERT INTO courses(`course`,`description`) VALUES ('".$course_name."','".$course_desc."')");
-=======
-            $res = mysqli_query(q   $db,"INSERT INTO courses(`course`,'description') VALUES ('".$course_name."','".$course_desc."')");
->>>>>>> 9b9e95946d03e756e757b0b17945df224322148e
             if (!$res) {
                 return 2;
             }else{
@@ -85,7 +81,22 @@ class Query {
               return true;
           }
       }
-}
+ }
+ public function addFaculty($idno,$fac,$em,$con)
+ {
+     require("config.php");
+     $sql = mysqli_query($db,"SELECT * FROM faculty WHERE id_no='$idno' AND email='$em'");
+     if($sql->num_rows>0){
+        return 1;
+    }else{
+        $res = mysqli_query($db,"INSERT INTO faculty(`id_no`,`name`,`email`,`contact`) VALUES ('".$idno."','".$fac."','".$em."','".$con."')");
+        if (!$res) {
+            return 2;
+        }else{
+            return 3;
+        }
+    }
+ }
 }
 
 ?>

@@ -56,5 +56,20 @@ if($req=='addUser'){
     }else{
         echo 'success';
     }
+}else if($req=="addFaculty"){
+    $idno = $data['id'];
+    $fac = $data['fac'];
+    $em = $data['em'];
+    $con = $data['con'];
+    require('query.php');
+    $oop = new Query();
+    $sql = $oop->addFaculty($idno,$fac,$em,$con);
+    if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
 }
 ?>
