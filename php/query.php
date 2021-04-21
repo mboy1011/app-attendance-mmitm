@@ -67,14 +67,14 @@ class Query {
             }
         }
   }
-  public function addStudent($course_id,$year, $section)
+  public function addClass($id,$yr, $sec)
   {
       require('config.php');
-      $sql = mysqli_query($db,"SELECT * FROM students WHERE id_no='$id_number'");
+      $sql = mysqli_query($db,"SELECT * FROM class WHERE course_id='$id' AND `level`='$yr' AND `section`='$sec'");
       if($sql->num_rows>0){
           return 1;
       }else{
-          $res = mysqli_query($db,"INSERT INTO class(`course_id`,`level`,`section`) VALUES ('".$course_id."','".$year."','".$section."')");
+          $res = mysqli_query($db,"INSERT INTO class(`course_id`,`level`,`section`) VALUES ('".$id."','".$yr."','".$sec."')");
           if (!$res) {
               return 2;
           }else{
@@ -97,22 +97,6 @@ class Query {
         }
     }
  }
-
-public function addClass($course_name,$year,$section)
-{
-    require('config.php');
-    $sql = mysqli_query($db,"SELECT * FROM class");
-    if($sql->num_rows>0){
-        return 1;
-    }else{
-        $res = mysqli_query($db,"INSERT INTO class(`course_id`,`level`,'section') VALUES ('".$course_name."','".$year."','".$section."')");
-        if (!$res) {
-            return false;
-        }else{
-            return true;
-        }
-    }
-}
 }
 
 ?>

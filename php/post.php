@@ -46,12 +46,17 @@ if($req=='addUser'){
     echo $sql;    
 }else if($req=='addClass'){
     require("query.php");
+    $id = $data['id'];
+    $yr = $data['yr'];
+    $sec = $data['sec'];
     $oop=new Query();
-    $sql=$oop->addStudent($id_number,$name,$class_id);
-     if(!$sql){
-        echo 'failed';
-    }else{
-        echo 'success';
+    $sql=$oop->addClass($id,$yr,$sec);
+    if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
     }
 }else if($req=="addFaculty"){
     $idno = $data['id'];
@@ -68,7 +73,7 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
-    $oop = new Query();
+    // $oop = new Query();
     $course_name = $data['course_name'];
     $year = $data['year'];
     $section = $data['section'];

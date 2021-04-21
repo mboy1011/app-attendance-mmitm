@@ -214,22 +214,20 @@ require('session.php');
         // AXIOS AJAX
         let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
-            let course_name = document.querySelector("#course_id");
-            let year = document.querySelector("#year");
-            let section = document.querySelector("#section");
-            
-           
+            let id = document.querySelector("#course_id");
+            let yr = document.querySelector("#year");
+            let sec = document.querySelector("#section");
                 axios.post('post.php',{
-                    req:'addClass',course_name:course_name.value,year:year.value,section:section.value
+                    req:'addClass',id:id.value,yr:yr.value,sec:sec.value
                 }).then((response)=>{
-                    console.log(response);
-                  
-                        M.toast({html:"Successfully Registered!"});
-                        course_name.value="";
-                        year.value="";
-                        section.value="";
-                        
-                    
+                  if(response.data=="dup"){
+                      M.toast({html:"Course Already Exist!"});
+                  }else if(response.data == "fai"){
+                      M.toast({html:"Failed to register course!"});
+                  }else if(response.data=='suc'){
+                      M.toast({html:"Successfully Added!"});
+                      
+                  }
                 }).catch((error)=>{
                     console.log(error)
                 });
