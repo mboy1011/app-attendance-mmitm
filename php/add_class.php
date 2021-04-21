@@ -7,7 +7,7 @@ require('session.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Course</title>
+    <title>Add Class</title>
      <!-- MCSS Offline -->
      <link rel="stylesheet" href="../assets/css/materializecss.min.css">
     <link rel="stylesheet" href="../assets/css/materializecss-icons.css">
@@ -33,7 +33,7 @@ require('session.php');
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Add Course</a>
+              <a href="#!" class="brand-logo center green-text">Add Class</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -107,25 +107,57 @@ require('session.php');
   </header>
   <main>
   <div class="container">
-    <div class="row"></div>
+    
     <div class="row">
         <div class="col s12" id="reg-form">
         <div class="row">
             <div class="input-field col s6">
-            <input id="course_name" type="text" class="validate" required>
-            <label for="course_name">Course</label>
+            <select name="course_id" id="course_id" class="custom-select select2">
+            <option value="" disabled selected>Course</option>
+								<?php 
+								$course = $db->query("SELECT * FROM courses order by course asc");
+								while($row=$course->fetch_assoc()):
+								?>
+								<option value="<?php echo $row['id'] ?>"><?php echo $row['course'] ?></option>
+							<?php endwhile; ?>
+							</select>
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s12">
-            <input id="text" type="text" class="validate" required>
-            <label for="text">Description</label>
+        <div class="col s12" id="reg-form">
+        <div class="row">
+            <div class="input-field col s6">
+            <select name="year" id="year" class="custom-select select2">
+            <option value="" disabled selected>Year</option>
+							
+								<option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+						
+							</select>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col s12" id="reg-form">
+        <div class="row">
+            <div class="input-field col s6">
+            <select name="section" id="section" class="custom-select select2">
+            <option value="" disabled selected>Section</option>
+							
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="D">E</option>
+						
+							</select>
             </div>
         </div>
         
         <div class="row">
             <div class="input-field col s6">
-            <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
+            <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Add
                 <i class="material-icons right">done</i>
             </button>
             </div>
@@ -182,32 +214,26 @@ require('session.php');
         // AXIOS AJAX
         let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
-            let nm = document.querySelector("#first_name");
-            let un = document.querySelector("#email");
-            let pw = document.querySelector("#password");
-            let pwc = document.querySelector("#password-conf");
-            if(pw.value==pwc.value){
+            let course_name = document.querySelector("#course_id");
+            let year = document.querySelector("#year");
+            let section = document.querySelector("#section");
+            
+           
                 axios.post('post.php',{
-                    req:'addUser',nm:nm.value,un:un.value,pw:pw.value
+                    req:'addClass',course_name:course_name.value,year:year.value,section:section.value
                 }).then((response)=>{
                     console.log(response);
-                    if(response.data=="exists"){
-                        M.toast({html:"Email Already Exist!"});
-                    }else if(response.data == "failed"){
-                        M.toast({html:"Failed to register user!"});
-                    }else if(response.data=='success'){
+                  
                         M.toast({html:"Successfully Registered!"});
-                        nm.value="";
-                        un.value="";
-                        pw.value="";
-                        pwc.value="";
-                    }
+                        course_name.value="";
+                        year.value="";
+                        section.value="";
+                        
+                    
                 }).catch((error)=>{
                     console.log(error)
                 });
-            }else{
-                M.toast({html:"Password doesn't matched!"});
-            }
+            
             // console.log("CLICKED");
         });
     </script>

@@ -26,9 +26,9 @@ class Query {
             $enc_pass = password_hash($passwd,PASSWORD_BCRYPT);
             $res = mysqli_query($db,"INSERT INTO users(`name`,username,`password`) VALUES ('".$name."','".$uname."','".$enc_pass."')");
             if (!$res) {
-                return false;
+                return 2;
             }else{
-                return true;
+                return 3;
             }
         }
     }
@@ -59,7 +59,7 @@ class Query {
         if($sql->num_rows>0){
             return 1;
         }else{
-            $res = mysqli_query(q   $db,"INSERT INTO courses(`course`,'description') VALUES ('".$course_name."','".$course_desc."')");
+            $res = mysqli_query($db,"INSERT INTO courses(`course`,'description') VALUES ('".$course_name."','".$course_desc."')");
             if (!$res) {
                 return false;
             }else{
@@ -67,20 +67,35 @@ class Query {
             }
         }
   }
-  public function addStudent($course_name,$course_desc)
+  public function addStudent($course_id,$year, $section)
   {
       require('config.php');
       $sql = mysqli_query($db,"SELECT * FROM courses");
       if($sql->num_rows>0){
           return 1;
       }else{
-          $res = mysqli_query(q   $db,"INSERT INTO courses(`course`,'description') VALUES ('".$course_name."','".$course_desc."')");
+          $res = mysqli_query($db,"INSERT INTO class(`course_id`,`level`,`section`) VALUES ('".$course_id."','".$year."','".$section."')");
           if (!$res) {
               return false;
           }else{
               return true;
           }
       }
+}
+public function addClass($course_name,$year,$section)
+{
+    require('config.php');
+    $sql = mysqli_query($db,"SELECT * FROM class");
+    if($sql->num_rows>0){
+        return 1;
+    }else{
+        $res = mysqli_query($db,"INSERT INTO class(`course_id`,`level`,'section') VALUES ('".$course_name."','".$year."','".$section."')");
+        if (!$res) {
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
 }
 

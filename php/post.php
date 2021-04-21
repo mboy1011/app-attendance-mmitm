@@ -40,5 +40,13 @@ if($req=='addUser'){
     $id = $data['cid'];
     $sql = $oop->getStudents($id);
     echo $sql;    
+}else if($req=='addClass'){
+    require("query.php");
+    $oop = new Query();
+    $course_name = $data['course_name'];
+    $year = $data['year'];
+    $section = $data['section'];
+    $sql = $oop->addClass($course_name, $year, $section);
+    echo $sql;    
 }
 ?>
