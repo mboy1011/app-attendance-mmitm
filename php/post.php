@@ -40,5 +40,16 @@ if($req=='addUser'){
     $id = $data['cid'];
     $sql = $oop->getStudents($id);
     echo $sql;    
-}
+}else if($req=='addStudent'){
+    $id_number=$data['id_number'];
+    $name=$data['name'];
+    $class_id=$data['class_id'];
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->addStudent($id_number,$name,$class_id);
+     if(!$sql){
+        echo 'failed';
+    }else{
+        echo 'success';
+    }
 ?>

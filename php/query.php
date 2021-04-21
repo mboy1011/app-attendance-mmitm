@@ -67,14 +67,14 @@ class Query {
             }
         }
   }
-  public function addStudent($course_name,$course_desc)
+  public function addStudent($id_number,$name,$class_id)
   {
       require('config.php');
-      $sql = mysqli_query($db,"SELECT * FROM courses");
+      $sql = mysqli_query($db,"SELECT * FROM students");
       if($sql->num_rows>0){
           return 1;
       }else{
-          $res = mysqli_query(q   $db,"INSERT INTO courses(`course`,'description') VALUES ('".$course_name."','".$course_desc."')");
+          $res = mysqli_query($db,"INSERT INTO students(`id_no`,'class_id','name') VALUES ('".$id_number."','".$class_id."','".$name."')");
           if (!$res) {
               return false;
           }else{

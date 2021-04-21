@@ -136,12 +136,11 @@
     
 
         <div class="row">
-        <div class="input-field col s12">
-            <button class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Register
+            <div class="input-field col s6">
+            <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
                 <i class="material-icons right">done</i>
             </button>
             </div>
-        </div>
         </form>
     </div>
     <a title="Login" class="ngl btn-floating btn-large waves-effect waves-light red"><i class="material-icons">input</i></a>
@@ -171,7 +170,42 @@
             document.getElementsByTagName('header')[0].style.paddingLeft = 0;
         }
         })
-        //
+        
+        let btn = document.querySelector("#regBtn");
+        btn.addEventListener('click',()=>{
+            let id_number = document.querySelector("#id_number");
+            let name = document.querySelector("#name");
+            let class_id=document.querySelector("#class_id";)
+            
+            if(id_number.value!="" && name.value!="" && class_id.value=""){
+                axios.post('post.php',{
+                    req:'addStudent',course_name:course_name.value,course_desc:course_desc.value
+                }).then((response)=>{
+                    console.log(response.data);
+                    if(response.data=="exists"){
+                        M.toast({html:"Student Already Exist!"});
+                    }else if(response.data == "failed"){
+                        M.toast({html:"Failed to register student!"});
+                    }else if(response.data=='success'){
+                        M.toast({html:"Successfully Added!"});
+                        course_name.value="";
+                        course_desc.value="";
+                       
+                    }
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            }else{
+                M.toast({html:"Empty!"});
+            }
+            // console.log("CLICKED");
+        });
+
+
+
+
+
+
     </script>
 </body>
 </html>
