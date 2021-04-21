@@ -136,7 +136,7 @@
     
 
         <div class="row">
-            <div class="input-field col s6">
+        <div class="input-field col s12">
             <button class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Register
                 <i class="material-icons right">done</i>
             </button>
