@@ -16,7 +16,7 @@ class Query {
             return false;
         }
     }
-    public function addUser($name,$uname,$passwd)
+    public function addUser($name,$uname,$passwd,$id,$ty)
     {
         require('config.php');
         $sql = mysqli_query($db,"SELECT * FROM users WHERE username='$uname'");
@@ -24,11 +24,11 @@ class Query {
             return 1;
         }else{
             $enc_pass = password_hash($passwd,PASSWORD_BCRYPT);
-            $res = mysqli_query($db,"INSERT INTO users(`name`,username,`password`) VALUES ('".$name."','".$uname."','".$enc_pass."')");
+            $res = mysqli_query($db,"INSERT INTO users(`name`,username,`password`,`faculty_id`,`type`) VALUES ('".$name."','".$uname."','".$enc_pass."','".$id."','".$ty."')");
             if (!$res) {
-                return false;
+                return 2;
             }else{
-                return true;
+                return 3;
             }
         }
     }
@@ -55,15 +55,15 @@ class Query {
     public function addCourse($course_name,$course_desc)
     {
         require('config.php');
-        $sql = mysqli_query($db,"SELECT * FROM courses");
+        $sql = mysqli_query($db,"SELECT * FROM courses WHERE course='$course_name'");
         if($sql->num_rows>0){
             return 1;
         }else{
-            $res = mysqli_query($db,"INSERT INTO courses(`course`,desccription) VALUES ('".$course_name."','".$course_desc."')");
+            $res = mysqli_query($db,"INSERT INTO courses(`course`,`description`) VALUES ('".$course_name."','".$course_desc."')");
             if (!$res) {
-                return false;
+                return 2;
             }else{
-                return true;
+                return 3;
             }
         }
   }

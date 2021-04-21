@@ -111,15 +111,30 @@ require('session.php');
     <div class="row">
         <div class="col s12" id="reg-form">
         <div class="row">
-            <div class="input-field col s6">
-            <input id="first_name" type="text" class="validate" required>
-            <label for="first_name">First Name</label>
-            </div>
+        <div class="input-field col s12">
+        <select id="fac" name="fac">
+            <option value="" disabled selected>Choose Faculty</option>
+            <?PHP
+                require("config.php");
+                $sql = mysqli_query($db, "SELECT * FROM faculty");
+                while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
+            ?>
+                <option data-id="<?php echo $row['id'];?>" value="<?php echo $row['email'];?>"><?php echo $row['name'];?></option>
+            <?PHP
+                }
+            ?>
+        </select>
+        <label>Faculty</label>
+        </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-            <input id="email" type="email" class="validate" required>
-            <label for="email">Email</label>
+            <select id="ty" name="ty">
+                <option value="" disabled selected>Choose Type</option>
+                <option  value="1">Administrator</option>
+                <option  value="2">Faculty</option>
+            </select>
+            <label>Type</label>
             </div>
         </div>
         <div class="row">
@@ -193,13 +208,13 @@ require('session.php');
         // AXIOS AJAX
         let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
-            let nm = document.querySelector("#first_name");
-            let un = document.querySelector("#email");
+            let fac = document.querySelector("#fac");
+            let ty = document.querySelector("#ty");
             let pw = document.querySelector("#password");
             let pwc = document.querySelector("#password-conf");
             if(pw.value==pwc.value){
                 axios.post('post.php',{
-                    req:'addUser',nm:nm.value,un:un.value,pw:pw.value
+                    req:'addUser',nm:fac[fac.selectedIndex].text,un:fac[fac.selectedIndex].value,pw:pw.value,id:fac[fac.selectedIndex].getAttribute('data-id'),ty:ty[ty.selectedIndex].value
                 }).then((response)=>{
                     console.log(response);
                     if(response.data=="exists"){

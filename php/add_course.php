@@ -190,11 +190,11 @@ require('session.php');
                     req:'addCourse',course_name:course_name.value,course_desc:course_desc.value
                 }).then((response)=>{
                     console.log(response.data);
-                    if(response.data=="exists"){
+                    if(response.data=="dup"){
                         M.toast({html:"Course Already Exist!"});
-                    }else if(response.data == "failed"){
+                    }else if(response.data == "fai"){
                         M.toast({html:"Failed to register course!"});
-                    }else if(response.data=='success'){
+                    }else if(response.data=='suc'){
                         M.toast({html:"Successfully Added!"});
                         course_name.value="";
                         course_desc.value="";
