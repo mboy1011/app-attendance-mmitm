@@ -108,7 +108,7 @@
   <main>
   <div class="container">
     <div class="row">
-        <form class="col s12" id="reg-form">
+        
           <div class="row">
              <div class="input-field col s12">
                 <input id="id_number" type="text" class="validate" required>
@@ -121,34 +121,52 @@
             </div>
           </div>
         
-          <div class="row">
+    
              <div class="input-field col s12">
                 <select name="class_id" id="class_id">
-               <option value="" disabled selected>Choose Class</option>
+                    <option value="" disabled selected>Choose Class</option>
                 <?php
-                require('config.php');
-                $class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
-                while($row=$class->fetch_assoc()):
+                   require('config.php');
+                  $class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
+                         while($row=$class->fetch_assoc()):
                 ?>
+                
                 <option value="<?php echo $row['id'] ?>" <?php echo isset($class_id) && $class_id == $row['id'] ? 'selected' : '' ?>><?php echo $row['class'] ?></option>
-                <?php endwhile; ?>
-            </select>
-        </div>
-      </div>
-     <div class="row">
+                          <?php endwhile; ?>
+                 </select>
+              </div>
+       
+    
+      
             <div class="input-field col s12">
-            <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
+                <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
                 <i class="material-icons right">done</i>
-            </button>
-            </div>
-        </form>
-    </div>
-    <a title="Login" class="ngl btn-floating btn-large waves-effect waves-light red"><i class="material-icons">input</i></a>
-    </div>
-   
+                </button>
+            </div>    
+</div>          
+     
   </main>
-    <footer>
-
+    <footer class="page-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+            <h5 class="white-text">Footer Content</h5>
+            <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Links</h5>
+            <ul>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+            </ul>
+            </div>
+        </div>
+        </div>
+        <div class="footer-copyright">
+        <div class="container">
+        © 2021 Bacus
+        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+    </div>
     </footer>
     <!-- MCSS Offline -->
     <script src="../assets/js/materialize-css.min.js"></script>
@@ -171,23 +189,25 @@
             document.getElementsByTagName('header')[0].style.paddingLeft = 0;
         }
         })
-        
+        //
+        // AXIOS AJAX
         let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
+          
             let id_number = document.querySelector("#id_number");
             let name = document.querySelector("#name");
-            let class_id=document.querySelector("#class_id";)
-            
-            if(id_number.value!="" && name.value!="" && class_id.value=""){
+            let class_id = document.querySelector("#class_id");
+
+            if(id_number.value!="" && name.value!="" && class_id.value!=""){
                 axios.post('post.php',{
-                    req:'addStudent',course_name:course_name.value,course_desc:course_desc.value
+                    req:'addStudent',id_number:id_number.value,class_id:class_id.value,name:name.value
                 }).then((response)=>{
                     console.log(response.data);
-                    if(response.data=="exists"){
+                    if(response.data=="dup"){
                         M.toast({html:"Student Already Exist!"});
-                    }else if(response.data == "failed"){
-                        M.toast({html:"Failed to register student!"});
-                    }else if(response.data=='success'){
+                    }else if(response.data == "fai"){
+                        M.toast({html:"Failed to register Student!"});
+                    }else if(response.data=='suc'){
                         M.toast({html:"Successfully Added!"});
                         course_name.value="";
                         course_desc.value="";
@@ -201,12 +221,6 @@
             }
             // console.log("CLICKED");
         });
-
-
-
-
-
-
     </script>
 </body>
 </html>
