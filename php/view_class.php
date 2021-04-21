@@ -13,6 +13,8 @@ require('session.php');
     <link rel="stylesheet" href="../assets/css/materializecss-icons.css">
     <!-- Style CSS -->
     <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- jQueryMaterializeCSS -->
+    <link rel="stylesheet" href="../assets/css/jq-data-material.css">
      <!--Let browser know website is optimized for mobile-->
      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
      <style>
@@ -33,7 +35,7 @@ require('session.php');
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Register</a>
+              <a href="#!" class="brand-logo center green-text">Class</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -67,7 +69,7 @@ require('session.php');
             <div class="collapsible-body white darken-5">
               <a href="add_student.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Students</a>
               <div class="divider"></div>
-              <div><a href="view_students.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Students</a></div>
+              <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Students</a></div>
               <div class="divider"></div>
             </div>
         </li>
@@ -107,7 +109,61 @@ require('session.php');
       
   </header>
   <main>
-  
+  <div class="row">
+      <div id="man" class="col s12">
+        <div class="card material-table">
+            <div class="table-header">
+              <span class="table-title">Classes</span>
+              <div class="actions">
+                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
+                <a href="#insertModal" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+              </div>
+            </div>
+        <table id="datatable" class="responsive-table">
+              <thead>
+                  <tr>
+                      <th>
+                        <label>
+                          <input type="checkbox" id="mChBx" />
+                          <span>Select All</span>
+                        </label>
+                      </th>
+                      <th>ID</th>
+                      <th>Class</th>
+                      <th>Action</th>
+                      <th>
+                  </tr>
+              </thead>
+              <tbody>
+              <?php 
+								$i = 1;
+								$class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
+								while($row=$class->fetch_assoc()):
+								?>
+                  <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" class="chBx" data-id="<?PHP echo $row['id']?>" />
+                        <span></span>
+                      </label>
+                    </td>
+                   <td class="text-center"><?php echo $i++ ?></td>
+									  <td class=""><p><b><?php echo $row['class'] ?></b></p>
+								  </td>
+                   
+                    <td>
+                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
+                      <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
+                    </td>
+                  </tr>
+                  <?php endwhile; ?>
+              </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -134,11 +190,16 @@ require('session.php');
     <!-- MCSS Offline -->
     <script src="../assets/js/materialize-css.min.js"></script>
     <script src="../assets/js/axios.min.js"></script>
+    <!-- jQueryMaterilizeCSS -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/jq-data-material.js"></script>
+
     <script type="text/javascript" charset="utf-8">
         M.AutoInit();
         //SideNave
-        let slout = document.querySelector("#slide-out");
         let men = document.querySelector("#menu");
+        let slout = document.querySelector("#slide-out");
         men.addEventListener('click',()=>{
         if(slout.M_Sidenav.isOpen == false){
             slout.M_Sidenav.open(); 
@@ -146,7 +207,7 @@ require('session.php');
             document.getElementsByTagName('main')[0].style.paddingLeft = "300px";
             document.getElementsByTagName('header')[0].style.paddingLeft = "300px";
         }else if(slout.M_Sidenav.isOpen == true){
-        slout.M_Sidenav.close();
+            slout.M_Sidenav.close();
             document.getElementsByTagName('footer')[0].style.paddingLeft = 0;
             document.getElementsByTagName('main')[0].style.paddingLeft = 0;
             document.getElementsByTagName('header')[0].style.paddingLeft = 0;
@@ -155,6 +216,32 @@ require('session.php');
         //
         // AXIOS AJAX
         
+        // 
+        // CheckBox
+    let mChBx = document.querySelector("#mChBx");
+    let chBx = document.querySelectorAll(".chBx");
+    mChBx.addEventListener('click',function(){
+      if(mChBx.checked == true){
+        for (let i = 0; i < chBx.length; i++) {
+          chBx[i].checked = true;            
+        }
+      }else{
+        for (let i = 0; i < chBx.length; i++) {
+          chBx[i].checked = false;            
+        }
+      }
+    });
+    let modal = document.querySelectorAll(".modal");
+    let delData = [];
+    let check = (e)=>{
+      for (let i = 0; i < chBx.length; i++) {
+        if(chBx[i].checked == true){
+          delData.push(chBx[i].dataset.id);
+        }          
+      }
+    }
+    
+    // 
     </script>
 </body>
 </html>

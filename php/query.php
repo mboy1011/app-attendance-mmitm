@@ -74,14 +74,18 @@ class Query {
       if($sql->num_rows>0){
           return 1;
       }else{
-          $res = mysqli_query($db,"INSERT INTO students('id_no','class_id','name') VALUES ('".$id_number."','".$class_id."','".$name."')");
+          $res = mysqli_query($db,"INSERT INTO students(`id_no`,`class_id`,`name`) VALUES ('".$id_number."','".$class_id."','".$name."')");
           if (!$res) {
-              return false;
+              return 2;
           }else{
-              return true;
+              return 3;
           }
       }
-}
+    }
+
+
+
+
 }
 
 ?>

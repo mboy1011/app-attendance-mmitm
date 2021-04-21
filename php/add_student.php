@@ -193,6 +193,7 @@
         // AXIOS AJAX
         let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
+          
             let id_number = document.querySelector("#id_number");
             let name = document.querySelector("#name");
             let class_id = document.querySelector("#class_id");

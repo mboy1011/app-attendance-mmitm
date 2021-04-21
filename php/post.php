@@ -48,10 +48,11 @@ if($req=='addUser'){
     $id_number=$data['id_number'];
     $name=$data['name'];
     $class_id=$data['class_id'];
+
     require("query.php");
     $oop=new Query();
     $sql=$oop->addStudent($id_number,$class_id,$name);
-    if($sql==1){
+      if($sql==1){
         echo 'dup';
     }else if($sql==3){
         echo 'suc';
