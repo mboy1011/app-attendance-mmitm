@@ -50,10 +50,11 @@ if($req=='addUser'){
     $class_id=$data['class_id'];
     require("query.php");
     $oop=new Query();
-    $sql=$oop->addStudent($id_number,$name,$class_id);
+    $sql=$oop->addStudent($id_number,$class_id,$name,);
      if(!$sql){
         echo 'failed';
     }else{
         echo 'success';
     }
+}
 ?>
