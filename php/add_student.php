@@ -109,20 +109,22 @@
   <div class="container">
     <div class="row">
         <form class="col s12" id="reg-form">
-        <div class="row">
-        <div class="input-field col s12">
-            <input id="id_number" type="text" class="validate" required>
-            <label for="id_number">ID Number</label>
-            </div>
+          <div class="row">
+             <div class="input-field col s12">
+                <input id="id_number" type="text" class="validate" required>
+                 <label for="id_number">ID Number</label>
+             </div>
+
             <div class="input-field col s12">
-            <input id="name" type="text" class="validate" required>
-            <label for="name">Name</label>
+                <input id="name" type="text" class="validate" required>
+                <label for="name">Name</label>
             </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <select name="class_id" id="class_id">
-            <option value="" disabled selected>Choose Class</option>
+          </div>
+        
+          <div class="row">
+             <div class="input-field col s12">
+                <select name="class_id" id="class_id">
+               <option value="" disabled selected>Choose Class</option>
                 <?php
                 require('config.php');
                 $class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
@@ -132,11 +134,9 @@
                 <?php endwhile; ?>
             </select>
         </div>
-        <div class="container">
-    
-
-        <div class="row">
-            <div class="input-field col s6">
+      </div>
+     <div class="row">
+            <div class="input-field col s12">
             <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
                 <i class="material-icons right">done</i>
             </button>
@@ -145,6 +145,7 @@
     </div>
     <a title="Login" class="ngl btn-floating btn-large waves-effect waves-light red"><i class="material-icons">input</i></a>
     </div>
+   
   </main>
     <footer>
 
