@@ -56,4 +56,5 @@ if($req=='addUser'){
     }else{
         echo 'success';
     }
+}
 ?>
