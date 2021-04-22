@@ -111,8 +111,8 @@
         
           <div class="row">
              <div class="input-field col s12">
-                <input id="id_number" type="text" class="validate" required>
-                 <label for="id_number">ID Number</label>
+                <input id="id_no" type="text" class="validate" required>
+                 <label for="id_no">ID Number</label>
              </div>
 
             <div class="input-field col s12">
@@ -194,13 +194,13 @@
         let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
           
-            let id_number = document.querySelector("#id_number");
+            let id_no = document.querySelector("#id_no");
             let name = document.querySelector("#name");
             let class_id = document.querySelector("#class_id");
 
-            if(id_number.value!="" && name.value!="" && class_id.value!=""){
+            if(id_no.value!="" && name.value!="" && class_id.value!=""){
                 axios.post('post.php',{
-                    req:'addStudent',id_number:id_number.value,class_id:class_id.value,name:name.value
+                    req:'addStudent',id_no:id_no.value,class_id:class_id.value,name:name.value
                 }).then((response)=>{
                     console.log(response.data);
                     if(response.data=="dup"){
@@ -209,8 +209,9 @@
                         M.toast({html:"Failed to register Student!"});
                     }else if(response.data=='suc'){
                         M.toast({html:"Successfully Added!"});
-                        course_name.value="";
-                        course_desc.value="";
+                        id_no.value="";
+                        class_id.value="";
+                        name.value="";
                        
                     }
                 }).catch((error)=>{

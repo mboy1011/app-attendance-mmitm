@@ -59,7 +59,7 @@ class Query {
         if($sql->num_rows>0){
             return 1;
         }else{
-            $res = mysqli_query($db,"INSERT INTO courses(`course`,'description') VALUES ('".$course_name."','".$course_desc."')");
+            $res = mysqli_query($db,"INSERT INTO courses(`course`,`description`) VALUES ('".$course_name."','".$course_desc."')");
             if (!$res) {
                 return 2;
             }else{
@@ -96,7 +96,37 @@ class Query {
             return 3;
         }
     }
- }
+public function addStudent($id_no,$class_id,$name){
+
+    require('config.php');
+        $sql = mysqli_query($db,"SELECT * FROM students WHERE id_no='$id_no'");
+        if($sql->num_rows>0){
+            return 1;
+        }else{
+            $res = mysqli_query($db,"INSERT INTO students(`id_no`,`class_id`,`name`) VALUES ('".$id_no."','".$class_id."','".$name."')");
+            if (!$res) {
+                return 2;
+            }else{
+                return 3;
+            }
+        }
+}
+
+public function updateStudent($id_no,$class_id,$name){
+
+    require('config.php');
+        $sql = mysqli_query($db,"SELECT * FROM students WHERE id_no='$id_no'");
+        if(empty($id_no)){
+			$save = $this->db->query("INSERT INTO students set $data");
+		}else{
+			$save = $this->db->query("UPDATE students set $data where id = $id_no");
+		}
+					
+		if($save){
+			return 1;
+		}
+	}
+}
 }
 
 ?>
