@@ -152,7 +152,7 @@ require('session.php');
                     <td><?PHP echo $row['class_id']?></td>
                     <td><?PHP echo $row['name']?></td>
                     <td>
-                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
+                      <a class="waves-effect waves-light btn modal-trigger orange modUp" href="#mupdate" data-id="<?PHP echo $row['id_no']?>" data-cid="<?PHP echo $row['class_id']?>" data-name="<?PHP echo $row['name']?>"><i class="material-icons white-text">edit</i></a>
                       <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
                     </td>
                   </tr>
@@ -165,7 +165,61 @@ require('session.php');
         </div>
       </div>
     </div>
+
+
+
+    <div id="mupdate" class="modal">
+   
+
+    <div class="modal-content">
+      <h4>Update Student</h4>
+      
+        <div>
+            <label for="" class="control-label">ID #</label>
+            <input type="text" name="id_no" id="modID"  value="" required> 
+        </div> 
+        
+        <div>
+            <label for="" class="control-label">Name</label>
+            <input type="text" name="name" id="modNAME"  value="" required>
+        </div>
+        
+        <div>
+            <label for="" class="control-label">Class</label>
+            <select name="class_id" id="" class="custom-select select2">
+                <option value=""></option>
+                <?php
+                $class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
+                while($row=$class->fetch_assoc()):
+                ?>
+                <option value="<?php echo $row['id'] ?>" <?php echo isset($class_id) && $class_id == $row['id'] ? 'selected' : '' ?>><?php echo $row['class'] ?></option>
+                <?php endwhile; ?>
+            </select>
+        </div>
+
+        <div class="input-field col s12">
+                <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
+                <i class="material-icons right">done</i>
+                </button>
+        </div>    
+             
+    </div>
   </main>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
   <footer class="page-footer">
     <div class="container">
         <div class="row">
@@ -241,8 +295,19 @@ require('session.php');
         }          
       }
     }
-    
+    let modUp = document.querySelectorAll(".modUp");
+    for (let i = 0; i < modUp.length; i++) {
+      modUp[i].addEventListener('click',(e)=>{
+        let mid = document.querySelector("#modID");
+        let mn = document.querySelector("#modNAME");
+        // console.log(modUp[i].dataset.id);
+        mid.value=modUp[i].dataset.id;
+        mn.value=modUp[i].dataset.name;
+      });      
+    }
     // 
+
+    
     </script>
 </body>
 </html>
