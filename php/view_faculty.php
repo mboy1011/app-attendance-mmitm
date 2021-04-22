@@ -112,17 +112,17 @@ require('session.php');
                           <span>Select All</span>
                         </label>
                       </th>
-                      <th>ID</th>
-                      <th>Username</th>
-                      <th>Password</th>
-                      <th>Type</th>
-                      <th>Faculty ID</th>
+                      <th>ID no.</th>
+                      <th>Full Name</th>
+                      <th>Email</th>
+                      <th>Contact</th>
+                      <th>Address</th>
                       <th>Action</th>
                   </tr>
               </thead>
               <tbody>
                 <?php
-                $result = mysqli_query($db,"SELECT * FROM users");
+                $result = mysqli_query($db,"SELECT * FROM faculty");
                 $i=1;
                 while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
                 ?>
@@ -133,11 +133,11 @@ require('session.php');
                         <span></span>
                       </label>
                     </td>
-                    <td><?PHP echo $row['id']?></td>
-                    <td><?PHP echo $row['username']?></td>
-                    <td><?PHP echo $row['password']?></td>
-                    <td><?PHP echo $row['type']?></td>
-                    <td><?PHP echo $row['faculty_id']?></td>
+                    <td><?PHP echo $row['id_no']?></td>
+                    <td><?PHP echo $row['name']?></td>
+                    <td><?PHP echo $row['email']?></td>
+                    <td><?PHP echo $row['contact']?></td>
+                    <td><?PHP echo $row['address']?></td>
                     <td>
                       <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
                       <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
@@ -156,68 +156,51 @@ require('session.php');
     <div id="demo-modal-fixed-footer" 
                 class="modal modal-fixed-footer">
                 <div class="modal-content">
-                    <h4>Add User</h4>
+                    <h4>Add Faculty</h4>
                     
-                    <p class="center">
+                    
                     <div class="row">
         <div class="col s12" id="reg-form">
         <div class="row">
-        <div class="input-field col s12">
-        <select id="fac" name="fac">
-            <option value="" disabled selected>Choose Faculty</option>
-            <?PHP
-                require("config.php");
-                $sql = mysqli_query($db, "SELECT * FROM faculty");
-                while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
-            ?>
-                <option data-id="<?php echo $row['id'];?>" value="<?php echo $row['email'];?>"><?php echo $row['name'];?></option>
-            <?PHP
-                }
-            ?>
-        </select>
-        <label>Faculty</label>
-        </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <select id="ty" name="ty">
-                <option value="" disabled selected>Choose Type</option>
-                <option  value="1">Administrator</option>
-                <option  value="2">Faculty</option>
-            </select>
-            <label>Type</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="password" type="password" class="validate" minlength="6" required>
-            <label for="password">Password</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="password-conf" type="password" class="validate" minlength="6" required>
-            <label for="password-conf">Password Confirm</label>
-            </div>
-        </div>
-        <div class="row">
             <div class="input-field col s6">
-           
+            <input id="idno" type="number" class="validate" required>
+            <label for="idno">ID No.</label>
             </div>
         </div>
-    </div></div>
+        <div class="row">
+            <div class="input-field col s12">
+            <input id="fac" type="text" class="validate" required>
+            <label for="fac">Full Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+            <input id="em" type="email" class="validate" required>
+            <label for="em">Email</label>
+            </div>
+        </div>
+        <div class="row">
+            <b>+639</b>
+            <div class="input-field inline">
+                <input id="con" type="number" class="validate" required>
+                <label for="con">Contact No.</label>
+            </div>
+        </div>
+        
+    </div>
+    </div>
                 </div>
                 <div class="modal-footer">
                     
-                <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                <i class="material-icons right">done</i>
-            </button>
-                    <a href="#!" class="modal-action 
-                        modal-close btn red darken-1">
-                        Cancel
-                    </a>
+                    <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                    <i class="material-icons right">done</i>
+                </button>
+                        <a href="#!" class="modal-action 
+                            modal-close btn red darken-1">
+                            Cancel
+                        </a>
+                    </div>
                 </div>
-            </div>
 
   </main>
   <footer class="page-footer">
@@ -298,40 +281,39 @@ require('session.php');
     
     // 
 
-   
+    //modal
+ 
 
 
         // AXIOS AJAX
         let btn = document.querySelector("#regBtn");
+        // let modal = document.querySelectorAll(".modal")
         btn.addEventListener('click',()=>{
-            let fac = document.querySelector("#fac");
-            let ty = document.querySelector("#ty");
-            let pw = document.querySelector("#password");
-            let pwc = document.querySelector("#password-conf");
-            if(pw.value==pwc.value){
+                let idno = document.querySelector("#idno");
+                let fac = document.querySelector("#fac");
+                let em = document.querySelector("#em");
+                let con = document.querySelector("#con");
                 axios.post('post.php',{
-                    req:'addUser',nm:fac[fac.selectedIndex].text,un:fac[fac.selectedIndex].value,pw:pw.value,id:fac[fac.selectedIndex].getAttribute('data-id'),ty:ty[ty.selectedIndex].value
+                    req:'addFaculty',id:idno.value,fac:fac.value,em:em.value,con:con.value
                 }).then((response)=>{
-                    console.log(response);
-                    if(response.data=="exists"){
-                        M.toast({html:"Email Already Exist!"});
-                    }else if(response.data == "failed"){
-                        M.toast({html:"Failed to register user!"});
-                    }else if(response.data=='success'){
-                        M.toast({html:"Successfully Registered!"});
-                        nm.value="";
-                        un.value="";
-                        pw.value="";
-                        pwc.value="";
+                    console.log(response.data);
+                    if(response.data=="dup"){
+                        M.toast({html:"Already Exist!"});
+                        modal[0].M_Modal.close();
+                    }else if(response.data == "fai"){
+                        M.toast({html:"Failed to register course!"});
+                        modal[0].M_Modal.close();
+                    }else if(response.data=='suc'){
+                        M.toast({html:"Successfully Added!"});
+                        fac.value="";
+                        em.value="";
+                        con.value="";
+                        idno.value="";
                         modal[0].M_Modal.close();
                     }
                 }).catch((error)=>{
                     console.log(error)
                 });
-            }else{
-                M.toast({html:"Password doesn't matched!"});
-            }
-            // console.log("CLICKED");
         });
     </script>
 </body>

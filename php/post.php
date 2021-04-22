@@ -74,10 +74,10 @@ if($req=='addUser'){
         echo 'fai';
     }
     // $oop = new Query();
-    $course_name = $data['course_name'];
-    $year = $data['year'];
-    $section = $data['section'];
-    $sql = $oop->addClass($course_name, $year, $section);
-    echo $sql;    
+    // $course_name = $data['course_name'];
+    // $year = $data['year'];
+    // $section = $data['section'];
+    // $sql = $oop->addClass($course_name, $year, $section);
+    // echo $sql;    
 }
 ?>
