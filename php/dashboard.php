@@ -57,7 +57,7 @@ require('session.php');
         <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
         <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
         <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>
-        <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>
+          
 <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>       
  <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
         <li><a href="view_class_subject.php" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
