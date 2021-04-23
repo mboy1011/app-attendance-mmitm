@@ -43,7 +43,7 @@ require('session.php');
           </div>
         </nav>
       </div>
-    <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
+      <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
         <li>
           <div class="user-view">
             <div class="background">
@@ -55,40 +55,17 @@ require('session.php');
           </div>
         </li>
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
-        <li><a href="#" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
-        <li>
-            <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Students</div>
-            <div class="collapsible-body white darken-5">
-              <a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Students</a>
-              <div class="divider"></div>
-              <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Students</a></div>
-              <div class="divider"></div>
-            </div>
-        </li>
-        <li><a href="#" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>
-        <li>
-            <div class="collapsible-header white-text"><i class="material-icons right white-text">assignment_ind</i>Faculty</div>
-            <div class="collapsible-body white darken-5">
-              <a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Faculties</a>
-              <div class="divider"></div>
-              <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Facultiess</a></div>
-              <div class="divider"></div>
-            </div>
-        </li>
-        <li class="active">
-            <div class="collapsible-header white-text"><i class="material-icons right white-text">badge</i>Users</div>
-            <div class="collapsible-body white darken-5">
-              <a href="add_user.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Users</a>
-              <div class="divider"></div>
-              <a href="view_user.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Users</a>
-              <div class="divider"></div>
-            </div>
-        </li>
+        <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
+        <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
+        <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>
+        <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
+        <li><a href="#" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
+        <li><a href="view_user.php" class="white-text">Users<i class="small material-icons left white-text">school</i></a></li>
         <li><a href="#" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
         <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>
         <li><a href="#" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
-    </ul>
+   </ul>
       
   </header>
   <main>
