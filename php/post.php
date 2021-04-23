@@ -114,5 +114,21 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
+}else if($req=='updateUser'){
+    require("query.php");
+    $user=$data['user'];
+    $pass=$data['pass'];
+    $type=$data['type'];
+    $auth=$data['auth'];
+    $id=$data['id'];
+    $oop=new Query();
+    $sql=$oop->updateStudent($user,$pass,$type,$auth,$id);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
 }
 ?>

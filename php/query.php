@@ -151,5 +151,17 @@ class Query {
             return 1;
         }
     }
+
+
+
+public function updateUser($user,$pass,$type,$id,$test,$auth){
+    require('config.php');
+    $query = mysqli_query($db,"UPDATE users SET username = $user WHERE id=$id");   
+    if(!$query){
+        return 'fai';
+    }else{
+        return 'suc';
+    }
 }
+
 ?>
