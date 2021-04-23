@@ -82,7 +82,7 @@ require('session.php');
               <div class="divider"></div>
             </div>
         </li>
-        <li><a href="#" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
+        <li><a href="attendance.php" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
         <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>
         <li><a href="#" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
@@ -195,12 +195,15 @@ require('session.php');
                 sub.M_FormSelect.$selectOptions.empty();
                 sub.M_FormSelect.$selectOptions.remove();
                 let opt1 = document.createElement("option");
+                opt1.setAttribute('disabled','');
+                opt1.setAttribute('selected','');
                 opt1.text = 'Choose Subject';
                 opt1.value = 0;
                 sub.options.add(opt1); 
                 for (let i = 0; i < obj.length; i++) {
                     // console.log(obj[i].brgyDesc);
                     let opt = document.createElement("option");
+                    // opt.setAttribute('selected');
                     opt.text = obj[i].sub_name;
                     opt.value = obj[i].class_id;
                     sub.options.add(opt);
