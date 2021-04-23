@@ -333,7 +333,6 @@ require('session.php');
       });      
     }
     // 
-    // AXIOS AJAX
     let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
           
@@ -343,7 +342,7 @@ require('session.php');
 
             if(id_no.value!="" && name.value!="" && class_id.value!=""){
                 axios.post('post.php',{
-                    req:'addStudent',id_no:id_no[id_no.selectedIndex].value,class_id:class_id[class_id.selectedIndex].value,name:name[name.selectedIndex].value
+                    req:'addStudent',id_no:id_no.value,class_id:class_id.value,name:name.value
                 }).then((response)=>{
                     console.log(response.data);
                     if(response.data=="dup"){
@@ -355,7 +354,7 @@ require('session.php');
                         id_no.value="";
                         class_id.value="";
                         name.value="";
-                        modal[0].M_Modal.close();
+                        
                        
                     }
                 }).catch((error)=>{
@@ -366,7 +365,6 @@ require('session.php');
             }
             // console.log("CLICKED");
         });
-    
     </script>
 </body>
 </html>
