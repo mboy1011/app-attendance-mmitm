@@ -76,7 +76,7 @@ require('session.php');
               <span class="table-title">Courses</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
-                <a href="#insertModal" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
             </div>
@@ -127,6 +127,44 @@ require('session.php');
         </div>
       </div>
     </div>
+</div>
+<!-- modal for adding course -->
+<div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
+      <div class="modal-content">
+                    <h4>Add Course</h4>
+                    <p class="center">
+
+          <div class="row">
+              <div class="col s12" id="reg-form">
+    
+   
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="course_name" type="text" class="validate" required>
+                      <label for="course_name">Course</label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="input-field col s12">
+                        <input id="course_desc" type="text" class="validate" required>
+                        <label for="course_desc">Description</label>
+                      </div>
+                  </div>
+
+              </div>
+            </div>
+            
+
+                <div class="modal-footer">
+                  <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                    <i class="material-icons right">done</i>
+                  </button>
+                   <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
+                </div>
+
+      </div>
+</div>
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -204,7 +242,34 @@ require('session.php');
       }
     }
     
-    // 
+    let btn = document.querySelector("#regBtn");
+        btn.addEventListener('click',()=>{
+            let course_name = document.querySelector("#course_name");
+            let course_desc = document.querySelector("#course_desc");
+            
+            if(course_name.value!="" && course_desc.value!=""){
+                axios.post('post.php',{
+                    req:'addCourse',course_name:course_name.value,course_desc:course_desc.value
+                }).then((response)=>{
+                    console.log(response.data);
+                    if(response.data=="dup"){
+                        M.toast({html:"Course Already Exist!"});
+                    }else if(response.data == "fai"){
+                        M.toast({html:"Failed to register course!"});
+                    }else if(response.data=='suc'){
+                        M.toast({html:"Successfully Added!"});
+                        course_name.value="";
+                        course_desc.value="";
+                       
+                    }
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            }else{
+                M.toast({html:"Empty!"});
+            }
+            // console.log("CLICKED");
+        });
     </script>
 </body>
 </html>

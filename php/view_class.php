@@ -78,7 +78,7 @@ require('session.php');
               <span class="table-title">Classes</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
-                <a href="#insertModal" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
             </div>
@@ -126,6 +126,80 @@ require('session.php');
         </div>
       </div>
     </div>
+
+
+    <!-- modal for adding a class -->
+    <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
+      <div class="modal-content">
+                    <h4>Add Class</h4>
+                    <p class="center">
+    
+            <div class="row">
+            <div class="col s12" id="reg-form">
+       
+       
+                 <div class="row">
+                    <div class="input-field col s12">
+                       <select name="course_id" id="course_id" class="custom-select select2">
+                          <option value="" disabled selected>Course</option>
+							            	<?php 
+                            $course = $db->query("SELECT * FROM courses order by course asc");
+                            while($row=$course->fetch_assoc()):
+                            ?>
+								          <option value="<?php echo $row['id'] ?>"><?php echo $row['course'] ?></option>
+						            	<?php endwhile; ?>
+							          </select>
+                    </div>
+                  </div>
+
+   
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <select name="year" id="year" class="custom-select select2">
+                         <option value="" disabled selected>Year</option>
+							
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+						
+							        </select>
+                    </div>
+                  </div>
+     
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <select name="section" id="section" class="custom-select select2">
+                        <option value="" disabled selected>Section</option>
+                
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="D">E</option>
+			                </select>
+                    </div>
+                  </div>
+                 
+                  <div class="row">
+                    <div class="input-field col s12">
+                
+                    </div>
+                  </div> 
+
+              </div>
+            </div>          
+                  
+            <div class="modal-footer">
+                  <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                    <i class="material-icons right">done</i>
+                  </button>
+                   <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
+                </div>
+    </div>
+  </div>
+    
+
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -203,7 +277,28 @@ require('session.php');
       }
     }
     
-    // 
+    let btn = document.querySelector("#regBtn");
+        btn.addEventListener('click',()=>{
+            let id = document.querySelector("#course_id");
+            let yr = document.querySelector("#year");
+            let sec = document.querySelector("#section");
+                axios.post('post.php',{
+                    req:'addClass',id:id.value,yr:yr.value,sec:sec.value
+                }).then((response)=>{
+                  if(response.data=="dup"){
+                      M.toast({html:"Course Already Exist!"});
+                  }else if(response.data == "fai"){
+                      M.toast({html:"Failed to register course!"});
+                  }else if(response.data=='suc'){
+                      M.toast({html:"Successfully Added!"});
+                      
+                  }
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            
+            // console.log("CLICKED");
+        });
     </script>
 </body>
 </html>

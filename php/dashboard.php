@@ -33,7 +33,7 @@ require('session.php');
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Register</a>
+              <a href="#!" class="brand-logo center green-text">Student Attendance Management System</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -56,9 +56,11 @@ require('session.php');
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
         <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
         <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
+        <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>
         <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>
-        <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
-        <li><a href="#" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
+<li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>       
+ <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
+        <li><a href="view_class_subject.php" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
         <li><a href="view_user.php" class="white-text">Users<i class="small material-icons left white-text">school</i></a></li>
         <li><a href="attendance.php" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
         <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>

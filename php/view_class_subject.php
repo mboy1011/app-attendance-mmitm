@@ -35,7 +35,7 @@ require('session.php');
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text"> Student</a>
+              <a href="#!" class="brand-logo center green-text">Class</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -43,7 +43,7 @@ require('session.php');
           </div>
         </nav>
       </div>
-    <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
+      <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
         <li>
           <div class="user-view">
             <div class="background">
@@ -54,6 +54,7 @@ require('session.php');
             <a href="#email"><span class="white-text email">admin@gcc.com</span></a>
           </div>
         </li>
+        <!-- menu navigation bar -->
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
         <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
         <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
@@ -65,16 +66,16 @@ require('session.php');
         <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>
         <li><a href="#" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
-      </ul>
+    </ul>
+      
+      
   </header>
-
-
   <main>
   <div class="row">
       <div id="man" class="col s12">
         <div class="card material-table">
             <div class="table-header">
-              <span class="table-title">Courses</span>
+              <span class="table-title">Classes</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
                 <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
@@ -82,171 +83,131 @@ require('session.php');
               </div>
             </div>
         <table id="datatable" class="responsive-table">
-              <thead>
-                  <tr>
-                      <th>
-                        <label>
-                          <input type="checkbox" id="mChBx" />
-                          <span>Select All</span>
-                        </label>
-                      </th>
-                      <th>ID_No</th>
-                      <th>Class_ID</th>
-                      <th>Name</th>
-                      <th>Action</th>
-                      </tr>
-              </thead>
-              <tbody>
-                <?php
-                $result = mysqli_query($db,"SELECT * FROM students");
-                $i=1;
-                while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
-                ?>
-                  <tr>
-                    <td>
-                      <label>
-                        <input type="checkbox" class="chBx" data-id="<?PHP echo $row['id']?>" />
-                        <span></span>
-                      </label>
-                    </td>
-                    <td><?PHP echo $row['id_no']?></td>
-                    <td><?PHP echo $row['class_id']?></td>
-                    <td><?PHP echo $row['name']?></td>
-                    <td>
-                      <a class="waves-effect waves-light btn modal-trigger orange modUp" href="#mupdate" data-id="<?PHP echo $row['id_no']?>" data-cid="<?PHP echo $row['class_id']?>" data-name="<?PHP echo $row['name']?>"><i class="material-icons white-text">edit</i></a>
+        <thead>
+								<tr>
+									<th class="text-center">#</th>
+									<th class="">Class</th>
+									<th class="">Subject</th>
+									<th class="">Faculty</th>
+									<th class="text-center">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php 
+								$i = 1;
+								$class_subject = $db->query("SELECT cs.*,concat(co.course,' ',c.level,'-',c.section) as `class`,s.sub_name,f.name as fname FROM class_subject cs inner join `class` c on c.id = cs.class_id inner join courses co on co.id = c.course_id inner join faculty f on f.id = cs.faculty_id inner join subjects s on s.id = cs.subject_id order by concat(co.course,' ',c.level,'-',c.section) asc");
+								while($row=$class_subject->fetch_assoc()):
+								?>
+								<tr>
+									<td class="text-center"><?php echo $i++ ?></td>
+									<td>
+										<p> <b><?php echo $row['class'] ?></b></p>
+									</td>
+									<td class="">
+										 <p> <b><?php echo $row['sub_name'] ?></b></p>
+									</td>
+									<td class="">
+										 <p> <b><?php echo $row['fname'] ?></b></p>
+									</td>
+                  <td>
+                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
                       <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
                     </td>
-                  </tr>
-                  <?php 
-                    } //end while
-                ?>
-              </tbody>
+								</tr>
+								<?php endwhile; ?>
+							</tbody>
           </table>
           </div>
         </div>
       </div>
     </div>
+    
 
-
-
-  <div id="mupdate" class="modal">
-   
-
-    <div class="modal-content">
-      <h4>Update Student</h4>
-      
-        <div>
-            <label for="" class="control-label">ID #</label>
-            <input type="text" name="id_no" id="modID"  value="" required> 
-        </div> 
-        
-        <div>
-            <label for="" class="control-label">Name</label>
-            <input type="text" name="name" id="modNAME"  value="" required>
-        </div>
-        
-        <div>
-            <label for="" class="control-label">Class</label>
-            <select name="class_id" id="" class="custom-select select2">
-                <option value=""></option>
-                <?php
-                $class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
-                while($row=$class->fetch_assoc()):
-                ?>
-                <option value="<?php echo $row['id'] ?>" <?php echo isset($class_id) && $class_id == $row['id'] ? 'selected' : '' ?>><?php echo $row['class'] ?></option>
-                <?php endwhile; ?>
-            </select>
-        </div>
-
-        <div class="input-field col s12">
-                <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
-                <i class="material-icons right">done</i>
-                </button>
-        </div>    
-             
-    </div>
-
-</div>
-
+    <!-- modal for adding a class -->
     <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
       <div class="modal-content">
-                    <h4>Add Students</h4>
+                    <h4>Assign Class</h4>
                     <p class="center">
-
-          <div class="row">
-              <div class="col s12" id="reg-form">
-                
-                <div class="row">
-                  <div class="input-field col s12">
-                  <input id="id_no" type="text" class="validate" required>
-                  <label for="id_no">ID Number</label>
-                  </div>
-                </div>
-
-
-          <div class="row">
-            <div class="input-field col s12">
-                <input id="name" type="text" class="validate" required>
-                <label for="name">Name</label>
-            </div>
-          </div>
-                  
-          <div class="row">
-            <div class="input-field col s12">
-                <select name="class_id" id="class_id">
-                    <option value="" disabled selected>Choose Class</option>
-                       <?php
-                          require('config.php');
-                          $class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
-                         while($row=$class->fetch_assoc()):
-                       ?>
-                
-                          <option value="<?php echo $row['id'] ?>" <?php echo isset($class_id) && $class_id == $row['id'] ? 'selected' : '' ?>><?php echo $row['class'] ?></option>
-                          <?php endwhile; ?>
-                </select>
-            </div>
-      </div>   
-
+    
             <div class="row">
-                <div class="input-field col s6">
-                
-                  </div>
-              </div>
-      </div>
-    </div>
-
-  </div>
-      <div class="modal-footer">
-                    
-                    <button id="regBtnSave" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                    <i class="material-icons right">done</i>
-                    </button>
-
-                    <a href="#!" class="modal-action 
-                        modal-close btn red darken-1">
-                        Cancel
-                    </a>
-
+            <div class="col s12" id="reg-form">
+                  <?php 
+                    include 'config.php'; 
+                    if(isset($_GET['id'])){
+                    $qry = $db>query("SELECT * FROM class_subject where id= ".$_GET['id']);
+                    foreach($qry->fetch_array() as $k => $val){
+                      $$k=$val;
+                  }
+                  }
+                  ?>
+       
+                 <div class="row">
+                    <div class="input-field col s12">
+                    <label for="" class="control-label">Class</label>
+                    <select name="class_id" id="class_id">
+                        <option value=""></option>
+                        <?php
+                        $class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
+                        while($row=$class->fetch_assoc()):
+                        ?>
+                        <option value="<?php echo $row['id'] ?>" <?php echo isset($c) && $c == $row['id'] ? 'selected' : '' ?>><?php echo $row['class'] ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                   </div>
                 </div>
-</div>
 
+
+   
+                  <div class="row">
+                    <div class="input-field col s12">
+                    <label for="" class="control-label">Faculty</label>
+                    <select name="faculty_id" id="faculty_id">
+                      <option value=""></option>
+                      <?php
+                      $class = $db->query("SELECT * FROM faculty order by name asc");
+                      while($row=$class->fetch_assoc()):
+                      ?>
+                      <option value="<?php echo $row['id'] ?>" <?php echo isset($f) && $f == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['name']) ?></option>
+                      <?php endwhile; ?>
+                    </select>
+                    </div>
+                  </div>
+     
+                  <div class="row">
+                    <div class="input-field col s12">
+                    <label for="" class="control-label">Subject</label>
+                    <select name="subject_id" id="subject_id">
+                      <option value=""></option>
+                      <?php
+                      $class = $db->query("SELECT * FROM subjects order by sub_name asc");
+                      while($row=$class->fetch_assoc()):
+                      ?>
+                      <option value="<?php echo $row['id'] ?>" <?php echo isset($s) && $s == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['sub_name']) ?></option>
+                      <?php endwhile; ?>
+                  </select>
+                    </div>
+                  </div>
+                 
+                  <div class="row">
+                    <div class="input-field col s12">
+                
+                    </div>
+                  </div> 
+
+              </div>
+            </div>          
+                  
+            <div class="modal-footer">
+                  <button id="regBtnSave" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                    <i class="material-icons right">done</i>
+                  </button>
+                   <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
+                </div>
+    </div>
+  </div>
+    
 
   </main>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   <footer class="page-footer">
     <div class="container">
         <div class="row">
@@ -322,46 +283,30 @@ require('session.php');
         }          
       }
     }
-    let modUp = document.querySelectorAll(".modUp");
-    for (let i = 0; i < modUp.length; i++) {
-      modUp[i].addEventListener('click',(e)=>{
-        let mid = document.querySelector("#modID");
-        let mn = document.querySelector("#modNAME");
-        // console.log(modUp[i].dataset.id);
-        mid.value=modUp[i].dataset.id;
-        mn.value=modUp[i].dataset.name;
-      });      
-    }
-    // 
-    let btn = document.querySelector("#regBtnSave");
-        btn.addEventListener('click',()=>{
-          
-            let id_no = document.querySelector("#id_no");
-            let name = document.querySelector("#name");
-            let class_id = document.querySelector("#class_id");
-
-            if(id_no.value!="" && name.value!="" && class_id.value!=""){
-                axios.post('post.php',{
-                    req:'addStudent',id_no:id_no.value,class_id:class_id.value,name:name.value
+    
+    let b = document.querySelector("#regBtnSave");
+        b.addEventListener('click',()=>{
+            let c = document.querySelector("#class_id");
+            let f= document.querySelector("#faculty_id");
+            let s = document.querySelector("#subject_id");
+                  axios.post('post.php',{
+                    req:'addClassSubject',c:c.value,f:f.value,s:s.value
                 }).then((response)=>{
-                    console.log(response.data);
-                    if(response.data=="dup"){
-                        M.toast({html:"Student Already Exist!"});
-                    }else if(response.data == "fai"){
-                        M.toast({html:"Failed to register Student!"});
-                    }else if(response.data=='suc'){
-                        M.toast({html:"Successfully Added!"});
-                        id_no.value="";
-                        class_id.value="";
-                        name.value="";
+                  if(response.data=="dup"){
+                      M.toast({html:"Class Assignment Already Exist!"});
+                  }else if(response.data == "fai"){
+                      M.toast({html:"Failed to register class assignment!"});
+                  }else if(response.data=='suc'){
+                      M.toast({html:"Successfully Added!"});
+                      c.value="";
+                        f.value="";
+                        s.value="";
                        
-                    }
+                  }
                 }).catch((error)=>{
                     console.log(error)
                 });
-            }else{
-                M.toast({html:"Empty!"});
-            }
+            
             // console.log("CLICKED");
         });
     </script>

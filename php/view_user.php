@@ -115,8 +115,8 @@ require('session.php');
                     <td><?PHP echo $row['type']?></td>
                     <td><?PHP echo $row['faculty_id']?></td>
                     <td>
-                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
-                      <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
+                      <a href="#modal-edit" class="waves-effect waves-light btn modal-trigger orange btn-up" data-user="<?PHP echo $row['username']?>" data-pass="<?PHP echo $row['password']?>" data-id="<?PHP echo $row['id']?>" data-type="<?PHP echo $row['type']?>" href="#mupdate"><i class="material-icons white-text">edit</i></a>
+          
                     </td>
                   </tr>
                   <?php 
@@ -134,6 +134,54 @@ require('session.php');
         <h4>Add User</h4>
         <p class="center">
                     
+                    <p class="center">
+                    <div class="row">
+        <div class="col s12" id="reg-form">
+        <div class="row">
+        <div class="input-field col s12">
+        <select id="fac" name="fac">
+            <option value="" disabled selected>Choose Faculty</option>
+            <?PHP
+                require("config.php");
+                $sql = mysqli_query($db, "SELECT * FROM faculty");
+                while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
+            ?>
+                <option data-id="<?php echo $row['id'];?>" value="<?php echo $row['email'];?>"><?php echo $row['name'];?></option>
+            <?PHP
+                }
+            ?>
+        </select>
+        <label>Faculty</label>
+        </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+            <select id="ty" name="ty"></select>
+                <option value="" disabled selected>Choose Type</option>
+                <option  value="1">Administrator</option>
+                <option  value="2">Faculty</option>
+            </select>
+            <label>Type</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+            <input id="password" type="password" class="validate" minlength="6" required>
+            <label for="password">Password</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+            <input id="password-conf" type="password" class="validate" minlength="6" required>
+            <label for="password-conf">Password Confirm</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+           
+            </div>
+        </div>
+    </div></div>
          <div class="row">
             <div class="col s12" id="reg-form">
 
@@ -194,6 +242,46 @@ require('session.php');
                     <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
                     <i class="material-icons right">done</i>
                       </button>
+                    <a href="#!" class="modal-action 
+                        modal-close btn red darken-1">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+            
+            <div id="modal-edit" 
+                class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Edit User</h4>
+                    <p class="center">
+                    <div class="row">
+                    <label>ID:</label>
+                    <input type="text" name="user" id="edit-id" disabled>
+                    <label>Username:</label>
+                    <input type="text" name="user" id="edit-us">
+                    
+                    <label>Password:</label>
+                    <input type="text" name="pass" id="edit-pass" disabled>
+                    <div class="input-field col s12">
+                      <select id="edit-type">
+                        
+                        <option value="0">Administrator</option>
+                        <option value="1">Faculty</option>
+                      </select>
+                      <label>Change Type</label>
+                      
+                    </div> 
+                    <label>
+                      <input type="checkbox" id="auth"/>
+                      <span><b>Check if you want to change the password?</b></span>
+                    </label> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    
+                <button id="upBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Save Changes
+                <i class="material-icons right">done</i>
+            </button>
                     <a href="#!" class="modal-action 
                         modal-close btn red darken-1">
                         Cancel
@@ -268,6 +356,42 @@ require('session.php');
         }
       }
     });
+        // Update
+    let btnup = document.querySelectorAll(".btn-up");
+   
+      for (let i = 0; i < btnup.length; i++) {
+        
+          btnup[i].addEventListener('click',function(){
+           
+            let edit_user = document.querySelector("#edit-us");
+            edit_user.value = this.dataset.user;
+            let edit_pass = document.querySelector("#edit-pass");
+            edit_pass.value = this.dataset.pass;
+            let edit_type = document.querySelector("#edit-type");
+            edit_type.value = this.dataset.type;
+            let edit_id = document.querySelector("#edit-id");
+            edit_id.value = this.dataset.id;
+          // console.log(this.dataset.id);
+        });
+      }
+      
+      let auth = document.querySelector("#auth");
+      auth.addEventListener('click',function(){
+          if(auth.checked == true){
+            let edit_pass = document.querySelector("#edit-pass");
+            edit_pass.removeAttribute('disabled');
+
+    }else{
+      let edit_pass = document.querySelector("#edit-pass");
+      edit_pass.setAttribute('disabled', '');
+    }
+    // console.log('click');
+  });
+
+
+
+
+
     let modal = document.querySelectorAll(".modal");
     let delData = [];
     let check = (e)=>{
@@ -315,6 +439,36 @@ require('session.php');
             }
             // console.log("CLICKED");
         });
+
+
+
+        let upbtn = document.querySelector("#upBtn");
+        upbtn.addEventListener('click',()=>{
+            let user = document.querySelector("#edit-us");
+            let pass = document.querySelector("#edit-pass");
+            let type = document.querySelector("#edit-type");
+            let auth = document.querySelector("#auth");
+            let id = document.querySelector("#edit-id");
+           
+                axios.post('post.php',{
+                    req:'updateUser',user:user.value,pass:pass.value,type:type.value,auth:auth.value,id:id.value
+                }).then((response)=>{
+                    console.log(response.data);
+                    
+                        M.toast({html:"Update Successfully!"});
+                        user.value="";
+                        pass.value="";
+                        type.value="";
+                        id.value="";
+
+                        modal[0].M_Modal.close();
+                    
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            
+            // console.log("CLICKED");
+        });
     </script>
-</body>
+</body> 
 </html>

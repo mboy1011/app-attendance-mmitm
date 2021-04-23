@@ -73,12 +73,12 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
-    // $oop = new Query();
-    $course_name = $data['course_name'];
-    $year = $data['year'];
-    $section = $data['section'];
-    $sql = $oop->addClass($course_name, $year, $section);
-    echo $sql;    
+    // // $oop = new Query();
+    // $course_name = $data['course_name'];
+    // $year = $data['year'];
+    // $section = $data['section'];
+    // $sql = $oop->addClass($course_name, $year, $section);
+    // echo $sql;    
 }else if($req=="addAttend"){
     require('query.php');
     $oop = new Query();
@@ -113,6 +113,22 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
+}else if($req=='updateUser'){
+    require("query.php");
+    $user=$data['user'];
+    $pass=$data['pass'];
+    $type=$data['type'];
+    $auth=$data['auth'];
+    $id=$data['id'];
+    $oop=new Query();
+    $sql=$oop->updateStudent($user,$pass,$type,$auth,$id);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
 }else if($req=="checkStat"){
     require('query.php');
     $cid=$data['cid'];
@@ -126,5 +142,34 @@ if($req=='addUser'){
     $sql = $oop->remFac($arr);
     $_SESSION['mulDel']=$sql;
     header("location:view_faculty.php");
+}else if($req=='addClassSubject'){
+    $c=$data['c'];
+    $f=$data['f'];
+    $s=$data['s'];
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->addClassSubject($c,$s,$f);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
+}else if($req=='addSubject'){
+    $subject_name=$data['subject_name'];
+    $subject_desc=$data['subject_desc'];
+
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->addSubject($subject_name,$subject_desc);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
 }
+
 ?>
