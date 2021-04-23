@@ -1,5 +1,5 @@
 <?php
-// require('session.php');
+require('session.php');
 $data = json_decode(file_get_contents("php://input"),true);
 $req = $data['req'];
 if($req=='addUser'){
@@ -119,5 +119,12 @@ if($req=='addUser'){
     $oop=new Query();
     $sql=$oop->checkStat($cid);
     echo $sql;
+}else if(isset($_POST['mulDel'])){
+    require("query.php");
+    $oop = new Query();
+    $arr = json_decode($_POST['arrData']);
+    $sql = $oop->remFac($arr);
+    $_SESSION['mulDel']=$sql;
+    header("location:view_faculty.php");
 }
 ?>

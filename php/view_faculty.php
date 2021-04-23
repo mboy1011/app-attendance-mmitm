@@ -75,7 +75,7 @@ require('session.php');
             <div class="table-header">
               <span class="table-title">User Accounts</span>
               <div class="actions">
-                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
+                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delFac" href="#dupdate"><i class="material-icons">delete</i></a>
                 <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
@@ -97,7 +97,7 @@ require('session.php');
                       <th>Action</th>
                   </tr>
               </thead>
-              <tbody>
+              <tbody id="tbody">
                 <?php
                 $result = mysqli_query($db,"SELECT * FROM faculty");
                 $i=1;
@@ -117,7 +117,6 @@ require('session.php');
                     <td><?PHP echo $row['address']?></td>
                     <td>
                       <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
-                      <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
                     </td>
                   </tr>
                   <?php 
@@ -129,7 +128,19 @@ require('session.php');
         </div>
       </div>
     </div>
-
+<!-- Modal Structure -->
+  <div id="delMod" class="modal">
+      <form action="post.php" method="post">
+      <div class="modal-content">
+        <h4>Delete Faculty</h4>
+          <input type="text" name="arrData" id="arrData" hidden>
+          Are you sure you want to delete the following data?
+      </div>
+      <div class="modal-footer">
+        <button href="#!" type="submit" name="mulDel" class="modal-close waves-effect waves-green btn-flat">Agree</button>
+      </div>
+      </form>
+    </div>
     <div id="demo-modal-fixed-footer" 
                 class="modal modal-fixed-footer">
                 <div class="modal-content">
@@ -178,7 +189,7 @@ require('session.php');
                         </a>
                     </div>
                 </div>
-
+                
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -246,25 +257,33 @@ require('session.php');
         }
       }
     });
-    let modal = document.querySelectorAll(".modal");
-    let delData = [];
-    let check = (e)=>{
-      for (let i = 0; i < chBx.length; i++) {
-        if(chBx[i].checked == true){
-          delData.push(chBx[i].dataset.id);
-        }          
-      }
-    }
+
+
     
     // 
-
+    let delFac = document.querySelector("#delFac");
+    delFac.addEventListener('click',()=>{
+      let delData = [];
+      let check = (e)=>{
+        for (let i = 0; i < chBx.length; i++) {
+          if(chBx[i].checked == true){
+            delData.push(chBx[i].dataset.id);
+          }          
+        }
+      }
+      check();
+      let delM = document.querySelector("#delMod");
+      delM.M_Modal.open()
+      let arrD = document.querySelector("#arrData");
+      arrD.value = JSON.stringify(delData);
+    });
     //modal
  
 
 
         // AXIOS AJAX
         let btn = document.querySelector("#regBtn");
-        // let modal = document.querySelectorAll(".modal")
+        let modal = document.querySelectorAll(".modal");
         btn.addEventListener('click',()=>{
                 let idno = document.querySelector("#idno");
                 let fac = document.querySelector("#fac");
@@ -292,6 +311,14 @@ require('session.php');
                     console.log(error)
                 });
         });
+        // 
+        <?php
+        if(isset($_SESSION['mulDel'])){
+          echo "let arr =".$_SESSION['mulDel']."; M.toast({html:arr.length+' data has been deleted!'}) ";
+          unset($_SESSION['mulDel']);
+        }
+        ?>
+        // 
     </script>
 </body>
 </html>

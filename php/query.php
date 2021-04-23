@@ -125,6 +125,26 @@ class Query {
             return 0;
         }
     }
+    public function remFac($arr)
+    {
+        require("config.php");
+        $values = array();
+        for ($i=0; $i < count($arr); $i++) { 
+            $mdel = $this->deleteFaculty($arr[$i]);
+            $values[] = $mdel;
+        }
+        return json_encode($values);
+    }
+    public function deleteFaculty($id)
+    {
+        require("config.php");
+        $sql = mysqli_query($db,"DELETE FROM faculty WHERE id='$id'");
+        if(!$sql){
+            return 'fai';
+        }else{
+            return 'suc';
+        }
+    }
     public function addRecord($at_id,$sid,$ty)
     {
         require('config.php');
