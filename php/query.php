@@ -175,5 +175,5 @@ public function updateUser($user,$pass,$type,$id,$test,$auth){
         return 'suc';
     }
 }
-
+}
 ?>
