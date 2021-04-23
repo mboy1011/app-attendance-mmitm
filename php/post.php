@@ -73,19 +73,18 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
-    // $oop = new Query();
-    $course_name = $data['course_name'];
-    $year = $data['year'];
-    $section = $data['section'];
-    $sql = $oop->addClass($course_name, $year, $section);
-    echo $sql;    
+    // // $oop = new Query();
+    // $course_name = $data['course_name'];
+    // $year = $data['year'];
+    // $section = $data['section'];
+    // $sql = $oop->addClass($course_name, $year, $section);
+    // echo $sql;    
 }else if($req=="addAttend"){
     require('query.php');
     $oop = new Query();
     $ls = $data['data'];
     $sql = $oop->addAttend($ls);
     echo $sql;
-    
 }else if($req=='addStudent'){
     $id_no=$data['id_no'];
     $name=$data['name'];
@@ -130,5 +129,11 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
+}else if($req=="checkStat"){
+    require('query.php');
+    $cid=$data['cid'];
+    $oop=new Query();
+    $sql=$oop->checkStat($cid);
+    echo $sql;
 }
 ?>

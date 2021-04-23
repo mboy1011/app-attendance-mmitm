@@ -43,7 +43,7 @@ require('session.php');
           </div>
         </nav>
       </div>
-    <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
+      <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
         <li>
           <div class="user-view">
             <div class="background">
@@ -55,40 +55,17 @@ require('session.php');
           </div>
         </li>
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
-        <li><a href="#" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
-        <li>
-            <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Students</div>
-            <div class="collapsible-body white darken-5">
-              <a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Students</a>
-              <div class="divider"></div>
-              <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Students</a></div>
-              <div class="divider"></div>
-            </div>
-        </li>
-        <li><a href="#" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>
-        <li>
-            <div class="collapsible-header white-text"><i class="material-icons right white-text">assignment_ind</i>Faculty</div>
-            <div class="collapsible-body white darken-5">
-              <a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Faculties</a>
-              <div class="divider"></div>
-              <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Facultiess</a></div>
-              <div class="divider"></div>
-            </div>
-        </li>
-        <li class="active">
-            <div class="collapsible-header white-text"><i class="material-icons right white-text">badge</i>Users</div>
-            <div class="collapsible-body white darken-5">
-              <a href="add_user.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Users</a>
-              <div class="divider"></div>
-              <a href="view_user.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Users</a>
-              <div class="divider"></div>
-            </div>
-        </li>
+        <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
+        <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
+        <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>
+        <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
+        <li><a href="#" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
+        <li><a href="view_user.php" class="white-text">Users<i class="small material-icons left white-text">school</i></a></li>
         <li><a href="#" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
         <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>
         <li><a href="#" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
-    </ul>
+   </ul>
       
   </header>
   <main>
@@ -153,54 +130,57 @@ require('session.php');
       </div>
     </div>
 
-    <div id="demo-modal-fixed-footer" 
-                class="modal modal-fixed-footer">
+    <!-- modal for adding a faculty -->
+    <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
                 <div class="modal-content">
                     <h4>Add Faculty</h4>
                     
                     
                     <div class="row">
-        <div class="col s12" id="reg-form">
-        <div class="row">
-            <div class="input-field col s6">
-            <input id="idno" type="number" class="validate" required>
-            <label for="idno">ID No.</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="fac" type="text" class="validate" required>
-            <label for="fac">Full Name</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="em" type="email" class="validate" required>
-            <label for="em">Email</label>
-            </div>
-        </div>
-        <div class="row">
-            <b>+639</b>
-            <div class="input-field inline">
-                <input id="con" type="number" class="validate" required>
-                <label for="con">Contact No.</label>
-            </div>
-        </div>
+                       <div class="col s12" id="reg-form">
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                            <input id="idno" type="number" class="validate" required>
+                            <label for="idno">ID No.</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input id="fac" type="text" class="validate" required>
+                            <label for="fac">Full Name</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input id="em" type="email" class="validate" required>
+                            <label for="em">Email</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <b>+639</b>
+                            <div class="input-field inline">
+                                <input id="con" type="number" class="validate" required>
+                                <label for="con">Contact No.</label>
+                            </div>
+                        </div>
         
-    </div>
-    </div>
+                    </div>
+                  </div>
                 </div>
+
                 <div class="modal-footer">
                     
-                    <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                    <i class="material-icons right">done</i>
-                </button>
-                        <a href="#!" class="modal-action 
-                            modal-close btn red darken-1">
-                            Cancel
-                        </a>
-                    </div>
+                    <button id="regBtn1" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                        <i class="material-icons right">done</i>
+                    </button>
+                        <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
                 </div>
+      </div>
+    </div>
 
   </main>
   <footer class="page-footer">
@@ -286,7 +266,7 @@ require('session.php');
 
 
         // AXIOS AJAX
-        let btn = document.querySelector("#regBtn");
+        let btn = document.querySelector("#regBtn1");
         // let modal = document.querySelectorAll(".modal")
         btn.addEventListener('click',()=>{
                 let idno = document.querySelector("#idno");
