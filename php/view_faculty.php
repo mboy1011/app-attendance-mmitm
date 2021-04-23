@@ -193,13 +193,10 @@ require('session.php');
                     </button>
                         <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
                 </div>
-<<<<<<< HEAD
                 
-=======
       </div>
     </div>
 
->>>>>>> f5190320508faf59067c7efbc113a8f547afe75f
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -292,13 +289,10 @@ require('session.php');
 
 
         // AXIOS AJAX
-<<<<<<< HEAD
         let btn = document.querySelector("#regBtn");
         let modal = document.querySelectorAll(".modal");
-=======
         let btn = document.querySelector("#regBtn1");
         // let modal = document.querySelectorAll(".modal")
->>>>>>> f5190320508faf59067c7efbc113a8f547afe75f
         btn.addEventListener('click',()=>{
                 let idno = document.querySelector("#idno");
                 let fac = document.querySelector("#fac");
