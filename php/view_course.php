@@ -161,10 +161,10 @@ require('session.php');
                     <i class="material-icons right">done</i>
                   </button>
                    <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
-                  <div>
                 </div>
-        </div>
-    </div>
+
+      </div>
+</div>
   </main>
   <footer class="page-footer">
     <div class="container">
