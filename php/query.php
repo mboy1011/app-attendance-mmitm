@@ -66,37 +66,63 @@ class Query {
                 return 3;
             }
         }
-  }
-  public function addClass($id,$yr, $sec)
-  {
-      require('config.php');
-      $sql = mysqli_query($db,"SELECT * FROM class WHERE course_id='$id' AND `level`='$yr' AND `section`='$sec'");
-      if($sql->num_rows>0){
-          return 1;
-      }else{
-          $res = mysqli_query($db,"INSERT INTO class(`course_id`,`level`,`section`) VALUES ('".$id."','".$yr."','".$sec."')");
-          if (!$res) {
-              return 2;
-          }else{
-              return 3;
-          }
-      }
- }
- public function addFaculty($idno,$fac,$em,$con)
- {
-     require("config.php");
-     $sql = mysqli_query($db,"SELECT * FROM faculty WHERE id_no='$idno' AND email='$em'");
-     if($sql->num_rows>0){
-        return 1;
-    }else{
-        $res = mysqli_query($db,"INSERT INTO faculty(`id_no`,`name`,`email`,`contact`) VALUES ('".$idno."','".$fac."','".$em."','".$con."')");
-        if (!$res) {
-            return 2;
+    }
+    public function addClass($id,$yr, $sec)
+    {
+        require('config.php');
+        $sql = mysqli_query($db,"SELECT * FROM class WHERE course_id='$id' AND `level`='$yr' AND `section`='$sec'");
+        if($sql->num_rows>0){
+            return 1;
         }else{
-            return 3;
+            $res = mysqli_query($db,"INSERT INTO class(`course_id`,`level`,`section`) VALUES ('".$id."','".$yr."','".$sec."')");
+            if (!$res) {
+                return 2;
+            }else{
+                return 3;
+            }
         }
     }
- }
+    public function addFaculty($idno,$fac,$em,$con)
+    {
+        require("config.php");
+        $sql = mysqli_query($db,"SELECT * FROM faculty WHERE id_no='$idno' AND email='$em'");
+        if($sql->num_rows>0){
+            return 1;
+        }else{
+            $res = mysqli_query($db,"INSERT INTO faculty(`id_no`,`name`,`email`,`contact`) VALUES ('".$idno."','".$fac."','".$em."','".$con."')");
+            if (!$res) {
+                return 2;
+            }else{
+                return 3;
+            }
+        }
+    }
+    public function addAttend($ls)
+    {
+        require('config.php');
+        $cid = $ls[0]['class_id'];
+        $sql = mysqli_query($db,"SELECT * FROM `attendance_list` WHERE class_subject_id='$cid' AND DATE_FORMAT(date_created,'%Y%c%d')=DATE_FORMAT(now(),'%Y%c%d')");
+        if($sql->num_rows>0){
+            return 1;
+        }else{
+            $res = mysqli_query($db,"INSERT INTO attendance_list(`class_subject_id`) VALUES ('".$cid."')");
+            $at_id = $db->insert_id;
+            for ($i=0; $i < count($ls); $i++) { 
+                $mulres = insertRecord($this->addRecord($at_id,$ls[$i]['stud_id'],$ls[$i]['type']));
+                
+            }
+        }
+    }
+    public function addRecord($at_id,$sid,$ty)
+    {
+        require('config.php');
+        $query = mysqli_query($db,"INSERT INTO attendance_record(`attendance_id`,`student_id`,`type`) VALUES ('".$at_id."','".$sid."','".$ty."')");   
+        if(!$query){
+            return 'fai';
+        }else{
+            return 'suc';
+        }
+    }
 }
 
 ?>

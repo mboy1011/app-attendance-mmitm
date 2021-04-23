@@ -79,5 +79,12 @@ if($req=='addUser'){
     $section = $data['section'];
     $sql = $oop->addClass($course_name, $year, $section);
     echo $sql;    
+}else if($req=="addAttend"){
+    require('query.php');
+    $oop = new Query();
+    $ls = $data['data'];
+    $sql = $oop->addAttend($ls);
+    echo $sql;
+    
 }
 ?>

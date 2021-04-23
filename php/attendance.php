@@ -127,11 +127,14 @@ require('session.php');
                 <th>Late</th>
             </tr>
         </thead>
-        <input type="hidden" name="" class="pbtn abtn lbtn" data-id="n/a">
+        <!-- <input type="hidden" name="" class="pbtn abtn lbtn" data-id="n/a"> -->
         <tbody id="tbody">
                  
         </tbody>
     </table>
+    </div>
+    <div class="row">
+    <a class="waves-effect waves-light btn" id="subtn">Submit</a>
     </div>
   </div>
   </main>
@@ -145,7 +148,7 @@ require('session.php');
             <div class="col l4 offset-l2 s12">
             <h5 class="white-text">Links</h5>
             <ul>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                <li><a class="grey-text text-lighten-3" href="#!"></a></li>
             </ul>
             </div>
         </div>
@@ -223,46 +226,107 @@ require('session.php');
             axios.post('post.php',{
                 req:'getStudents',cid:sub.value
             }).then((response)=>{
-                // console.log(response.data);
+                console.log(response.data);
                 let obj = response.data;
                 for (let i = 0; i < obj.length; i++) {
-                    let pbtn = document.createElement('a');
-                    let abtn = document.createElement('a');
-                    let lbtn = document.createElement('a');
-                    let picon = document.createElement('i');
-                    let aicon = document.createElement('i');
-                    let licon = document.createElement('i');
-                    picon.setAttribute('class','material-icons white-text');
-                    aicon.setAttribute('class','material-icons white-text');
-                    licon.setAttribute('class','material-icons white-text');
-                    pbtn.setAttribute('class','pbtn waves-effect waves-light btn green');
-                    abtn.setAttribute('class','abtn waves-effect waves-light btn red');
-                    lbtn.setAttribute('class','lbtn waves-effect waves-light btn orange');
-                    pbtn.setAttribute('data-id',obj[i].sid);
-                    abtn.setAttribute('data-id',obj[i].sid);
-                    lbtn.setAttribute('data-id',obj[i].sid);
-                tb.insertRow(i);
-                tb.rows[i].insertCell(0).innerText = i;
-                tb.rows[i].insertCell(1).innerText = obj[i].name;
-                tb.rows[i].insertCell(2).appendChild(pbtn).appendChild(picon).innerText='check';
-                tb.rows[i].insertCell(3).appendChild(abtn).appendChild(aicon).innerText='close';
-                tb.rows[i].insertCell(4).appendChild(lbtn).appendChild(licon).innerText='timer_off';
-                // console.log(i+""+tb.rows.length);
+                    let plb = document.createElement("label");
+                    let psp = document.createElement("span");
+                    let pbtn = document.createElement('input');
+                    let alb = document.createElement("label");
+                    let asp = document.createElement("span");
+                    let abtn = document.createElement('input');
+                    let llb = document.createElement("label");
+                    let lsp = document.createElement("span");
+                    let lbtn = document.createElement('input');
+
+                    pbtn.setAttribute('class','pbtn');
+                    abtn.setAttribute('class','abtn');
+                    lbtn.setAttribute('class','lbtn');
+
+                    pbtn.setAttribute('type','radio');
+                    pbtn.setAttribute('name','group'+i);
+                    abtn.setAttribute('type','radio');
+                    abtn.setAttribute('name','group'+i);
+                    lbtn.setAttribute('type','radio');
+                    lbtn.setAttribute('name','group'+i);
+                    
+                    pbtn.setAttribute('data-sid',obj[i].sid);
+                    pbtn.setAttribute('data-cid',obj[i].cid);
+                    pbtn.setAttribute('data-ty',1);
+                    abtn.setAttribute('data-sid',obj[i].sid);
+                    abtn.setAttribute('data-cid',obj[i].cid);
+                    abtn.setAttribute('data-ty',0);
+                    lbtn.setAttribute('data-sid',obj[i].sid);
+                    lbtn.setAttribute('data-cid',obj[i].cid);
+                    lbtn.setAttribute('data-ty',2);
+                        
+                    tb.insertRow(i);
+                    tb.rows[i].insertCell(0).innerText = i;
+                    tb.rows[i].insertCell(1).innerText = obj[i].name;
+                    tb.rows[i].insertCell(2).appendChild(plb).appendChild(pbtn).parentElement.appendChild(psp);
+                    tb.rows[i].insertCell(3).appendChild(alb).appendChild(abtn).parentElement.appendChild(asp);
+                    tb.rows[i].insertCell(4).appendChild(llb).appendChild(lbtn).parentElement.appendChild(lsp);
                 }
-            check();
             }).catch((error)=>{
                 console.log(error);
             })      
         });   
-        function check() {
-            let prbtn = document.querySelectorAll(".pbtn");
-            let abbtn = document.querySelectorAll(".abtn");
-            let labtn = document.querySelectorAll(".lbtn");
-            for(i=0;i<prbtn.length;i++){
-                prbtn[i].addEventListener('click',function(e){this.parentElement.parentElement.remove();console.log(this.dataset.id);})
-                abbtn[i].addEventListener('click',function(e){this.parentElement.parentElement.remove();console.log(this.dataset.id);})
-                labtn[i].addEventListener('click',function(e){this.parentElement.parentElement.remove();console.log(this.dataset.id);})
+        let subtn = document.querySelector("#subtn");
+        subtn.addEventListener('click',()=>{
+            let radbut = document.querySelectorAll("input[type='radio']");
+            let data = [];
+            for (let i = 0; i < radbut.length; i++) {
+                if(radbut[i].checked==true){
+                    data.push({
+                        "class_id":radbut[i].dataset.cid,
+                        "stud_id":radbut[i].dataset.sid,
+                        "type":radbut[i].dataset.ty
+                    });
+                    // console.log("Type:"+radbut[i].dataset.ty+"|Student ID:"+radbut[i].dataset.sid);
+                    console.log(data);
+                }
             }
+            axios.post('post.php',{
+                req:'addAttend',data:data
+            }).then((response)=>{
+                console.log(response.data);
+            }).catch((error)=>{
+                console.log(error);
+            })
+        });
+        function check() {
+            // let radbut = document.querySelectorAll("input[type='radio']");
+            // let data = {};
+            // for (let i = 0; i < radbut.length; i++) {
+            //     if(radbut[i].checked==true){
+            //         data = {
+            //             "class_id":radbut[i].cid,
+            //             "stud_id":radbut[i].sid,
+            //             "type":radbut[i].ty
+            //         }
+            //     }
+            // }
+            // console.log(data);
+            // let prbtn = document.querySelectorAll(".pbtn");
+            // let abbtn = document.querySelectorAll(".abtn");
+            // let labtn = document.querySelectorAll(".lbtn");
+            // for(i=0;i<prbtn.length;i++){
+            //     prbtn[i].addEventListener('click',function(e){
+                    
+            //         console.log(this.dataset.cid);
+            //         // inData(this.dataset.cid,this.dataset.sid,1);
+            //     })
+            //     abbtn[i].addEventListener('click',function(e){
+            //         // this.parentElement.parentElement.remove();
+            //         console.log(this.dataset.cid);
+            //         // inData(this.dataset.cid,this.dataset.sid,0);
+            //     })
+            //     labtn[i].addEventListener('click',function(e){
+            //         // this.parentElement.parentElement.remove();
+            //         console.log(this.remove());
+            //         // inData(this.dataset.cid,this.dataset.sid,2);
+            //     })
+            // }
         }
     </script>
 </body>
