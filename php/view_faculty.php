@@ -130,54 +130,57 @@ require('session.php');
       </div>
     </div>
 
-    <div id="demo-modal-fixed-footer" 
-                class="modal modal-fixed-footer">
+    <!-- modal for adding a faculty -->
+    <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
                 <div class="modal-content">
                     <h4>Add Faculty</h4>
                     
                     
                     <div class="row">
-        <div class="col s12" id="reg-form">
-        <div class="row">
-            <div class="input-field col s6">
-            <input id="idno" type="number" class="validate" required>
-            <label for="idno">ID No.</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="fac" type="text" class="validate" required>
-            <label for="fac">Full Name</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="em" type="email" class="validate" required>
-            <label for="em">Email</label>
-            </div>
-        </div>
-        <div class="row">
-            <b>+639</b>
-            <div class="input-field inline">
-                <input id="con" type="number" class="validate" required>
-                <label for="con">Contact No.</label>
-            </div>
-        </div>
+                       <div class="col s12" id="reg-form">
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                            <input id="idno" type="number" class="validate" required>
+                            <label for="idno">ID No.</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input id="fac" type="text" class="validate" required>
+                            <label for="fac">Full Name</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input id="em" type="email" class="validate" required>
+                            <label for="em">Email</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <b>+639</b>
+                            <div class="input-field inline">
+                                <input id="con" type="number" class="validate" required>
+                                <label for="con">Contact No.</label>
+                            </div>
+                        </div>
         
-    </div>
-    </div>
+                    </div>
+                  </div>
                 </div>
+
                 <div class="modal-footer">
                     
-                    <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                    <i class="material-icons right">done</i>
-                </button>
-                        <a href="#!" class="modal-action 
-                            modal-close btn red darken-1">
-                            Cancel
-                        </a>
-                    </div>
+                    <button id="regBtn1" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                        <i class="material-icons right">done</i>
+                    </button>
+                        <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
                 </div>
+      </div>
+    </div>
 
   </main>
   <footer class="page-footer">
@@ -263,7 +266,7 @@ require('session.php');
 
 
         // AXIOS AJAX
-        let btn = document.querySelector("#regBtn");
+        let btn = document.querySelector("#regBtn1");
         // let modal = document.querySelectorAll(".modal")
         btn.addEventListener('click',()=>{
                 let idno = document.querySelector("#idno");
