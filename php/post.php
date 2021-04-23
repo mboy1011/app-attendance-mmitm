@@ -119,5 +119,34 @@ if($req=='addUser'){
     $oop=new Query();
     $sql=$oop->checkStat($cid);
     echo $sql;
+}else if($req=='addClassSubject'){
+    $c=$data['c'];
+    $f=$data['f'];
+    $s=$data['s'];
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->addClassSubject($c,$s,$f);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
+}else if($req=='addSubject'){
+    $subject_name=$data['subject_name'];
+    $subject_desc=$data['subject_desc'];
+
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->addSubject($subject_name,$subject_desc);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
 }
+
 ?>

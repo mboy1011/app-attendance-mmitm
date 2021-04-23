@@ -163,5 +163,35 @@ class Query {
             return 1;
         }
     }
+    public function addClassSubject($c,$s,$f){
+        require('config.php');
+        $sql = mysqli_query($db,"SELECT * FROM class_subject where class_id='$c'");
+        if($sql->num_rows>0){
+            return 1;
+        }else{
+            $res = mysqli_query($db,"INSERT INTO class_subject(`class_id`,`subject_id`,`faculty_id`) VALUES ('".$c."','".$s."','".$f."')");
+            if (!$res) {
+                return 2;
+            }else{
+                return 3;
+            }
+        }
+        
+    }
+    public function addSubject($subject_name,$subject_desc)
+    {
+        require('config.php');
+        $sql = mysqli_query($db,"SELECT * FROM subjects WHERE sub_name='$subject_name'");
+        if($sql->num_rows>0){
+            return 1;
+        }else{
+            $res = mysqli_query($db,"INSERT INTO subjects(`sub_name`,`description`) VALUES ('".$subject_name."','".$subject_desc."')");
+            if (!$res) {
+                return 2;
+            }else{
+                return 3;
+            }
+        }
+}
 }
 ?>
