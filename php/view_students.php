@@ -218,7 +218,7 @@ require('session.php');
   </div>
       <div class="modal-footer">
                     
-                    <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                    <button id="regBtnSave" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
                     <i class="material-icons right">done</i>
                     </button>
 
@@ -333,7 +333,7 @@ require('session.php');
       });      
     }
     // 
-    let btn = document.querySelector("#regBtn");
+    let btn = document.querySelector("#regBtnSave");
         btn.addEventListener('click',()=>{
           
             let id_no = document.querySelector("#id_no");
