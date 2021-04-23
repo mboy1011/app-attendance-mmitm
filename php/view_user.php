@@ -316,5 +316,5 @@ require('session.php');
             // console.log("CLICKED");
         });
     </script>
-</body>
+</body> 
 </html>
