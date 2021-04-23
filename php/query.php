@@ -105,12 +105,24 @@ class Query {
         if($sql->num_rows>0){
             return 1;
         }else{
+            $values = array();
             $res = mysqli_query($db,"INSERT INTO attendance_list(`class_subject_id`) VALUES ('".$cid."')");
             $at_id = $db->insert_id;
             for ($i=0; $i < count($ls); $i++) { 
-                $mulres = insertRecord($this->addRecord($at_id,$ls[$i]['stud_id'],$ls[$i]['type']));
-                
+                $mulres = $this->addRecord($at_id,$ls[$i]['stud_id'],$ls[$i]['type']);
+                $values[] = $mulres;
             }
+            return json_encode($values);
+        }
+    }
+    public function checkStat($cid)
+    {
+        require('config.php');
+        $sql = mysqli_query($db,"SELECT * FROM `attendance_list` WHERE class_subject_id='$cid' AND DATE_FORMAT(date_created,'%Y%c%d')=DATE_FORMAT(now(),'%Y%c%d')");
+        if($sql->num_rows>0){
+            return 1;
+        }else{
+            return 0;
         }
     }
     public function addRecord($at_id,$sid,$ty)

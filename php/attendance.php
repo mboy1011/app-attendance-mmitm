@@ -213,7 +213,7 @@ require('session.php');
             });
         });
         // 
-        
+
         // 
         let sub = document.querySelector("#sub");
         sub.addEventListener('change',()=>{
@@ -226,50 +226,66 @@ require('session.php');
             axios.post('post.php',{
                 req:'getStudents',cid:sub.value
             }).then((response)=>{
+                let datas;
                 console.log(response.data);
                 let obj = response.data;
-                for (let i = 0; i < obj.length; i++) {
-                    let plb = document.createElement("label");
-                    let psp = document.createElement("span");
-                    let pbtn = document.createElement('input');
-                    let alb = document.createElement("label");
-                    let asp = document.createElement("span");
-                    let abtn = document.createElement('input');
-                    let llb = document.createElement("label");
-                    let lsp = document.createElement("span");
-                    let lbtn = document.createElement('input');
+                axios.post('post.php',{
+                    req:'checkStat',cid:obj[0].cid
+                }).then((response)=>{
+                    datas = response.data;
+                    //
+                    if(datas==1){
+                        M.toast({html:'Attendance already checked!'})
+                    }else{
+                        for (let i = 0; i < obj.length; i++) {
+                            let plb = document.createElement("label");
+                            let psp = document.createElement("span");
+                            let pbtn = document.createElement('input');
+                            let alb = document.createElement("label");
+                            let asp = document.createElement("span");
+                            let abtn = document.createElement('input');
+                            let llb = document.createElement("label");
+                            let lsp = document.createElement("span");
+                            let lbtn = document.createElement('input');
 
-                    pbtn.setAttribute('class','pbtn');
-                    abtn.setAttribute('class','abtn');
-                    lbtn.setAttribute('class','lbtn');
+                            pbtn.setAttribute('class','pbtn');
+                            abtn.setAttribute('class','abtn');
+                            lbtn.setAttribute('class','lbtn');
 
-                    pbtn.setAttribute('type','radio');
-                    pbtn.setAttribute('name','group'+i);
-                    abtn.setAttribute('type','radio');
-                    abtn.setAttribute('name','group'+i);
-                    lbtn.setAttribute('type','radio');
-                    lbtn.setAttribute('name','group'+i);
-                    
-                    pbtn.setAttribute('data-sid',obj[i].sid);
-                    pbtn.setAttribute('data-cid',obj[i].cid);
-                    pbtn.setAttribute('data-ty',1);
-                    abtn.setAttribute('data-sid',obj[i].sid);
-                    abtn.setAttribute('data-cid',obj[i].cid);
-                    abtn.setAttribute('data-ty',0);
-                    lbtn.setAttribute('data-sid',obj[i].sid);
-                    lbtn.setAttribute('data-cid',obj[i].cid);
-                    lbtn.setAttribute('data-ty',2);
-                        
-                    tb.insertRow(i);
-                    tb.rows[i].insertCell(0).innerText = i;
-                    tb.rows[i].insertCell(1).innerText = obj[i].name;
-                    tb.rows[i].insertCell(2).appendChild(plb).appendChild(pbtn).parentElement.appendChild(psp);
-                    tb.rows[i].insertCell(3).appendChild(alb).appendChild(abtn).parentElement.appendChild(asp);
-                    tb.rows[i].insertCell(4).appendChild(llb).appendChild(lbtn).parentElement.appendChild(lsp);
-                }
+                            pbtn.setAttribute('type','radio');
+                            pbtn.setAttribute('name','group'+i);
+                            abtn.setAttribute('type','radio');
+                            abtn.setAttribute('checked','');
+                            abtn.setAttribute('name','group'+i);
+                            lbtn.setAttribute('type','radio');
+                            lbtn.setAttribute('name','group'+i);
+                            
+                            pbtn.setAttribute('data-sid',obj[i].sid);
+                            pbtn.setAttribute('data-cid',obj[i].cid);
+                            pbtn.setAttribute('data-ty',1);
+                            abtn.setAttribute('data-sid',obj[i].sid);
+                            abtn.setAttribute('data-cid',obj[i].cid);
+                            abtn.setAttribute('data-ty',0);
+                            lbtn.setAttribute('data-sid',obj[i].sid);
+                            lbtn.setAttribute('data-cid',obj[i].cid);
+                            lbtn.setAttribute('data-ty',2);
+                                
+                            tb.insertRow(i);
+                            tb.rows[i].insertCell(0).innerText = i;
+                            tb.rows[i].insertCell(1).innerText = obj[i].name;
+                            tb.rows[i].insertCell(2).appendChild(plb).appendChild(pbtn).parentElement.appendChild(psp);
+                            tb.rows[i].insertCell(3).appendChild(alb).appendChild(abtn).parentElement.appendChild(asp);
+                            tb.rows[i].insertCell(4).appendChild(llb).appendChild(lbtn).parentElement.appendChild(lsp);
+                        }//endfor
+                    }//endif
+                    // 
+                }).catch((error)=>{
+                    datas = error;
+                });
             }).catch((error)=>{
                 console.log(error);
             })      
+            
         });   
         let subtn = document.querySelector("#subtn");
         subtn.addEventListener('click',()=>{
@@ -286,47 +302,39 @@ require('session.php');
                     console.log(data);
                 }
             }
-            axios.post('post.php',{
-                req:'addAttend',data:data
-            }).then((response)=>{
-                console.log(response.data);
-            }).catch((error)=>{
-                console.log(error);
-            })
+            if(data.length==0){
+                M.toast({html:"Select a student first before submitting!"});
+            }else{
+                axios.post('post.php',{
+                    req:'addAttend',data:data
+                }).then((response)=>{
+                    console.log(response.data);
+                    let obj = response.data;
+                    if(obj==1){
+                        M.toast({html:"Attendance already checked!"});
+                        let tb = document.querySelector("#tbody");
+                        if(tb.rows.length>0){
+                            document.querySelectorAll("table tbody tr").forEach(function(e){e.remove()})
+                            // console.log("not empty!");
+                        }
+                    }else if(data.length==obj.length){
+                        M.toast({html:"All students successfully attendend!"});
+                        let tb = document.querySelector("#tbody");
+                        if(tb.rows.length>0){
+                            document.querySelectorAll("table tbody tr").forEach(function(e){e.remove()})
+                            // console.log("not empty!");
+                        }
+                        console.log(data.length);
+                        console.log(obj.length);
+                    }
+                }).catch((error)=>{
+                    console.log(error);
+                })
+            }
         });
+        
         function check() {
-            // let radbut = document.querySelectorAll("input[type='radio']");
-            // let data = {};
-            // for (let i = 0; i < radbut.length; i++) {
-            //     if(radbut[i].checked==true){
-            //         data = {
-            //             "class_id":radbut[i].cid,
-            //             "stud_id":radbut[i].sid,
-            //             "type":radbut[i].ty
-            //         }
-            //     }
-            // }
-            // console.log(data);
-            // let prbtn = document.querySelectorAll(".pbtn");
-            // let abbtn = document.querySelectorAll(".abtn");
-            // let labtn = document.querySelectorAll(".lbtn");
-            // for(i=0;i<prbtn.length;i++){
-            //     prbtn[i].addEventListener('click',function(e){
-                    
-            //         console.log(this.dataset.cid);
-            //         // inData(this.dataset.cid,this.dataset.sid,1);
-            //     })
-            //     abbtn[i].addEventListener('click',function(e){
-            //         // this.parentElement.parentElement.remove();
-            //         console.log(this.dataset.cid);
-            //         // inData(this.dataset.cid,this.dataset.sid,0);
-            //     })
-            //     labtn[i].addEventListener('click',function(e){
-            //         // this.parentElement.parentElement.remove();
-            //         console.log(this.remove());
-            //         // inData(this.dataset.cid,this.dataset.sid,2);
-            //     })
-            // }
+            
         }
     </script>
 </body>
