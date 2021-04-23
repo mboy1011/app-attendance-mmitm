@@ -99,7 +99,7 @@ require('session.php');
               <span class="table-title">User Accounts</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
-                <a href="#insertModal" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
             </div>
@@ -152,6 +152,73 @@ require('session.php');
         </div>
       </div>
     </div>
+
+    <div id="demo-modal-fixed-footer" 
+                class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Add User</h4>
+                    
+                    <p class="center">
+                    <div class="row">
+        <div class="col s12" id="reg-form">
+        <div class="row">
+        <div class="input-field col s12">
+        <select id="fac" name="fac">
+            <option value="" disabled selected>Choose Faculty</option>
+            <?PHP
+                require("config.php");
+                $sql = mysqli_query($db, "SELECT * FROM faculty");
+                while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
+            ?>
+                <option data-id="<?php echo $row['id'];?>" value="<?php echo $row['email'];?>"><?php echo $row['name'];?></option>
+            <?PHP
+                }
+            ?>
+        </select>
+        <label>Faculty</label>
+        </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+            <select id="ty" name="ty">
+                <option value="" disabled selected>Choose Type</option>
+                <option  value="1">Administrator</option>
+                <option  value="2">Faculty</option>
+            </select>
+            <label>Type</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+            <input id="password" type="password" class="validate" minlength="6" required>
+            <label for="password">Password</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+            <input id="password-conf" type="password" class="validate" minlength="6" required>
+            <label for="password-conf">Password Confirm</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+           
+            </div>
+        </div>
+    </div></div>
+                </div>
+                <div class="modal-footer">
+                    
+                <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                <i class="material-icons right">done</i>
+            </button>
+                    <a href="#!" class="modal-action 
+                        modal-close btn red darken-1">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -230,6 +297,42 @@ require('session.php');
     }
     
     // 
+
+   
+
+
+        // AXIOS AJAX
+        let btn = document.querySelector("#regBtn");
+        btn.addEventListener('click',()=>{
+            let fac = document.querySelector("#fac");
+            let ty = document.querySelector("#ty");
+            let pw = document.querySelector("#password");
+            let pwc = document.querySelector("#password-conf");
+            if(pw.value==pwc.value){
+                axios.post('post.php',{
+                    req:'addUser',nm:fac[fac.selectedIndex].text,un:fac[fac.selectedIndex].value,pw:pw.value,id:fac[fac.selectedIndex].getAttribute('data-id'),ty:ty[ty.selectedIndex].value
+                }).then((response)=>{
+                    console.log(response);
+                    if(response.data=="exists"){
+                        M.toast({html:"Email Already Exist!"});
+                    }else if(response.data == "failed"){
+                        M.toast({html:"Failed to register user!"});
+                    }else if(response.data=='success'){
+                        M.toast({html:"Successfully Registered!"});
+                        nm.value="";
+                        un.value="";
+                        pw.value="";
+                        pwc.value="";
+                        modal[0].M_Modal.close();
+                    }
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            }else{
+                M.toast({html:"Password doesn't matched!"});
+            }
+            // console.log("CLICKED");
+        });
     </script>
 </body>
 </html>

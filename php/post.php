@@ -86,5 +86,33 @@ if($req=='addUser'){
     $sql = $oop->addAttend($ls);
     echo $sql;
     
+}else if($req=='addStudent'){
+    $id_no=$data['id_no'];
+    $name=$data['name'];
+    $class_id=$data['class_id'];
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->addStudent($id_no,$class_id,$name);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
+}else if($req=='updateStudent'){
+    $id_no=$data['id_no'];
+    $name=$data['name'];
+    $class_id=$data['class_id'];
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->updateStudent($id_no,$class_id,$name);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
 }
 ?>

@@ -35,7 +35,7 @@ require('session.php');
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text"> Student</a>
+              <a href="#!" class="brand-logo center green-text">Register User</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -55,33 +55,17 @@ require('session.php');
           </div>
         </li>
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
-        <li>
-            <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Courses</div>
-            <div class="collapsible-body white darken-5">
-              <a href="add_course.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Course</a>
-              <div class="divider"></div>
-              <div><a href="view_course.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Course</a></div>
-              <div class="divider"></div>
-            </div>
-        </li>
+        <li><a href="#" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
         <li>
             <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Students</div>
             <div class="collapsible-body white darken-5">
-              <a href="add_student.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Students</a>
+              <a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Students</a>
               <div class="divider"></div>
               <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Students</a></div>
               <div class="divider"></div>
             </div>
         </li>
-        <li>
-            <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Class</div>
-            <div class="collapsible-body white darken-5">
-              <a href="add_class.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Class</a>
-              <div class="divider"></div>
-              <div><a href="view_class.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Classes</a></div>
-              <div class="divider"></div>
-            </div>
-        </li>
+        <li><a href="#" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>
         <li>
             <div class="collapsible-header white-text"><i class="material-icons right white-text">assignment_ind</i>Faculty</div>
             <div class="collapsible-body white darken-5">
@@ -91,8 +75,7 @@ require('session.php');
               <div class="divider"></div>
             </div>
         </li>
-        <li><a href="#" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
-        <li>
+        <li class="active">
             <div class="collapsible-header white-text"><i class="material-icons right white-text">badge</i>Users</div>
             <div class="collapsible-body white darken-5">
               <a href="add_user.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Users</a>
@@ -113,10 +96,10 @@ require('session.php');
       <div id="man" class="col s12">
         <div class="card material-table">
             <div class="table-header">
-              <span class="table-title">Courses</span>
+              <span class="table-title">User Accounts</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
-                <a href="#insertModal" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
             </div>
@@ -129,15 +112,17 @@ require('session.php');
                           <span>Select All</span>
                         </label>
                       </th>
-                      <th>ID_No</th>
-                      <th>Class_ID</th>
-                      <th>Name</th>
+                      <th>ID no.</th>
+                      <th>Full Name</th>
+                      <th>Email</th>
+                      <th>Contact</th>
+                      <th>Address</th>
                       <th>Action</th>
-                      </tr>
+                  </tr>
               </thead>
               <tbody>
                 <?php
-                $result = mysqli_query($db,"SELECT * FROM students");
+                $result = mysqli_query($db,"SELECT * FROM faculty");
                 $i=1;
                 while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
                 ?>
@@ -149,10 +134,12 @@ require('session.php');
                       </label>
                     </td>
                     <td><?PHP echo $row['id_no']?></td>
-                    <td><?PHP echo $row['class_id']?></td>
                     <td><?PHP echo $row['name']?></td>
+                    <td><?PHP echo $row['email']?></td>
+                    <td><?PHP echo $row['contact']?></td>
+                    <td><?PHP echo $row['address']?></td>
                     <td>
-                      <a class="waves-effect waves-light btn modal-trigger orange modUp" href="#mupdate" data-id="<?PHP echo $row['id_no']?>" data-cid="<?PHP echo $row['class_id']?>" data-name="<?PHP echo $row['name']?>"><i class="material-icons white-text">edit</i></a>
+                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
                       <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
                     </td>
                   </tr>
@@ -166,60 +153,56 @@ require('session.php');
       </div>
     </div>
 
-
-
-    <div id="mupdate" class="modal">
-   
-
-    <div class="modal-content">
-      <h4>Update Student</h4>
-      
-        <div>
-            <label for="" class="control-label">ID #</label>
-            <input type="text" name="id_no" id="modID"  value="" required> 
-        </div> 
-        
-        <div>
-            <label for="" class="control-label">Name</label>
-            <input type="text" name="name" id="modNAME"  value="" required>
+    <div id="demo-modal-fixed-footer" 
+                class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Add Faculty</h4>
+                    
+                    
+                    <div class="row">
+        <div class="col s12" id="reg-form">
+        <div class="row">
+            <div class="input-field col s6">
+            <input id="idno" type="number" class="validate" required>
+            <label for="idno">ID No.</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+            <input id="fac" type="text" class="validate" required>
+            <label for="fac">Full Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+            <input id="em" type="email" class="validate" required>
+            <label for="em">Email</label>
+            </div>
+        </div>
+        <div class="row">
+            <b>+639</b>
+            <div class="input-field inline">
+                <input id="con" type="number" class="validate" required>
+                <label for="con">Contact No.</label>
+            </div>
         </div>
         
-        <div>
-            <label for="" class="control-label">Class</label>
-            <select name="class_id" id="" class="custom-select select2">
-                <option value=""></option>
-                <?php
-                $class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
-                while($row=$class->fetch_assoc()):
-                ?>
-                <option value="<?php echo $row['id'] ?>" <?php echo isset($class_id) && $class_id == $row['id'] ? 'selected' : '' ?>><?php echo $row['class'] ?></option>
-                <?php endwhile; ?>
-            </select>
-        </div>
-
-        <div class="input-field col s12">
-                <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
-                <i class="material-icons right">done</i>
-                </button>
-        </div>    
-             
     </div>
+    </div>
+                </div>
+                <div class="modal-footer">
+                    
+                    <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                    <i class="material-icons right">done</i>
+                </button>
+                        <a href="#!" class="modal-action 
+                            modal-close btn red darken-1">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+
   </main>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   <footer class="page-footer">
     <div class="container">
         <div class="row">
@@ -295,19 +278,43 @@ require('session.php');
         }          
       }
     }
-    let modUp = document.querySelectorAll(".modUp");
-    for (let i = 0; i < modUp.length; i++) {
-      modUp[i].addEventListener('click',(e)=>{
-        let mid = document.querySelector("#modID");
-        let mn = document.querySelector("#modNAME");
-        // console.log(modUp[i].dataset.id);
-        mid.value=modUp[i].dataset.id;
-        mn.value=modUp[i].dataset.name;
-      });      
-    }
+    
     // 
 
-    
+    //modal
+ 
+
+
+        // AXIOS AJAX
+        let btn = document.querySelector("#regBtn");
+        // let modal = document.querySelectorAll(".modal")
+        btn.addEventListener('click',()=>{
+                let idno = document.querySelector("#idno");
+                let fac = document.querySelector("#fac");
+                let em = document.querySelector("#em");
+                let con = document.querySelector("#con");
+                axios.post('post.php',{
+                    req:'addFaculty',id:idno.value,fac:fac.value,em:em.value,con:con.value
+                }).then((response)=>{
+                    console.log(response.data);
+                    if(response.data=="dup"){
+                        M.toast({html:"Already Exist!"});
+                        modal[0].M_Modal.close();
+                    }else if(response.data == "fai"){
+                        M.toast({html:"Failed to register course!"});
+                        modal[0].M_Modal.close();
+                    }else if(response.data=='suc'){
+                        M.toast({html:"Successfully Added!"});
+                        fac.value="";
+                        em.value="";
+                        con.value="";
+                        idno.value="";
+                        modal[0].M_Modal.close();
+                    }
+                }).catch((error)=>{
+                    console.log(error)
+                });
+        });
     </script>
 </body>
 </html>

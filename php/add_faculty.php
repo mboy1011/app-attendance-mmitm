@@ -208,8 +208,8 @@ require('session.php');
                         M.toast({html:"Failed to register course!"});
                     }else if(response.data=='suc'){
                         M.toast({html:"Successfully Added!"});
-                        course_name.value="";
-                        course_desc.value="";
+                        // course_name.value="";
+                        // course_desc.value="";
                        
                     }
                 }).catch((error)=>{
