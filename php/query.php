@@ -140,20 +140,16 @@ class Query {
     }
 
     public function updateStudent($id_no,$class_id,$name){
-
         require('config.php');
-            $sql = mysqli_query($db,"SELECT * FROM students WHERE id_no='$id_no'");
-            if(empty($id_no)){
-                $save = $this->db->query("INSERT INTO students set $data");
-            }else{
-                $save = $this->db->query("UPDATE students set $data where id = $id_no");
-            }
-                        
-            if($save){
-                return 1;
-            }
+        $sql = mysqli_query($db,"SELECT * FROM students WHERE id_no='$id_no'");
+        if(empty($id_no)){
+            $save = $this->db->query("INSERT INTO students set $data");
+        }else{
+            $save = $this->db->query("UPDATE students set $data where id = $id_no");
+        }
+        if($save){
+            return 1;
         }
     }
 }
-
 ?>
