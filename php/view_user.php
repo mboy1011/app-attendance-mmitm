@@ -129,71 +129,79 @@ require('session.php');
       </div>
     </div>
 
-    <div id="demo-modal-fixed-footer" 
-                class="modal modal-fixed-footer">
-                <div class="modal-content">
-                    <h4>Add User</h4>
+    <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <h4>Add User</h4>
+        <p class="center">
                     
-                    <p class="center">
-                    <div class="row">
-        <div class="col s12" id="reg-form">
-        <div class="row">
-        <div class="input-field col s12">
-        <select id="fac" name="fac">
-            <option value="" disabled selected>Choose Faculty</option>
-            <?PHP
-                require("config.php");
-                $sql = mysqli_query($db, "SELECT * FROM faculty");
-                while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
-            ?>
-                <option data-id="<?php echo $row['id'];?>" value="<?php echo $row['email'];?>"><?php echo $row['name'];?></option>
-            <?PHP
-                }
-            ?>
-        </select>
-        <label>Faculty</label>
-        </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <select id="ty" name="ty">
-                <option value="" disabled selected>Choose Type</option>
-                <option  value="1">Administrator</option>
-                <option  value="2">Faculty</option>
-            </select>
-            <label>Type</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="password" type="password" class="validate" minlength="6" required>
-            <label for="password">Password</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="password-conf" type="password" class="validate" minlength="6" required>
-            <label for="password-conf">Password Confirm</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-           
-            </div>
-        </div>
-    </div></div>
+         <div class="row">
+            <div class="col s12" id="reg-form">
+
+              <div class="row">
+                <div class="input-field col s12">
+                   <select id="fac" name="fac">
+                      <option value="" disabled selected>Choose Faculty</option>
+                       <?PHP
+                          require("config.php");
+                           $sql = mysqli_query($db, "SELECT * FROM faculty");
+                           while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
+                       ?>
+                      <option data-id="<?php echo $row['id'];?>" value="<?php echo $row['email'];?>"><?php echo $row['name'];?></option>
+                      <?PHP
+                          }
+                      ?>
+                    </select>
+                    <label>Faculty</label>
                 </div>
+              </div>
+
+
+              <div class="row">
+                 <div class="input-field col s12">
+                    <select id="ty" name="ty">
+                        <option value="" disabled selected>Choose Type</option>
+                        <option  value="1">Administrator</option>
+                        <option  value="2">Faculty</option>
+                    </select>
+                    <label>Type</label>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="input-field col s12">
+                  <input id="password" type="password" class="validate" minlength="6" required>
+                  <label for="password">Password</label>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="input-field col s12">
+                  <input id="password-conf" type="password" class="validate" minlength="6" required>
+                  <label for="password-conf">Password Confirm</label>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="input-field col s6">
+                
+                  </div>
+              </div>
+      </div>
+    </div>
+  </div>
                 <div class="modal-footer">
                     
-                <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                <i class="material-icons right">done</i>
-            </button>
+                    <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                    <i class="material-icons right">done</i>
+                    </button>
+
                     <a href="#!" class="modal-action 
                         modal-close btn red darken-1">
                         Cancel
                     </a>
+
                 </div>
-            </div>
+</div>
 
   </main>
   <footer class="page-footer">

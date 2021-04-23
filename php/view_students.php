@@ -67,6 +67,8 @@ require('session.php');
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
       </ul>
   </header>
+
+
   <main>
   <div class="row">
       <div id="man" class="col s12">
@@ -75,7 +77,7 @@ require('session.php');
               <span class="table-title">Courses</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
-                <a href="#insertModal" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
             </div>
@@ -127,7 +129,7 @@ require('session.php');
 
 
 
-    <div id="mupdate" class="modal">
+  <div id="mupdate" class="modal">
    
 
     <div class="modal-content">
@@ -163,6 +165,61 @@ require('session.php');
         </div>    
              
     </div>
+
+
+
+    <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
+      <div class="modal-content">
+                    <h4>Add Students</h4>
+                    <p class="center">
+
+          <div class="row">
+              <div class="input-field col s12" id="reg-form">
+                
+                <div class="row">
+                  <input id="id_no" type="text" class="validate" required>
+                  <label for="id_no">ID Number</label>
+                </div>
+              </div>
+        
+          <div class="row">
+            <div class="input-field col s12">
+                <input id="name" type="text" class="validate" required>
+                <label for="name">Name</label>
+            </div>
+          </div>
+   
+            <div class="input-field col s12">
+                <select name="class_id" id="class_id">
+                    <option value="" disabled selected>Choose Class</option>
+                       <?php
+                          require('config.php');
+                          $class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
+                         while($row=$class->fetch_assoc()):
+                       ?>
+                
+                          <option value="<?php echo $row['id'] ?>" <?php echo isset($class_id) && $class_id == $row['id'] ? 'selected' : '' ?>><?php echo $row['class'] ?></option>
+                          <?php endwhile; ?>
+                </select>
+            </div>
+      </div>   
+
+    
+      
+            <div class="modal-footer">
+                <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
+                <i class="material-icons right">done</i>
+                </button>
+                <a href="#!" class="modal-action 
+                        modal-close btn red darken-1">
+                        Cancel
+                    </a>
+              </div>   
+</div>
+        
+
+
+
   </main>
 
 
@@ -265,7 +322,38 @@ require('session.php');
       });      
     }
     // 
+    // AXIOS AJAX
+    let btn = document.querySelector("#regBtn");
+        btn.addEventListener('click',()=>{
+          
+            let id_no = document.querySelector("#id_no");
+            let name = document.querySelector("#name");
+            let class_id = document.querySelector("#class_id");
 
+            if(id_no.value!="" && name.value!="" && class_id.value!=""){
+                axios.post('post.php',{
+                    req:'addStudent',id_no:id_no.value,class_id:class_id.value,name:name.value
+                }).then((response)=>{
+                    console.log(response.data);
+                    if(response.data=="dup"){
+                        M.toast({html:"Student Already Exist!"});
+                    }else if(response.data == "fai"){
+                        M.toast({html:"Failed to register Student!"});
+                    }else if(response.data=='suc'){
+                        M.toast({html:"Successfully Added!"});
+                        id_no.value="";
+                        class_id.value="";
+                        name.value="";
+                       
+                    }
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            }else{
+                M.toast({html:"Empty!"});
+            }
+            // console.log("CLICKED");
+        });
     
     </script>
 </body>
