@@ -354,7 +354,6 @@ require('session.php');
                         id_no.value="";
                         class_id.value="";
                         name.value="";
-                        
                        
                     }
                 }).catch((error)=>{
