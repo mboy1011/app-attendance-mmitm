@@ -193,15 +193,13 @@ require('session.php');
                     
                     <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
                     <i class="material-icons right">done</i>
-                    </button>
-
+                      </button>
                     <a href="#!" class="modal-action 
                         modal-close btn red darken-1">
                         Cancel
                     </a>
-
                 </div>
-</div>
+            </div>
 
   </main>
   <footer class="page-footer">

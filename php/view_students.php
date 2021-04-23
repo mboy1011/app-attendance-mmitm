@@ -166,7 +166,7 @@ require('session.php');
              
     </div>
 
-
+</div>
 
     <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
       <div class="modal-content">
@@ -174,21 +174,24 @@ require('session.php');
                     <p class="center">
 
           <div class="row">
-              <div class="input-field col s12" id="reg-form">
+              <div class="col s12" id="reg-form">
                 
                 <div class="row">
+                  <div class="input-field col s12">
                   <input id="id_no" type="text" class="validate" required>
                   <label for="id_no">ID Number</label>
+                  </div>
                 </div>
-              </div>
-        
+
+
           <div class="row">
             <div class="input-field col s12">
                 <input id="name" type="text" class="validate" required>
                 <label for="name">Name</label>
             </div>
           </div>
-   
+                  
+          <div class="row">
             <div class="input-field col s12">
                 <select name="class_id" id="class_id">
                     <option value="" disabled selected>Choose Class</option>
@@ -204,20 +207,28 @@ require('session.php');
             </div>
       </div>   
 
-    
-      
-            <div class="modal-footer">
-                <button id="regBtn" class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Save
-                <i class="material-icons right">done</i>
-                </button>
-                <a href="#!" class="modal-action 
+            <div class="row">
+                <div class="input-field col s6">
+                
+                  </div>
+              </div>
+      </div>
+    </div>
+
+  </div>
+      <div class="modal-footer">
+                    
+                    <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                    <i class="material-icons right">done</i>
+                    </button>
+
+                    <a href="#!" class="modal-action 
                         modal-close btn red darken-1">
                         Cancel
                     </a>
-              </div>   
-</div>
-        
 
+                </div>
+</div>
 
 
   </main>
@@ -332,7 +343,7 @@ require('session.php');
 
             if(id_no.value!="" && name.value!="" && class_id.value!=""){
                 axios.post('post.php',{
-                    req:'addStudent',id_no:id_no.value,class_id:class_id.value,name:name.value
+                    req:'addStudent',id_no:id_no[id_no.selectedIndex].value,class_id:class_id[class_id.selectedIndex].value,name:name[name.selectedIndex].value
                 }).then((response)=>{
                     console.log(response.data);
                     if(response.data=="dup"){
@@ -344,6 +355,7 @@ require('session.php');
                         id_no.value="";
                         class_id.value="";
                         name.value="";
+                        modal[0].M_Modal.close();
                        
                     }
                 }).catch((error)=>{
