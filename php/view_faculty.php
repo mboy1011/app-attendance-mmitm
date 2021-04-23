@@ -76,7 +76,7 @@ require('session.php');
               <span class="table-title">User Accounts</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delFac" href="#dupdate"><i class="material-icons">delete</i></a>
-                <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a href="#modFac" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
             </div>
@@ -141,11 +141,8 @@ require('session.php');
       </div>
       </form>
     </div>
-    <div id="demo-modal-fixed-footer" 
-                class="modal modal-fixed-footer">
-
     <!-- modal for adding a faculty -->
-    <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
+    <div id="modFac" class="modal modal-fixed-footer">
                 <div class="modal-content">
                     <h4>Add Faculty</h4>
                     
@@ -264,17 +261,17 @@ require('session.php');
         }
       }
     });
-
+    
 
     
     // 
     let delFac = document.querySelector("#delFac");
     delFac.addEventListener('click',()=>{
-      let delData = [];
+      let deltoData = [];
       let check = (e)=>{
         for (let i = 0; i < chBx.length; i++) {
           if(chBx[i].checked == true){
-            delData.push(chBx[i].dataset.id);
+            deltoData.push(chBx[i].dataset.id);
           }          
         }
       }
@@ -282,16 +279,15 @@ require('session.php');
       let delM = document.querySelector("#delMod");
       delM.M_Modal.open()
       let arrD = document.querySelector("#arrData");
-      arrD.value = JSON.stringify(delData);
+      arrD.value = JSON.stringify(deltoData);
     });
     //modal
  
 
 
         // AXIOS AJAX
-        let btn = document.querySelector("#regBtn");
-        let modal = document.querySelectorAll(".modal");
         let btn = document.querySelector("#regBtn1");
+        let modal = document.querySelectorAll(".modal");
         // let modal = document.querySelectorAll(".modal")
         btn.addEventListener('click',()=>{
                 let idno = document.querySelector("#idno");
