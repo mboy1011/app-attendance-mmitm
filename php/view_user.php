@@ -133,9 +133,7 @@ require('session.php');
       <div class="modal-content">
         <h4>Add User</h4>
         <p class="center">
-                    
-                    <p class="center">
-                    <div class="row">
+        <div class="row">
         <div class="col s12" id="reg-form">
         <div class="row">
         <div class="input-field col s12">
@@ -156,7 +154,7 @@ require('session.php');
         </div>
         <div class="row">
             <div class="input-field col s12">
-            <select id="ty" name="ty"></select>
+            <select id="ty" name="ty">
                 <option value="" disabled selected>Choose Type</option>
                 <option  value="1">Administrator</option>
                 <option  value="2">Faculty</option>
@@ -178,63 +176,10 @@ require('session.php');
         </div>
         <div class="row">
             <div class="input-field col s6">
-           
+            
             </div>
         </div>
-    </div></div>
-         <div class="row">
-            <div class="col s12" id="reg-form">
-
-              <div class="row">
-                <div class="input-field col s12">
-                   <select id="fac" name="fac">
-                      <option value="" disabled selected>Choose Faculty</option>
-                       <?PHP
-                          require("config.php");
-                           $sql = mysqli_query($db, "SELECT * FROM faculty");
-                           while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
-                       ?>
-                      <option data-id="<?php echo $row['id'];?>" value="<?php echo $row['email'];?>"><?php echo $row['name'];?></option>
-                      <?PHP
-                          }
-                      ?>
-                    </select>
-                    <label>Faculty</label>
-                </div>
-              </div>
-
-
-              <div class="row">
-                 <div class="input-field col s12">
-                    <select id="ty" name="ty">
-                        <option value="" disabled selected>Choose Type</option>
-                        <option  value="1">Administrator</option>
-                        <option  value="2">Faculty</option>
-                    </select>
-                    <label>Type</label>
-                  </div>
-              </div>
-
-              <div class="row">
-                  <div class="input-field col s12">
-                  <input id="password" type="password" class="validate" minlength="6" required>
-                  <label for="password">Password</label>
-                  </div>
-              </div>
-
-              <div class="row">
-                  <div class="input-field col s12">
-                  <input id="password-conf" type="password" class="validate" minlength="6" required>
-                  <label for="password-conf">Password Confirm</label>
-                  </div>
-              </div>
-
-              <div class="row">
-                  <div class="input-field col s6">
-                
-                  </div>
-              </div>
-      </div>
+    </div>
     </div>
   </div>
                 <div class="modal-footer">
@@ -272,7 +217,7 @@ require('session.php');
                       
                     </div> 
                     <label>
-                      <input type="checkbox" id="auth"/>
+                      <input type="checkbox" id="auth" value=""/>
                       <span><b>Check if you want to change the password?</b></span>
                     </label> 
                     </div>
@@ -380,10 +325,12 @@ require('session.php');
           if(auth.checked == true){
             let edit_pass = document.querySelector("#edit-pass");
             edit_pass.removeAttribute('disabled');
+            auth.value = "true"
 
     }else{
       let edit_pass = document.querySelector("#edit-pass");
       edit_pass.setAttribute('disabled', '');
+      auth.value = "false"
     }
     // console.log('click');
   });
@@ -450,17 +397,15 @@ require('session.php');
             let auth = document.querySelector("#auth");
             let id = document.querySelector("#edit-id");
            
+
+
                 axios.post('post.php',{
                     req:'updateUser',user:user.value,pass:pass.value,type:type.value,auth:auth.value,id:id.value
                 }).then((response)=>{
                     console.log(response.data);
                     
                         M.toast({html:"Update Successfully!"});
-                        user.value="";
-                        pass.value="";
-                        type.value="";
-                        id.value="";
-
+                        
                         modal[0].M_Modal.close();
                     
                 }).catch((error)=>{

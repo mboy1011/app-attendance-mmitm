@@ -150,30 +150,24 @@ class Query {
                 }
             }
     }
+    public function updateUser($user,$pass,$type,$auth,$id){
 
-    public function updateStudent($id_no,$class_id,$name){
         require('config.php');
-        $sql = mysqli_query($db,"SELECT * FROM students WHERE id_no='$id_no'");
-        if(empty($id_no)){
-            $save = $this->db->query("INSERT INTO students set $data");
+        if($auth == "true"){
+            $enc_pass = password_hash($pass,PASSWORD_BCRYPT);
+            $sql = mysqli_query($db,"UPDATE users SET username='$user', type='$type', password='$enc_pass' WHERE id='$id'");
         }else{
-            $save = $this->db->query("UPDATE students set $data where id = $id_no");
-        }
-        if($save){
-            return 1;
+            $sql = mysqli_query($db,"UPDATE users SET username='$user', type='$type' WHERE id='$id'");
         }
     }
+  
+
+ 
 
 
 
-public function updateUser($user,$pass,$type,$id,$test,$auth){
-    require('config.php');
-    $query = mysqli_query($db,"UPDATE users SET username = $user WHERE id=$id");   
-    if(!$query){
-        return 'fai';
-    }else{
-        return 'suc';
-    }
-}
+
+
+// query end
 }
 ?>

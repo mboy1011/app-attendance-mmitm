@@ -113,15 +113,24 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
+
+
+}else if($req=="checkStat"){
+    require('query.php');
+    $cid=$data['cid'];
+    $oop=new Query();
+    $sql=$oop->checkStat($cid);
+    echo $sql;
 }else if($req=='updateUser'){
-    require("query.php");
     $user=$data['user'];
     $pass=$data['pass'];
     $type=$data['type'];
     $auth=$data['auth'];
     $id=$data['id'];
+    
+    require("query.php");
     $oop=new Query();
-    $sql=$oop->updateStudent($user,$pass,$type,$auth,$id);
+    $sql=$oop->updateUser($user,$pass,$type,$auth,$id);
      if($sql==1){
         echo 'dup';
     }else if($sql==3){
@@ -129,11 +138,7 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
-}else if($req=="checkStat"){
-    require('query.php');
-    $cid=$data['cid'];
-    $oop=new Query();
-    $sql=$oop->checkStat($cid);
-    echo $sql;
+
+
 }
 ?>
