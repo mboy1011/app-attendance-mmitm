@@ -116,7 +116,7 @@ require('session.php');
                     <td><?PHP echo $row['contact']?></td>
                     <td><?PHP echo $row['address']?></td>
                     <td>
-                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
+                    <a href="#modal-edit" class="waves-effect waves-light btn modal-trigger orange btn-up" data-fn="<?PHP echo $row['name']?>" data-email="<?PHP echo $row['email']?>" data-id="<?PHP echo $row['id_no']?>" data-idno="<?PHP echo $row['id']?>" data-add="<?PHP echo $row['address']?>" data-cont="<?PHP echo $row['contact']?>" href="#mupdate"><i class="material-icons white-text">edit</i></a>
                     </td>
                   </tr>
                   <?php 
@@ -194,6 +194,41 @@ require('session.php');
       </div>
     </div>
 
+<!-- Modal for editing faculty -->
+    <div id="modal-edit" 
+                class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Edit Faculty</h4>
+                    <p class="center">
+                    <div class="row">
+                    <label>ID no:</label>
+                    <input type="text" name="idno" id="edit-idno" disabled>
+                    <label>Faculty no:</label>
+                    <input type="text" name="id" id="edit-id">
+                    <label>Full Name:</label>
+                    <input type="text" name="fn" id="edit-fn">
+                    <label>Email:</label>
+                    <input type="text" name="email" id="edit-email">
+                    <label>Contact:</label>
+                    <input type="text" name="email" id="edit-cont">
+                    <label>Address:</label>
+                    <input type="text" name="add" id="edit-add">
+                    
+                   
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    
+                <button id="upBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Save Changes
+                <i class="material-icons right">done</i>
+            </button>
+                    <a href="#!" class="modal-action 
+                        modal-close btn red darken-1">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -262,7 +297,27 @@ require('session.php');
       }
     });
     
-
+    let btnup = document.querySelectorAll(".btn-up");
+   
+   for (let i = 0; i < btnup.length; i++) {
+     
+       btnup[i].addEventListener('click',function(){
+        
+         let edit_fn = document.querySelector("#edit-fn");
+         edit_fn.value = this.dataset.fn;
+         let edit_email = document.querySelector("#edit-email");
+         edit_email.value = this.dataset.email;
+         let edit_cont = document.querySelector("#edit-cont");
+         edit_cont.value = this.dataset.cont;
+         let edit_id = document.querySelector("#edit-id");
+         edit_id.value = this.dataset.id;
+         let edit_idno = document.querySelector("#edit-idno");
+         edit_idno.value = this.dataset.idno;
+         let edit_add = document.querySelector("#edit-add");
+         edit_add.value = this.dataset.add;
+       // console.log(this.dataset.id);
+     });
+   }
     
     // 
     let delFac = document.querySelector("#delFac");
@@ -290,12 +345,12 @@ require('session.php');
         let modal = document.querySelectorAll(".modal");
         // let modal = document.querySelectorAll(".modal")
         btn.addEventListener('click',()=>{
-                let idno = document.querySelector("#idno");
+                let id = document.querySelector("#id");
                 let fac = document.querySelector("#fac");
                 let em = document.querySelector("#em");
                 let con = document.querySelector("#con");
                 axios.post('post.php',{
-                    req:'addFaculty',id:idno.value,fac:fac.value,em:em.value,con:con.value
+                    req:'addFaculty',id:id.value,fac:fac.value,em:em.value,con:con.value
                 }).then((response)=>{
                     console.log(response.data);
                     if(response.data=="dup"){
@@ -328,6 +383,39 @@ require('session.php');
         }
         ?>
         // 
+
+        let upbtn = document.querySelector("#upBtn");
+        upbtn.addEventListener('click',()=>{
+            let id = document.querySelector("#edit-id");
+            let idno = document.querySelector("#edit-idno");
+            let fn = document.querySelector("#edit-fn");
+            let email = document.querySelector("#edit-email");
+            let cont = document.querySelector("#edit-cont");
+            let add = document.querySelector("#edit-add");
+           
+
+
+                axios.post('post.php',{
+                    req:'updateFaculty',fn:fn.value,email:email.value,cont:cont.value,add:add.value,id:id.value,idno:idno.value
+                }).then((response)=>{
+                    console.log(response.data);
+                    
+                        M.toast({html:"Update Successfully!"});
+                        
+                        modal[0].M_Modal.close();
+                    
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            
+            // console.log("CLICKED");
+        });
+
+
+
+
+
+
     </script>
 </body>
 </html>

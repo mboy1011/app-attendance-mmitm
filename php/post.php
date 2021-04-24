@@ -182,6 +182,24 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
+}else if($req=='updateFaculty'){
+    $fn=$data['fn'];
+    $email=$data['email'];
+    $cont=$data['cont'];
+    $add=$data['add'];
+    $id=$data['id'];
+    $idno=$data['idno'];
+    
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->updateFaculty($fn,$email,$cont,$add,$id,$idno);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
 }
 
 ?>

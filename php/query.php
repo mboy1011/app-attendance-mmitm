@@ -220,6 +220,14 @@ class Query {
         }
     }
     
+
+    public function updateFaculty($fn,$email,$cont,$add,$id,$idno){
+        
+        require('config.php');
+        $sql = mysqli_query($db,"UPDATE faculty SET id_no='$id', name='$fn', address='$add', contact='$cont', email='$email' WHERE id='$idno'");
+       
+    }
+
     
-}
+}//End of query
 ?>
