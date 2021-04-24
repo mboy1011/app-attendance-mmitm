@@ -58,8 +58,8 @@
     <script type="text/javascript" charset="utf-8">
         M.AutoInit();
     <?php
-    include("php\config.php");
-    include("php\query.php");
+    include("php/config.php");
+    include("php/query.php");
     $oop = new Query();
     if(isset($_POST['login'])){
         $user = mysqli_real_escape_string($db,$_POST['username']);
