@@ -69,6 +69,7 @@ if($req=='addUser'){
     if($sql==1){
         echo 'dup';
     }else if($sql==3){
+        $_SESSION['addFac']='suc';
         echo 'suc';
     }else if($sql==2){
         echo 'fai';

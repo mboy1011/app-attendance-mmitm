@@ -305,12 +305,13 @@ require('session.php');
                         M.toast({html:"Failed to register course!"});
                         modal[0].M_Modal.close();
                     }else if(response.data=='suc'){
-                        M.toast({html:"Successfully Added!"});
+                        
                         fac.value="";
                         em.value="";
                         con.value="";
                         idno.value="";
                         modal[0].M_Modal.close();
+                        window.location.reload();
                     }
                 }).catch((error)=>{
                     console.log(error)
@@ -321,6 +322,9 @@ require('session.php');
         if(isset($_SESSION['mulDel'])){
           echo "let arr =".$_SESSION['mulDel']."; M.toast({html:arr.length+' data has been deleted!'}) ";
           unset($_SESSION['mulDel']);
+        }else if(isset($_SESSION['addFac'])){
+          echo "M.toast({html:'Succesfully Added!'})";
+          unset($_SESSION['addFac']);
         }
         ?>
         // 
