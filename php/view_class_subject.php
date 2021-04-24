@@ -35,7 +35,7 @@ require('session.php');
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Register User</a>
+              <a href="#!" class="brand-logo center green-text">Class</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -54,6 +54,7 @@ require('session.php');
             <a href="#email"><span class="white-text email">admin@gcc.com</span></a>
           </div>
         </li>
+        <!-- menu navigation bar -->
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
         <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
         <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
@@ -65,7 +66,8 @@ require('session.php');
         <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>
         <li><a href="#" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
-   </ul>
+    </ul>
+      
       
   </header>
   <main>
@@ -73,126 +75,137 @@ require('session.php');
       <div id="man" class="col s12">
         <div class="card material-table">
             <div class="table-header">
-              <span class="table-title">User Accounts</span>
+              <span class="table-title">Classes</span>
               <div class="actions">
-                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delFac" href="#dupdate"><i class="material-icons">delete</i></a>
-                <a href="#modFac" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
+                <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
             </div>
         <table id="datatable" class="responsive-table">
-              <thead>
-                  <tr>
-                      <th>
-                        <label>
-                          <input type="checkbox" id="mChBx" />
-                          <span>Select All</span>
-                        </label>
-                      </th>
-                      <th>ID no.</th>
-                      <th>Full Name</th>
-                      <th>Email</th>
-                      <th>Contact</th>
-                      <th>Address</th>
-                      <th>Action</th>
-                  </tr>
-              </thead>
-              <tbody id="tbody">
-                <?php
-                $result = mysqli_query($db,"SELECT * FROM faculty");
-                $i=1;
-                while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
-                ?>
-                  <tr>
-                    <td>
-                      <label>
-                        <input type="checkbox" class="chBx" data-id="<?PHP echo $row['id']?>" />
-                        <span></span>
-                      </label>
-                    </td>
-                    <td><?PHP echo $row['id_no']?></td>
-                    <td><?PHP echo $row['name']?></td>
-                    <td><?PHP echo $row['email']?></td>
-                    <td><?PHP echo $row['contact']?></td>
-                    <td><?PHP echo $row['address']?></td>
-                    <td>
+        <thead>
+								<tr>
+									<th class="text-center">#</th>
+									<th class="">Class</th>
+									<th class="">Subject</th>
+									<th class="">Faculty</th>
+									<th class="text-center">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php 
+								$i = 1;
+								$class_subject = $db->query("SELECT cs.*,concat(co.course,' ',c.level,'-',c.section) as `class`,s.sub_name,f.name as fname FROM class_subject cs inner join `class` c on c.id = cs.class_id inner join courses co on co.id = c.course_id inner join faculty f on f.id = cs.faculty_id inner join subjects s on s.id = cs.subject_id order by concat(co.course,' ',c.level,'-',c.section) asc");
+								while($row=$class_subject->fetch_assoc()):
+								?>
+								<tr>
+									<td class="text-center"><?php echo $i++ ?></td>
+									<td>
+										<p> <b><?php echo $row['class'] ?></b></p>
+									</td>
+									<td class="">
+										 <p> <b><?php echo $row['sub_name'] ?></b></p>
+									</td>
+									<td class="">
+										 <p> <b><?php echo $row['fname'] ?></b></p>
+									</td>
+                  <td>
                       <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
+                      <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
                     </td>
-                  </tr>
-                  <?php 
-                    } //end while
-                ?>
-              </tbody>
+								</tr>
+								<?php endwhile; ?>
+							</tbody>
           </table>
           </div>
         </div>
       </div>
     </div>
-<!-- Modal Structure -->
-  <div id="delMod" class="modal">
-      <form action="post.php" method="post">
+    
+
+    <!-- modal for adding a class -->
+    <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
       <div class="modal-content">
-        <h4>Delete Faculty</h4>
-          <input type="text" name="arrData" id="arrData" hidden>
-          Are you sure you want to delete the following data?
-      </div>
-      <div class="modal-footer">
-        <button href="#!" type="submit" name="mulDel" class="modal-close waves-effect waves-green btn-flat">Agree</button>
-      </div>
-      </form>
-    </div>
-    <!-- modal for adding a faculty -->
-    <div id="modFac" class="modal modal-fixed-footer">
-                <div class="modal-content">
-                    <h4>Add Faculty</h4>
-                    
-                    
-                    <div class="row">
-                       <div class="col s12" id="reg-form">
+                    <h4>Assign Class</h4>
+                    <p class="center">
+    
+            <div class="row">
+            <div class="col s12" id="reg-form">
+                  <?php 
+                    include 'config.php'; 
+                    if(isset($_GET['id'])){
+                    $qry = $db>query("SELECT * FROM class_subject where id= ".$_GET['id']);
+                    foreach($qry->fetch_array() as $k => $val){
+                      $$k=$val;
+                  }
+                  }
+                  ?>
+       
+                 <div class="row">
+                    <div class="input-field col s12">
+                    <label for="" class="control-label">Class</label>
+                    <select name="class_id" id="class_id">
+                        <option value=""></option>
+                        <?php
+                        $class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
+                        while($row=$class->fetch_assoc()):
+                        ?>
+                        <option value="<?php echo $row['id'] ?>" <?php echo isset($c) && $c == $row['id'] ? 'selected' : '' ?>><?php echo $row['class'] ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                   </div>
+                </div>
 
-                        <div class="row">
-                            <div class="input-field col s6">
-                            <input id="idno" type="number" class="validate" required>
-                            <label for="idno">ID No.</label>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="input-field col s12">
-                            <input id="fac" type="text" class="validate" required>
-                            <label for="fac">Full Name</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="input-field col s12">
-                            <input id="em" type="email" class="validate" required>
-                            <label for="em">Email</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <b>+639</b>
-                            <div class="input-field inline">
-                                <input id="con" type="number" class="validate" required>
-                                <label for="con">Contact No.</label>
-                            </div>
-                        </div>
-        
+   
+                  <div class="row">
+                    <div class="input-field col s12">
+                    <label for="" class="control-label">Faculty</label>
+                    <select name="faculty_id" id="faculty_id">
+                      <option value=""></option>
+                      <?php
+                      $class = $db->query("SELECT * FROM faculty order by name asc");
+                      while($row=$class->fetch_assoc()):
+                      ?>
+                      <option value="<?php echo $row['id'] ?>" <?php echo isset($f) && $f == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['name']) ?></option>
+                      <?php endwhile; ?>
+                    </select>
                     </div>
                   </div>
-                </div>
-
-                <div class="modal-footer">
-                    
-                    <button id="regBtn1" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                        <i class="material-icons right">done</i>
-                    </button>
-                        <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
-                </div>
+     
+                  <div class="row">
+                    <div class="input-field col s12">
+                    <label for="" class="control-label">Subject</label>
+                    <select name="subject_id" id="subject_id">
+                      <option value=""></option>
+                      <?php
+                      $class = $db->query("SELECT * FROM subjects order by sub_name asc");
+                      while($row=$class->fetch_assoc()):
+                      ?>
+                      <option value="<?php echo $row['id'] ?>" <?php echo isset($s) && $s == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['sub_name']) ?></option>
+                      <?php endwhile; ?>
+                  </select>
+                    </div>
+                  </div>
+                 
+                  <div class="row">
+                    <div class="input-field col s12">
                 
-      </div>
+                    </div>
+                  </div> 
+
+              </div>
+            </div>          
+                  
+            <div class="modal-footer">
+                  <button id="regBtnSave" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                    <i class="material-icons right">done</i>
+                  </button>
+                   <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
+                </div>
     </div>
+  </div>
+    
 
   </main>
   <footer class="page-footer">
@@ -261,73 +274,41 @@ require('session.php');
         }
       }
     });
-    
-
-    
-    // 
-    let delFac = document.querySelector("#delFac");
-    delFac.addEventListener('click',()=>{
-      let deltoData = [];
-      let check = (e)=>{
-        for (let i = 0; i < chBx.length; i++) {
-          if(chBx[i].checked == true){
-            deltoData.push(chBx[i].dataset.id);
-          }          
-        }
+    let modal = document.querySelectorAll(".modal");
+    let delData = [];
+    let check = (e)=>{
+      for (let i = 0; i < chBx.length; i++) {
+        if(chBx[i].checked == true){
+          delData.push(chBx[i].dataset.id);
+        }          
       }
-      check();
-      let delM = document.querySelector("#delMod");
-      delM.M_Modal.open()
-      let arrD = document.querySelector("#arrData");
-      arrD.value = JSON.stringify(deltoData);
-    });
-    //modal
- 
-
-
-        // AXIOS AJAX
-        let btn = document.querySelector("#regBtn1");
-        let modal = document.querySelectorAll(".modal");
-        // let modal = document.querySelectorAll(".modal")
-        btn.addEventListener('click',()=>{
-                let idno = document.querySelector("#idno");
-                let fac = document.querySelector("#fac");
-                let em = document.querySelector("#em");
-                let con = document.querySelector("#con");
-                axios.post('post.php',{
-                    req:'addFaculty',id:idno.value,fac:fac.value,em:em.value,con:con.value
+    }
+    
+    let b = document.querySelector("#regBtnSave");
+        b.addEventListener('click',()=>{
+            let c = document.querySelector("#class_id");
+            let f= document.querySelector("#faculty_id");
+            let s = document.querySelector("#subject_id");
+                  axios.post('post.php',{
+                    req:'addClassSubject',c:c.value,f:f.value,s:s.value
                 }).then((response)=>{
-                    console.log(response.data);
-                    if(response.data=="dup"){
-                        M.toast({html:"Already Exist!"});
-                        modal[0].M_Modal.close();
-                    }else if(response.data == "fai"){
-                        M.toast({html:"Failed to register course!"});
-                        modal[0].M_Modal.close();
-                    }else if(response.data=='suc'){
-                        
-                        fac.value="";
-                        em.value="";
-                        con.value="";
-                        idno.value="";
-                        modal[0].M_Modal.close();
-                        window.location.reload();
-                    }
+                  if(response.data=="dup"){
+                      M.toast({html:"Class Assignment Already Exist!"});
+                  }else if(response.data == "fai"){
+                      M.toast({html:"Failed to register class assignment!"});
+                  }else if(response.data=='suc'){
+                      M.toast({html:"Successfully Added!"});
+                      c.value="";
+                        f.value="";
+                        s.value="";
+                       
+                  }
                 }).catch((error)=>{
                     console.log(error)
                 });
+            
+            // console.log("CLICKED");
         });
-        // 
-        <?php
-        if(isset($_SESSION['mulDel'])){
-          echo "let arr =".$_SESSION['mulDel']."; M.toast({html:arr.length+' data has been deleted!'}) ";
-          unset($_SESSION['mulDel']);
-        }else if(isset($_SESSION['addFac'])){
-          echo "M.toast({html:'Succesfully Added!'})";
-          unset($_SESSION['addFac']);
-        }
-        ?>
-        // 
     </script>
 </body>
 </html>

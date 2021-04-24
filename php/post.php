@@ -1,5 +1,5 @@
 <?php
-// require('session.php');
+require('session.php');
 $data = json_decode(file_get_contents("php://input"),true);
 $req = $data['req'];
 if($req=='addUser'){
@@ -69,6 +69,7 @@ if($req=='addUser'){
     if($sql==1){
         echo 'dup';
     }else if($sql==3){
+        $_SESSION['addFac']='suc';
         echo 'suc';
     }else if($sql==2){
         echo 'fai';
@@ -140,5 +141,47 @@ if($req=='addUser'){
     }
 
 
+}else if($req=="checkStat"){
+    require('query.php');
+    $cid=$data['cid'];
+    $oop=new Query();
+    $sql=$oop->checkStat($cid);
+    echo $sql;
+}else if(isset($_POST['mulDel'])){
+    require("query.php");
+    $oop = new Query();
+    $arr = json_decode($_POST['arrData']);
+    $sql = $oop->remFac($arr);
+    $_SESSION['mulDel']=$sql;
+    header("location:view_faculty.php");
+}else if($req=='addClassSubject'){
+    $c=$data['c'];
+    $f=$data['f'];
+    $s=$data['s'];
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->addClassSubject($c,$s,$f);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
+}else if($req=='addSubject'){
+    $subject_name=$data['subject_name'];
+    $subject_desc=$data['subject_desc'];
+
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->addSubject($subject_name,$subject_desc);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
 }
+
 ?>

@@ -56,11 +56,13 @@ require('session.php');
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
         <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
         <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
+        <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>
         <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>
-        <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
-        <li><a href="#" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
+<li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>       
+ <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
+        <li><a href="view_class_subject.php" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
         <li><a href="view_user.php" class="white-text">Users<i class="small material-icons left white-text">school</i></a></li>
-        <li><a href="#" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
+        <li><a href="attendance.php" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
         <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>
         <li><a href="#" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>

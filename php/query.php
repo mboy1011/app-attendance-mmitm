@@ -125,6 +125,26 @@ class Query {
             return 0;
         }
     }
+    public function remFac($arr)
+    {
+        require("config.php");
+        $values = array();
+        for ($i=0; $i < count($arr); $i++) { 
+            $mdel = $this->deleteFaculty($arr[$i]);
+            $values[] = $mdel;
+        }
+        return json_encode($values);
+    }
+    public function deleteFaculty($id)
+    {
+        require("config.php");
+        $sql = mysqli_query($db,"DELETE FROM faculty WHERE id='$id'");
+        if(!$sql){
+            return 'fai';
+        }else{
+            return 'suc';
+        }
+    }
     public function addRecord($at_id,$sid,$ty)
     {
         require('config.php');
@@ -169,5 +189,44 @@ class Query {
 
 
 // query end
+    public function addClassSubject($c,$s,$f){
+        require('config.php');
+        $sql = mysqli_query($db,"SELECT * FROM class_subject where class_id='$c'");
+        if($sql->num_rows>0){
+            return 1;
+        }else{
+            $res = mysqli_query($db,"INSERT INTO class_subject(`class_id`,`subject_id`,`faculty_id`) VALUES ('".$c."','".$s."','".$f."')");
+            if (!$res) {
+                return 2;
+            }else{
+                return 3;
+            }
+        }
+        
+    }
+    public function addSubject($subject_name,$subject_desc)
+    {
+        require('config.php');
+        $sql = mysqli_query($db,"SELECT * FROM subjects WHERE sub_name='$subject_name'");
+        if($sql->num_rows>0){
+            return 1;
+        }else{
+            $res = mysqli_query($db,"INSERT INTO subjects(`sub_name`,`description`) VALUES ('".$subject_name."','".$subject_desc."')");
+            if (!$res) {
+                return 2;
+            }else{
+                return 3;
+            }
+        }
+    }
+    public function updateUser($user,$pass,$type,$id,$test,$auth){
+        require('config.php');
+        $query = mysqli_query($db,"UPDATE users SET username = $user WHERE id=$id");   
+        if(!$query){
+            return 'fai';
+        }else{
+            return 'suc';
+        }
+    }
 }
 ?>

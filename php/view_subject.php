@@ -35,7 +35,7 @@ require('session.php');
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Register User</a>
+              <a href="#!" class="brand-logo center green-text">Course</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -73,10 +73,10 @@ require('session.php');
       <div id="man" class="col s12">
         <div class="card material-table">
             <div class="table-header">
-              <span class="table-title">User Accounts</span>
+              <span class="table-title">Courses</span>
               <div class="actions">
-                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delFac" href="#dupdate"><i class="material-icons">delete</i></a>
-                <a href="#modFac" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
+                <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
             </div>
@@ -89,17 +89,15 @@ require('session.php');
                           <span>Select All</span>
                         </label>
                       </th>
-                      <th>ID no.</th>
-                      <th>Full Name</th>
-                      <th>Email</th>
-                      <th>Contact</th>
-                      <th>Address</th>
-                      <th>Action</th>
+                      <th>ID</th>
+                      <th>Course</th>
+                      <th>Description</th>
+                      <th>Date_Created</th>
                   </tr>
               </thead>
-              <tbody id="tbody">
+              <tbody>
                 <?php
-                $result = mysqli_query($db,"SELECT * FROM faculty");
+                $result = mysqli_query($db,"SELECT * FROM subjects");
                 $i=1;
                 while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
                 ?>
@@ -110,13 +108,14 @@ require('session.php');
                         <span></span>
                       </label>
                     </td>
-                    <td><?PHP echo $row['id_no']?></td>
-                    <td><?PHP echo $row['name']?></td>
-                    <td><?PHP echo $row['email']?></td>
-                    <td><?PHP echo $row['contact']?></td>
-                    <td><?PHP echo $row['address']?></td>
+                    <td><?PHP echo $row['id']?></td>
+                    <td><?PHP echo $row['sub_name']?></td>
+                    <td><?PHP echo $row['description']?></td>
+                    <td><?PHP echo $row['date_created']?></td>
+                   
                     <td>
                       <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
+                      <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
                     </td>
                   </tr>
                   <?php 
@@ -128,72 +127,44 @@ require('session.php');
         </div>
       </div>
     </div>
-<!-- Modal Structure -->
-  <div id="delMod" class="modal">
-      <form action="post.php" method="post">
+</div>
+<!-- modal for adding course -->
+<div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
       <div class="modal-content">
-        <h4>Delete Faculty</h4>
-          <input type="text" name="arrData" id="arrData" hidden>
-          Are you sure you want to delete the following data?
-      </div>
-      <div class="modal-footer">
-        <button href="#!" type="submit" name="mulDel" class="modal-close waves-effect waves-green btn-flat">Agree</button>
-      </div>
-      </form>
-    </div>
-    <!-- modal for adding a faculty -->
-    <div id="modFac" class="modal modal-fixed-footer">
-                <div class="modal-content">
-                    <h4>Add Faculty</h4>
-                    
-                    
-                    <div class="row">
-                       <div class="col s12" id="reg-form">
+                    <h4>Add Subject</h4>
+                    <p class="center">
 
-                        <div class="row">
-                            <div class="input-field col s6">
-                            <input id="idno" type="number" class="validate" required>
-                            <label for="idno">ID No.</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="input-field col s12">
-                            <input id="fac" type="text" class="validate" required>
-                            <label for="fac">Full Name</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="input-field col s12">
-                            <input id="em" type="email" class="validate" required>
-                            <label for="em">Email</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <b>+639</b>
-                            <div class="input-field inline">
-                                <input id="con" type="number" class="validate" required>
-                                <label for="con">Contact No.</label>
-                            </div>
-                        </div>
-        
+          <div class="row">
+              <div class="col s12" id="reg-form">
+    
+   
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="subject_name" type="text" class="validate" required>
+                      <label for="subject_name">Subject</label>
                     </div>
                   </div>
-                </div>
+
+                  <div class="row">
+                      <div class="input-field col s12">
+                        <input id="subject_desc" type="text" class="validate" required>
+                        <label for="subject_desc">Description</label>
+                      </div>
+                  </div>
+
+              </div>
+            </div>
+            
 
                 <div class="modal-footer">
-                    
-                    <button id="regBtn1" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                        <i class="material-icons right">done</i>
-                    </button>
-                        <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
+                  <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                    <i class="material-icons right">done</i>
+                  </button>
+                   <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
                 </div>
-                
-      </div>
-    </div>
 
+      </div>
+</div>
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -261,73 +232,44 @@ require('session.php');
         }
       }
     });
-    
-
-    
-    // 
-    let delFac = document.querySelector("#delFac");
-    delFac.addEventListener('click',()=>{
-      let deltoData = [];
-      let check = (e)=>{
-        for (let i = 0; i < chBx.length; i++) {
-          if(chBx[i].checked == true){
-            deltoData.push(chBx[i].dataset.id);
-          }          
-        }
+    let modal = document.querySelectorAll(".modal");
+    let delData = [];
+    let check = (e)=>{
+      for (let i = 0; i < chBx.length; i++) {
+        if(chBx[i].checked == true){
+          delData.push(chBx[i].dataset.id);
+        }          
       }
-      check();
-      let delM = document.querySelector("#delMod");
-      delM.M_Modal.open()
-      let arrD = document.querySelector("#arrData");
-      arrD.value = JSON.stringify(deltoData);
-    });
-    //modal
- 
-
-
-        // AXIOS AJAX
-        let btn = document.querySelector("#regBtn1");
-        let modal = document.querySelectorAll(".modal");
-        // let modal = document.querySelectorAll(".modal")
+    }
+    
+    let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
-                let idno = document.querySelector("#idno");
-                let fac = document.querySelector("#fac");
-                let em = document.querySelector("#em");
-                let con = document.querySelector("#con");
+            let subject_name = document.querySelector("#subject_name");
+            let subject_desc = document.querySelector("#subject_desc");
+            
+            if(subject_name.value!="" && subject_desc.value!=""){
                 axios.post('post.php',{
-                    req:'addFaculty',id:idno.value,fac:fac.value,em:em.value,con:con.value
+                    req:'addSubject',subject_name:subject_name.value,subject_desc:subject_desc.value
                 }).then((response)=>{
                     console.log(response.data);
                     if(response.data=="dup"){
-                        M.toast({html:"Already Exist!"});
-                        modal[0].M_Modal.close();
+                        M.toast({html:"Course Already Exist!"});
                     }else if(response.data == "fai"){
                         M.toast({html:"Failed to register course!"});
-                        modal[0].M_Modal.close();
                     }else if(response.data=='suc'){
-                        
-                        fac.value="";
-                        em.value="";
-                        con.value="";
-                        idno.value="";
-                        modal[0].M_Modal.close();
-                        window.location.reload();
+                        M.toast({html:"Successfully Added!"});
+                        subject_name.value="";
+                        subject_desc.value="";
+                       
                     }
                 }).catch((error)=>{
                     console.log(error)
                 });
+            }else{
+                M.toast({html:"Empty!"});
+            }
+            // console.log("CLICKED");
         });
-        // 
-        <?php
-        if(isset($_SESSION['mulDel'])){
-          echo "let arr =".$_SESSION['mulDel']."; M.toast({html:arr.length+' data has been deleted!'}) ";
-          unset($_SESSION['mulDel']);
-        }else if(isset($_SESSION['addFac'])){
-          echo "M.toast({html:'Succesfully Added!'})";
-          unset($_SESSION['addFac']);
-        }
-        ?>
-        // 
     </script>
 </body>
 </html>
