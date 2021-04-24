@@ -82,14 +82,14 @@ class Query {
             }
         }
     }
-    public function addFaculty($idno,$fac,$em,$con)
+    public function addFaculty($idno,$fac,$em,$con,$addr)
     {
         require("config.php");
         $sql = mysqli_query($db,"SELECT * FROM faculty WHERE id_no='$idno' AND email='$em'");
         if($sql->num_rows>0){
             return 1;
         }else{
-            $res = mysqli_query($db,"INSERT INTO faculty(`id_no`,`name`,`email`,`contact`) VALUES ('".$idno."','".$fac."','".$em."','".$con."')");
+            $res = mysqli_query($db,"INSERT INTO faculty(`id_no`,`name`,`email`,`contact`,`address`) VALUES ('".$idno."','".$fac."','".$em."','".$con."','".$addr."')");
             if (!$res) {
                 return 2;
             }else{

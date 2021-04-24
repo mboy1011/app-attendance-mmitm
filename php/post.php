@@ -63,9 +63,10 @@ if($req=='addUser'){
     $fac = $data['fac'];
     $em = $data['em'];
     $con = $data['con'];
+    $addr = $data['addr'];
     require('query.php');
     $oop = new Query();
-    $sql = $oop->addFaculty($idno,$fac,$em,$con);
+    $sql = $oop->addFaculty($idno,$fac,$em,$con,$addr);
     if($sql==1){
         echo 'dup';
     }else if($sql==3){

@@ -178,6 +178,13 @@ require('session.php');
                                 <label for="con">Contact No.</label>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input id="addr" type="text">
+                            <label for="addr">Address</label>
+                            </div>
+                        </div>
         
                     </div>
                   </div>
@@ -185,7 +192,7 @@ require('session.php');
 
                 <div class="modal-footer">
                     
-                    <button id="regBtn1" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                    <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
                         <i class="material-icons right">done</i>
                     </button>
                         <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
@@ -297,7 +304,69 @@ require('session.php');
       }
     });
     
-    let btnup = document.querySelectorAll(".btn-up");
+    
+    
+    // 
+    let delFac = document.querySelector("#delFac");
+    delFac.addEventListener('click',()=>{
+      let deltoData = [];
+      let check = (e)=>{
+        for (let i = 0; i < chBx.length; i++) {
+          if(chBx[i].checked == true){
+            deltoData.push(chBx[i].dataset.id);
+          }          
+        }
+      }
+      check();
+      let delM = document.querySelector("#delMod");
+      delM.M_Modal.open()
+      let arrD = document.querySelector("#arrData");
+      arrD.value = JSON.stringify(deltoData);
+    });
+    
+    //modal
+ 
+
+
+        // AXIOS AJAX
+        let btn = document.querySelector("#regBtn");
+        btn.addEventListener('click',()=>{
+                let id = document.querySelector("#idno");
+                let fac = document.querySelector("#fac");
+                let em = document.querySelector("#em");
+                let con = document.querySelector("#con");
+                let addr = document.querySelector("#addr");
+                axios.post('post.php',{
+                    req:'addFaculty',id:id.value,fac:fac.value,em:em.value,con:con.value,addr:addr.value
+                }).then((response)=>{
+                    console.log(response.data);
+                    if(response.data=="dup"){
+                        M.toast({html:"Already Exist!"});
+                    }else if(response.data == "fai"){
+                        M.toast({html:"Failed to register course!"});
+                    }else if(response.data=='suc'){
+                        M.toast({html:"Successfully Added!"});
+                        // course_name.value="";
+                        // course_desc.value="";
+                       
+                    }
+                }).catch((error)=>{
+                    console.log(error)
+                });
+        });
+        // 
+        <?php
+        if(isset($_SESSION['mulDel'])){
+          echo "let arr =".$_SESSION['mulDel']."; M.toast({html:arr.length+' data has been deleted!'}) ";
+          unset($_SESSION['mulDel']);
+        }else if(isset($_SESSION['addFac'])){
+          echo "M.toast({html:'Succesfully Added!'})";
+          unset($_SESSION['addFac']);
+        }
+        ?>
+        // 
+
+        let btnup = document.querySelectorAll(".btn-up");
    
    for (let i = 0; i < btnup.length; i++) {
      
@@ -318,71 +387,7 @@ require('session.php');
        // console.log(this.dataset.id);
      });
    }
-    
-    // 
-    let delFac = document.querySelector("#delFac");
-    delFac.addEventListener('click',()=>{
-      let deltoData = [];
-      let check = (e)=>{
-        for (let i = 0; i < chBx.length; i++) {
-          if(chBx[i].checked == true){
-            deltoData.push(chBx[i].dataset.id);
-          }          
-        }
-      }
-      check();
-      let delM = document.querySelector("#delMod");
-      delM.M_Modal.open()
-      let arrD = document.querySelector("#arrData");
-      arrD.value = JSON.stringify(deltoData);
-    });
-    //modal
- 
 
-
-        // AXIOS AJAX
-        let btn = document.querySelector("#regBtn1");
-        let modal = document.querySelectorAll(".modal");
-        // let modal = document.querySelectorAll(".modal")
-        btn.addEventListener('click',()=>{
-                let id = document.querySelector("#id");
-                let fac = document.querySelector("#fac");
-                let em = document.querySelector("#em");
-                let con = document.querySelector("#con");
-                axios.post('post.php',{
-                    req:'addFaculty',id:id.value,fac:fac.value,em:em.value,con:con.value
-                }).then((response)=>{
-                    console.log(response.data);
-                    if(response.data=="dup"){
-                        M.toast({html:"Already Exist!"});
-                        modal[0].M_Modal.close();
-                    }else if(response.data == "fai"){
-                        M.toast({html:"Failed to register course!"});
-                        modal[0].M_Modal.close();
-                    }else if(response.data=='suc'){
-                        
-                        fac.value="";
-                        em.value="";
-                        con.value="";
-                        idno.value="";
-                        modal[0].M_Modal.close();
-                        window.location.reload();
-                    }
-                }).catch((error)=>{
-                    console.log(error)
-                });
-        });
-        // 
-        <?php
-        if(isset($_SESSION['mulDel'])){
-          echo "let arr =".$_SESSION['mulDel']."; M.toast({html:arr.length+' data has been deleted!'}) ";
-          unset($_SESSION['mulDel']);
-        }else if(isset($_SESSION['addFac'])){
-          echo "M.toast({html:'Succesfully Added!'})";
-          unset($_SESSION['addFac']);
-        }
-        ?>
-        // 
 
         let upbtn = document.querySelector("#upBtn");
         upbtn.addEventListener('click',()=>{
