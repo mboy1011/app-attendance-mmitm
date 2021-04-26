@@ -45,11 +45,11 @@ require('session.php');
         <li>
           <div class="user-view">
             <div class="background">
-              <img src="" alt="" style="width:100%;">
+              <!-- <img src="" alt="" style="width:100%;"> -->
             </div>
-            <a href="#user"><img class="circle" src=""></a>
+            <!-- <a href="#user"><img class="circle" src=""></a>
             <a href="#name"><span class="white-text name">Admin</span></a>
-            <a href="#email"><span class="white-text email">admin@gcc.com</span></a>
+            <a href="#email"><span class="white-text email">admin@gcc.com</span></a> -->
           </div>
         </li>
         <!-- menu navigation bar -->
@@ -58,13 +58,13 @@ require('session.php');
         <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
         <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>
           
-<li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>       
- <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
+        <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>       
+        <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
         <li><a href="view_class_subject.php" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
         <li><a href="view_user.php" class="white-text">Users<i class="small material-icons left white-text">school</i></a></li>
         <li><a href="attendance.php" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
         <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>
-        <li><a href="#" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
+        <li><a href="view_attendance_record.php" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
     </ul>
       
@@ -74,23 +74,11 @@ require('session.php');
   </main>
   <footer class="page-footer">
     <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-            <h5 class="white-text">Footer Content</h5>
-            <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-            <h5 class="white-text">Links</h5>
-            <ul>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-            </ul>
-            </div>
-        </div>
-        </div>
+      
         <div class="footer-copyright">
         <div class="container">
         © 2021 Bacus
-        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+       
         </div>
     </div>
     </footer>

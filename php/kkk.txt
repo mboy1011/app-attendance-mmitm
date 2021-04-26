@@ -1,0 +1,5 @@
+select students.name as Student_Name,attendance_record.type as Status,class_subject.class_id as Class_Name
+from class_subject
+ join students on students.class_id=class_subject.class_id
+ join attendance_record on attendance_record.attendance_id=class_subject.id
+join class on class.id=class_subject.class_id

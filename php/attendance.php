@@ -43,45 +43,25 @@ require('session.php');
       </div>
     <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
         <li>
-          <div class="user-view">
+        <div class="user-view">
             <div class="background">
-              <img src="" alt="" style="width:100%;">
+              <!-- <img src="" alt="" style="width:100%;"> -->
             </div>
-            <a href="#user"><img class="circle" src=""></a>
+            <!-- <a href="#user"><img class="circle" src=""></a>
             <a href="#name"><span class="white-text name">Admin</span></a>
-            <a href="#email"><span class="white-text email">admin@gcc.com</span></a>
+            <a href="#email"><span class="white-text email">admin@gcc.com</span></a> -->
           </div>
         </li>
+        <!-- menu navigation bar -->
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
-        <li><a href="#" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
-        <li>
-            <div class="collapsible-header white-text"><i class="material-icons right white-text">people_alt</i>Students</div>
-            <div class="collapsible-body white darken-5">
-              <a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Students</a>
-              <div class="divider"></div>
-              <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Students</a></div>
-              <div class="divider"></div>
-            </div>
-        </li>
-        <li><a href="#" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>
-        <li>
-            <div class="collapsible-header white-text"><i class="material-icons right white-text">assignment_ind</i>Faculty</div>
-            <div class="collapsible-body white darken-5">
-              <a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Faculties</a>
-              <div class="divider"></div>
-              <div><a href="#" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Facultiess</a></div>
-              <div class="divider"></div>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header white-text"><i class="material-icons right white-text">badge</i>Users</div>
-            <div class="collapsible-body white darken-5">
-              <a href="add_user.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">group_add</i> Add Users</a>
-              <div class="divider"></div>
-              <a href="view_user.php" class="green-text"><i class="material-icons left green-text" style="font-size:25px; padding-left: 50px;">list</i> View Users</a>
-              <div class="divider"></div>
-            </div>
-        </li>
+        <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
+        <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
+        <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>
+          
+        <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>       
+        <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
+        <li><a href="view_class_subject.php" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
+        <li><a href="view_user.php" class="white-text">Users<i class="small material-icons left white-text">school</i></a></li>
         <li><a href="attendance.php" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
         <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>
         <li><a href="#" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
@@ -140,23 +120,11 @@ require('session.php');
   </main>
   <footer class="page-footer">
     <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-            <h5 class="white-text">Footer Content</h5>
-            <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-            <h5 class="white-text">Links</h5>
-            <ul>
-                <li><a class="grey-text text-lighten-3" href="#!"></a></li>
-            </ul>
-            </div>
-        </div>
-        </div>
+      
         <div class="footer-copyright">
         <div class="container">
         © 2021 Bacus
-        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+       
         </div>
     </div>
     </footer>
