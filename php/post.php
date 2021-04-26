@@ -63,12 +63,14 @@ if($req=='addUser'){
     $fac = $data['fac'];
     $em = $data['em'];
     $con = $data['con'];
+    $addr = $data['addr'];
     require('query.php');
     $oop = new Query();
-    $sql = $oop->addFaculty($idno,$fac,$em,$con);
+    $sql = $oop->addFaculty($idno,$fac,$em,$con,$addr);
     if($sql==1){
         echo 'dup';
     }else if($sql==3){
+        $_SESSION['addFac']='suc';
         echo 'suc';
     }else if($sql==2){
         echo 'fai';
@@ -113,15 +115,24 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
+
+
+}else if($req=="checkStat"){
+    require('query.php');
+    $cid=$data['cid'];
+    $oop=new Query();
+    $sql=$oop->checkStat($cid);
+    echo $sql;
 }else if($req=='updateUser'){
-    require("query.php");
     $user=$data['user'];
     $pass=$data['pass'];
     $type=$data['type'];
     $auth=$data['auth'];
     $id=$data['id'];
+    
+    require("query.php");
     $oop=new Query();
-    $sql=$oop->updateStudent($user,$pass,$type,$auth,$id);
+    $sql=$oop->updateUser($user,$pass,$type,$auth,$id);
      if($sql==1){
         echo 'dup';
     }else if($sql==3){
@@ -129,6 +140,8 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
+
+
 }else if($req=="checkStat"){
     require('query.php');
     $cid=$data['cid'];
@@ -163,6 +176,24 @@ if($req=='addUser'){
     require("query.php");
     $oop=new Query();
     $sql=$oop->addSubject($subject_name,$subject_desc);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
+}else if($req=='updateFaculty'){
+    $fn=$data['fn'];
+    $email=$data['email'];
+    $cont=$data['cont'];
+    $add=$data['add'];
+    $id=$data['id'];
+    $idno=$data['idno'];
+    
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->updateFaculty($fn,$email,$cont,$add,$id,$idno);
      if($sql==1){
         echo 'dup';
     }else if($sql==3){

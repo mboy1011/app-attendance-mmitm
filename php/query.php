@@ -82,14 +82,14 @@ class Query {
             }
         }
     }
-    public function addFaculty($idno,$fac,$em,$con)
+    public function addFaculty($idno,$fac,$em,$con,$addr)
     {
         require("config.php");
         $sql = mysqli_query($db,"SELECT * FROM faculty WHERE id_no='$idno' AND email='$em'");
         if($sql->num_rows>0){
             return 1;
         }else{
-            $res = mysqli_query($db,"INSERT INTO faculty(`id_no`,`name`,`email`,`contact`) VALUES ('".$idno."','".$fac."','".$em."','".$con."')");
+            $res = mysqli_query($db,"INSERT INTO faculty(`id_no`,`name`,`email`,`contact`,`address`) VALUES ('".$idno."','".$fac."','".$em."','".$con."','".$addr."')");
             if (!$res) {
                 return 2;
             }else{
@@ -170,19 +170,25 @@ class Query {
                 }
             }
     }
+    public function updateUser($user,$pass,$type,$auth,$id){
 
-    public function updateStudent($id_no,$class_id,$name){
         require('config.php');
-        $sql = mysqli_query($db,"SELECT * FROM students WHERE id_no='$id_no'");
-        if(empty($id_no)){
-            $save = $this->db->query("INSERT INTO students set $data");
+        if($auth == "true"){
+            $enc_pass = password_hash($pass,PASSWORD_BCRYPT);
+            $sql = mysqli_query($db,"UPDATE users SET username='$user', type='$type', password='$enc_pass' WHERE id='$id'");
         }else{
-            $save = $this->db->query("UPDATE students set $data where id = $id_no");
-        }
-        if($save){
-            return 1;
+            $sql = mysqli_query($db,"UPDATE users SET username='$user', type='$type' WHERE id='$id'");
         }
     }
+  
+
+ 
+
+
+
+
+
+// query end
     public function addClassSubject($c,$s,$f){
         require('config.php');
         $sql = mysqli_query($db,"SELECT * FROM class_subject where class_id='$c'");
@@ -213,14 +219,15 @@ class Query {
             }
         }
     }
-    public function updateUser($user,$pass,$type,$id,$test,$auth){
+    
+
+    public function updateFaculty($fn,$email,$cont,$add,$id,$idno){
+        
         require('config.php');
-        $query = mysqli_query($db,"UPDATE users SET username = $user WHERE id=$id");   
-        if(!$query){
-            return 'fai';
-        }else{
-            return 'suc';
-        }
+        $sql = mysqli_query($db,"UPDATE faculty SET id_no='$id', name='$fn', address='$add', contact='$cont', email='$email' WHERE id='$idno'");
+       
     }
-}
+
+    
+}//End of query
 ?>
