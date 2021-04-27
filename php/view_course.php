@@ -80,7 +80,7 @@ require('session.php');
               <span class="table-title">Courses</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
-                <a href="#modCor" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
             </div>
@@ -165,8 +165,10 @@ require('session.php');
                    
                 </div>
   </div>
+
+  </div>
 <!-- modal for adding course -->
-<div id="modCor" class="modal modal-fixed-footer">
+<div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
       <div class="modal-content">
                     <h4>Add Course</h4>
                     <p class="center">
@@ -203,6 +205,10 @@ require('session.php');
       </div>
 </div>
   </main>
+
+
+
+
   <footer class="page-footer">
     <div class="container">
       
@@ -267,8 +273,8 @@ require('session.php');
       }
     }
     
-    let regBtn = document.querySelector("#regBtn");
-    regBtn.addEventListener('click',()=>{
+    let btn = document.querySelector("#regBtn");
+        btn.addEventListener('click',()=>{
             let course_name = document.querySelector("#course_name");
             let course_desc = document.querySelector("#course_desc");
             
@@ -297,63 +303,6 @@ require('session.php');
         });
 
 
-
-
-        
-
-
-        let delCor = document.querySelector("#delCor");
-        delCor.addEventListener('click',()=>{
-      let deltoData = [];
-      let check = (e)=>{
-        for (let i = 0; i < chBx.length; i++) {
-          if(chBx[i].checked == true){
-            deltoData.push(chBx[i].dataset.id);
-          }          
-        }
-      }
-      check();
-      let delM = document.querySelector("#delMod");
-      delM.M_Modal.open()
-      let arrD = document.querySelector("#arrData");
-      arrD.value = JSON.stringify(deltoData);
-    });
-
-
-    <?php
-        if(isset($_SESSION['mulDel'])){
-          echo "let arr =".$_SESSION['mulDel']."; M.toast({html:arr.length+' data has been deleted!'}) ";
-          unset($_SESSION['mulDel']);
-        }else if(isset($_SESSION['addCor'])){
-          echo "M.toast({html:'Succesfully Added!'})";
-          unset($_SESSION['addCor']);
-        }
-        ?>
-
-let upbtn = document.querySelector("#upBtn");
-        upbtn.addEventListener('click',()=>{
-            let id = document.querySelector("#edit-id");
-            let cname = document.querySelector("#edit-name");
-            let cdesc = document.querySelector("#edit-desc");
-      
-           
-
-
-                axios.post('post.php',{
-                    req:'updateCourse',id:id.value,cname:cname.value,cdesc:cdesc.value
-                }).then((response)=>{
-                    console.log(response.data);
-                    
-                        M.toast({html:"Update Successfully!"});
-                        
-                        modal[0].M_Modal.close();
-                    
-                }).catch((error)=>{
-                    console.log(error)
-                });
-            
-            // console.log("CLICKED");
-        });
     </script>
 </body>
 </html>
