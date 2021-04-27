@@ -117,8 +117,10 @@ require('session.php');
                     <td><?PHP echo $row['date_created']?></td>
                    
                     <td>
-                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
-                      <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
+                    <a href="#modal-edit" class="waves-effect waves-light btn modal-trigger orange btn-up" 
+                    data-id="<?PHP echo $row['id']?>"data-cname="<?PHP echo $row['course']?>" data-cdesc="<?PHP echo $row['description']?>" 
+                    data-date="<?PHP echo $row['date_created']?>"href="#mupdate"><i class="material-icons white-text">edit</i></a>
+
                     </td>
                   </tr>
                   <?php 
@@ -131,6 +133,24 @@ require('session.php');
       </div>
     </div>
 </div>
+<!-- Modal for editing course -->
+<div id="modal-edit" 
+                class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Edit Course</h4>
+                    <p class="center">
+                    <div class="row">
+                    <label>ID no:</label>
+                    <input type="text" name="id" id="edit-id" disabled>
+                    <label>Course</label>
+                    <input type="text" name="cname" id="edit-name">
+                    <label>Description</label>
+                    <input type="text" name="cdesc" id="edit-desc">
+                    <label>Date Created</label>
+                    <input type="text" name="date" id="edit-date">
+                   
+                    </div>
+                </div>
 <!-- modal for adding course -->
 <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
       <div class="modal-content">
@@ -259,6 +279,34 @@ require('session.php');
             }else{
                 M.toast({html:"Empty!"});
             }
+            // console.log("CLICKED");
+        });
+
+
+
+
+        let upbtn = document.querySelector("#upBtn");
+        upbtn.addEventListener('click',()=>{
+            let id = document.querySelector("#edit-id");
+            let cid = document.querySelector("#edit-name");
+            let cd = document.querySelector("#edit-desc");
+            let dt = document.querySelector("#edit-date");
+           
+
+
+                axios.post('post.php',{
+                    req:'updateFaculty',id:id.value,cid:cid.value,cd:cd.value,dt:dt.value
+                }).then((response)=>{
+                    console.log(response.data);
+                    
+                        M.toast({html:"Update Successfully!"});
+                        
+                        modal[0].M_Modal.close();
+                    
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            
             // console.log("CLICKED");
         });
     </script>
