@@ -24,9 +24,10 @@ if($req=='addUser'){
     require("query.php");
     $oop=new Query();
     $sql=$oop->addCourse($course_name,$course_desc);
-     if($sql==1){
+    if($sql==1){
         echo 'dup';
     }else if($sql==3){
+        $_SESSION['addCor']='suc';
         echo 'suc';
     }else if($sql==2){
         echo 'fai';
@@ -202,15 +203,15 @@ if($req=='addUser'){
         echo 'fai';
     }
 }else if($req=='updateCourse'){
-    $cid=$data['cid'];
-    $cd=$data['cd'];
-    $dt=$data['dt'];
-    $id=$data['id'];
+    $cid=$data['id'];
+    $cname=$data['cname'];
+    $cdesc=$data['cdesc'];
+
 
     
     require("query.php");
     $oop=new Query();
-    $sql=$oop->updateCourse($id,$cid,$cd);
+    $sql=$oop->updateCourse($cid,$cname,$cdesc);
      if($sql==1){
         echo 'dup';
     }else if($sql==3){
@@ -218,5 +219,5 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
-
+}
 ?>
