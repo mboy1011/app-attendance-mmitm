@@ -37,14 +37,15 @@ require('session.php');
           <div class="nav-wrapper white">
               <a href="#!" class="brand-logo center green-text">Course</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
-              <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
-                  <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
-              </ul>
+                  <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
+                    <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
+                  </ul>
           </div>
         </nav>
       </div>
+      
       <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
-        <li>
+      <li>
         <div class="user-view">
             <div class="background">
               <!-- <img src="" alt="" style="width:100%;"> -->
@@ -54,12 +55,10 @@ require('session.php');
             <a href="#email"><span class="white-text email">admin@gcc.com</span></a> -->
           </div>
         </li>
-        <!-- menu navigation bar -->
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
         <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
         <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
-        <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>
-          
+        <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>   
         <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>       
         <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
         <li><a href="view_class_subject.php" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
@@ -69,9 +68,11 @@ require('session.php');
         <li><a href="view_attendance_record.php" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
     </ul>
-      
-  </header>
+</header>
+
+
   <main>
+  
   <div class="row">
       <div id="man" class="col s12">
         <div class="card material-table">
@@ -79,7 +80,7 @@ require('session.php');
               <span class="table-title">Courses</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
-                <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a href="#modCor" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
             </div>
@@ -98,7 +99,7 @@ require('session.php');
                       <th>Date_Created</th>
                   </tr>
               </thead>
-              <tbody>
+              <tbody id="tbody">
                 <?php
                 $result = mysqli_query($db,"SELECT * FROM courses");
                 $i=1;
@@ -111,15 +112,12 @@ require('session.php');
                         <span></span>
                       </label>
                     </td>
-                    <td><?PHP echo $row['id']?></td>
                     <td><?PHP echo $row['course']?></td>
                     <td><?PHP echo $row['description']?></td>
                     <td><?PHP echo $row['date_created']?></td>
                    
                     <td>
-                    <a href="#modal-edit" class="waves-effect waves-light btn modal-trigger orange btn-up" 
-                    data-id="<?PHP echo $row['id']?>"data-cname="<?PHP echo $row['course']?>" data-cdesc="<?PHP echo $row['description']?>" 
-                    data-date="<?PHP echo $row['date_created']?>"href="#mupdate"><i class="material-icons white-text">edit</i></a>
+                    <a href="#modal-edit" class="waves-effect waves-light btn modal-trigger orange btn-up" data-cname="<?PHP echo $row['course']?>" data-desc="<?PHP echo $row['description']?>"><i class="material-icons white-text">edit</i></a>
 
                     </td>
                   </tr>
@@ -133,6 +131,22 @@ require('session.php');
       </div>
     </div>
 </div>
+<!-- modal for delete -->
+<div id="delMod" class="modal">
+                          <form action="post.php" method="post">
+                          <div class="modal-content">
+                            <h4>Delete Course</h4>
+                              <input type="text" name="arrData" id="arrData" hidden>
+                              Are you sure you want to delete the following data?
+                          </div>
+                          <div class="modal-footer">
+                            <button href="#!" type="submit" name="mulDel" class="modal-close waves-effect waves-green btn-flat">Agree</button>
+                          </div>
+                          </form>
+                        </div>
+
+
+
 <!-- Modal for editing course -->
 <div id="modal-edit" 
                 class="modal modal-fixed-footer">
@@ -149,10 +163,10 @@ require('session.php');
                     <label>Date Created</label>
                     <input type="text" name="date" id="edit-date">
                    
-                    </div>
                 </div>
+  </div>
 <!-- modal for adding course -->
-<div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
+<div id="modCor" class="modal modal-fixed-footer">
       <div class="modal-content">
                     <h4>Add Course</h4>
                     <p class="center">
@@ -253,8 +267,8 @@ require('session.php');
       }
     }
     
-    let btn = document.querySelector("#regBtn");
-        btn.addEventListener('click',()=>{
+    let regBtn = document.querySelector("#regBtn");
+    regBtn.addEventListener('click',()=>{
             let course_name = document.querySelector("#course_name");
             let course_desc = document.querySelector("#course_desc");
             
@@ -285,17 +299,48 @@ require('session.php');
 
 
 
-        let upbtn = document.querySelector("#upBtn");
+        
+
+
+        let delCor = document.querySelector("#delCor");
+        delCor.addEventListener('click',()=>{
+      let deltoData = [];
+      let check = (e)=>{
+        for (let i = 0; i < chBx.length; i++) {
+          if(chBx[i].checked == true){
+            deltoData.push(chBx[i].dataset.id);
+          }          
+        }
+      }
+      check();
+      let delM = document.querySelector("#delMod");
+      delM.M_Modal.open()
+      let arrD = document.querySelector("#arrData");
+      arrD.value = JSON.stringify(deltoData);
+    });
+
+
+    <?php
+        if(isset($_SESSION['mulDel'])){
+          echo "let arr =".$_SESSION['mulDel']."; M.toast({html:arr.length+' data has been deleted!'}) ";
+          unset($_SESSION['mulDel']);
+        }else if(isset($_SESSION['addCor'])){
+          echo "M.toast({html:'Succesfully Added!'})";
+          unset($_SESSION['addCor']);
+        }
+        ?>
+
+let upbtn = document.querySelector("#upBtn");
         upbtn.addEventListener('click',()=>{
             let id = document.querySelector("#edit-id");
-            let cid = document.querySelector("#edit-name");
-            let cd = document.querySelector("#edit-desc");
-            let dt = document.querySelector("#edit-date");
+            let cname = document.querySelector("#edit-name");
+            let cdesc = document.querySelector("#edit-desc");
+      
            
 
 
                 axios.post('post.php',{
-                    req:'updateFaculty',id:id.value,cid:cid.value,cd:cd.value,dt:dt.value
+                    req:'updateCourse',id:id.value,cname:cname.value,cdesc:cdesc.value
                 }).then((response)=>{
                     console.log(response.data);
                     

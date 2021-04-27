@@ -227,13 +227,12 @@ class Query {
         $sql = mysqli_query($db,"UPDATE faculty SET id_no='$id', name='$fn', address='$add', contact='$cont', email='$email' WHERE id='$idno'");
        
     }
-    public function updateCourse($id,$cid,$cd,$dt){
+    public function updateCourse($cid,$cname,$cdesc){
         
         require('config.php');
-        $sql = mysqli_query($db,"UPDATE courses SET id='$id', course='$cid', description='$cd', date_created='$dt'WHERE id='$id'");
+        $sql = mysqli_query($db,"UPDATE courses SET id='$cid', course='$cname', description='$cdesc' WHERE id='$cid'");
        
     }
 
-    
 }//End of query
 ?>
