@@ -117,7 +117,7 @@ require('session.php');
                     <td><?PHP echo $row['name']?></td>
                     <td>
                       <a class="waves-effect waves-light btn modal-trigger orange modUp" href="#mupdate" data-id="<?PHP echo $row['id_no']?>" data-cid="<?PHP echo $row['class_id']?>" data-name="<?PHP echo $row['name']?>"><i class="material-icons white-text">edit</i></a>
-                      <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
+                      <!-- <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a> -->
                     </td>
                   </tr>
                   <?php 

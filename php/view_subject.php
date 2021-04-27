@@ -76,7 +76,7 @@ require('session.php');
       <div id="man" class="col s12">
         <div class="card material-table">
             <div class="table-header">
-              <span class="table-title">Courses</span>
+              <span class="table-title">Subjects</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
                 <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
@@ -118,7 +118,7 @@ require('session.php');
                    
                     <td>
                       <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
-                      <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
+                      <!-- <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a> -->
                     </td>
                   </tr>
                   <?php 

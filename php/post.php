@@ -201,6 +201,22 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
-}
+}else if($req=='updateCourse'){
+    $cid=$data['cid'];
+    $cd=$data['cd'];
+    $dt=$data['dt'];
+    $id=$data['id'];
+
+    
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->updateCourse($id,$cid,$cd);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
 
 ?>
