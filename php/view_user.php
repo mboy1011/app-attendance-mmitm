@@ -1,5 +1,8 @@
 <?php
 require('session.php');
+if($_SESSION['utype']==2){
+  header("location: ./user/check_attendance.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
