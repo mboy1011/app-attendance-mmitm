@@ -10,7 +10,7 @@ if($_SESSION['utype']!=2){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check Attendance</title>
+    <title>class List</title>
      <!-- MCSS Offline -->
      <link rel="stylesheet" href="../../assets/css/materializecss.min.css">
     <link rel="stylesheet" href="../../assets/css/materializecss-icons.css">
@@ -36,7 +36,7 @@ if($_SESSION['utype']!=2){
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Check Attendance</a>
+              <a href="#!" class="brand-logo center green-text">Class List</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -101,7 +101,7 @@ if($_SESSION['utype']!=2){
         //
         // AXIOS AJAX
         // 
-        
+       
     </script>
 </body>
 </html>
