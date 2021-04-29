@@ -8,11 +8,13 @@ class Query {
             if($row['type']==2){
                 session_start();
                 $_SESSION['login_user']=$row['id'];
+                $_SESSION['faid'] = $row['faculty_id'];
                 $_SESSION['utype']=$row['type'];
                 header('location:php/user/check_attendance.php');
             }else if(password_verify($pass,$row['password'])){
                 session_start();
                 $_SESSION['login_user']=$row['id'];
+                $_SESSION['faid'] = $row['faculty_id'];
                 $_SESSION['utype']=$row['type'];
                 header('location:php/dashboard.php');
             }else{
