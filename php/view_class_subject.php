@@ -4,39 +4,37 @@ if($_SESSION['utype']==2){
   header("location: ./user/check_attendance.php");
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Register</title>
-            <!-- MCSS Offline -->
-            <link rel="stylesheet" href="../assets/css/materializecss.min.css">
-            <link rel="stylesheet" href="../assets/css/materializecss-icons.css">
-            <!-- Style CSS -->
-            <link rel="stylesheet" href="../assets/css/style.css">
-            <!-- jQueryMaterializeCSS -->
-            <link rel="stylesheet" href="../assets/css/jq-data-material.css">
-            <!--Let browser know website is optimized for mobile-->
-            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <style>
-          #mapid { height: 180px; }
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+     <!-- MCSS Offline -->
+     <link rel="stylesheet" href="../assets/css/materializecss.min.css">
+    <link rel="stylesheet" href="../assets/css/materializecss-icons.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- jQueryMaterializeCSS -->
+    <link rel="stylesheet" href="../assets/css/jq-data-material.css">
+     <!--Let browser know website is optimized for mobile-->
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+     <style>
+         #mapid { height: 180px; }
+      header, main, footer {
+        padding-left: 300px;
+      }
+
+      @media only screen and (max-width : 1024px) {
         header, main, footer {
-          padding-left: 300px;
+          padding-left: 0;
         }
-
-        @media only screen and (max-width : 1024px) {
-          header, main, footer {
-            padding-left: 0;
-          }
-        }
-      </style>
+      }
+     </style>
 </head>
-
 <body>
-  <header>
+<header>
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
@@ -46,9 +44,7 @@ if($_SESSION['utype']==2){
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
               </ul>
           </div>
-
         </nav>
-        
       </div>
       <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
         <li>
@@ -92,47 +88,51 @@ if($_SESSION['utype']==2){
               </div>
             </div>
         <table id="datatable" class="responsive-table">
-        <thead>
-								<tr>
-									<th class="text-center">#</th>
-									<th class="">Class</th>
-									<th class="">Subject</th>
-									<th class="">Faculty</th>
-									<th class="text-center">Action</th>
-								</tr>
-							</thead>
-							<tbody>
+              <thead>
+                  <tr>
+                      <th>
+                        <label>
+                          <input type="checkbox" id="mChBx" />
+                          <span>Select All</span>
+                        </label>
+                      </th>
+                      <th>ID</th>
+                      <th>Class</th>
+                      <th>Subject</th>
+                      <th>Faculty</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
               <?php
                  $i=1;
                 $result = mysqli_query($db,"SELECT cs.*,concat(co.course,' ',c.level,'-',c.section) as `class`,s.sub_name,f.name as fname FROM class_subject cs inner join `class` c on c.id = cs.class_id inner join courses co on co.id = c.course_id inner join faculty f on f.id = cs.faculty_id inner join subjects s on s.id = cs.subject_id order by concat(co.course,' ',c.level,'-',c.section) asc");
                  while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
                 ?>
-								<tr>
-									<td class="text-center"><?php echo $i++ ?></td>
-									<td>
-										<p> <b><?php echo $row['class'] ?></b></p>
-									</td>
-									<td class="">
-										 <p> <b><?php echo $row['sub_name'] ?></b></p>
-									</td>
-									<td class="">
-										 <p> <b><?php echo $row['fname'] ?></b></p>
-									</td>
-                  <td>
-                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
-                      <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
+                  <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" class="chBx" data-id="<?PHP echo $row['id']?>" />
+                        <span></span>
+                      </label>
                     </td>
-								</tr>
-                <?php 
-                    } //end while
-                ?>
-							</tbody>
+                   <td class="text-center"><?php echo $i++ ?></td>
+									  <td class=""><p><b><?php echo $row['class'] ?></b></p></td>
+                    <td class=""><p><b><?php echo $row['sub_name'] ?></b></p></td>
+                    <td class=""><p><b><?php echo $row['fname'] ?></b></p></td>
+                    <td>
+                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
+                      <!-- <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a> -->
+                    </td>
+                  </tr>
+                  <?php } ?>
+              </tbody>
           </table>
           </div>
         </div>
       </div>
+    </div>
 
-    
 
     <!-- modal for adding a class -->
     <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
@@ -142,7 +142,8 @@ if($_SESSION['utype']==2){
     
             <div class="row">
             <div class="col s12" id="reg-form">
-                  <?php 
+                 
+                 <?php 
                     include 'config.php'; 
                     if(isset($_GET['id'])){
                     $qry = $db>query("SELECT * FROM class_subject where id= ".$_GET['id']);
@@ -151,9 +152,9 @@ if($_SESSION['utype']==2){
                   }
                   }
                   ?>
-       
-                 <div class="row">
-                    <div class="input-field col s12">
+     
+            <div class="row">
+              <div class="input-field col s12">
                     <label for="" class="control-label">Class</label>
                     <select name="class" id="class">
                         <option value=""></option>
@@ -164,13 +165,11 @@ if($_SESSION['utype']==2){
                         <option value="<?php echo $row['id'] ?>" <?php echo isset($c) && $c == $row['id'] ? 'selected' : '' ?>><?php echo $row['class'] ?></option>
                         <?php endwhile; ?>
                     </select>
-                   </div>
                 </div>
+              </div>
 
-
-   
-                  <div class="row">
-                    <div class="input-field col s12">
+            <div class="row">
+              <div class="input-field col s12">
                     <label for="" class="control-label">Faculty</label>
                     <select name="faculty" id="faculty">
                       <option value=""></option>
@@ -181,11 +180,11 @@ if($_SESSION['utype']==2){
                       <option value="<?php echo $row['id'] ?>" <?php echo isset($f) && $f == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['name']) ?></option>
                       <?php endwhile; ?>
                     </select>
-                    </div>
-                  </div>
+              </div>
+            </div>
      
-                  <div class="row">
-                    <div class="input-field col s12">
+            <div class="row">
+              <div class="input-field col s12">
                     <label for="" class="control-label">Subject</label>
                     <select name="subject" id="subject">
                       <option value=""></option>
@@ -196,26 +195,25 @@ if($_SESSION['utype']==2){
                       <option value="<?php echo $row['id'] ?>" <?php echo isset($s) && $s == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['sub_name']) ?></option>
                       <?php endwhile; ?>
                   </select>
-                    </div>
-                  </div>
-                 
-                  <div class="row">
-                    <div class="input-field col s12">
-                
-                    </div>
-                  </div> 
-
               </div>
-            </div>          
-                  
-            <div class="modal-footer">
-                  <button id="regBtnSave" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+            </div>
+                 
+            <div class="row">
+              <div class="input-field col s12">
+                
+              </div>
+            </div> 
+
+  </div> 
+  </div>
+                  <div class="modal-footer">
+                  <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
                     <i class="material-icons right">done</i>
                   </button>
                    <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
                 </div>
+        </div>
     </div>
-  </div>
     
 
   </main>
@@ -283,24 +281,21 @@ if($_SESSION['utype']==2){
       }
     }
     
-    let b = document.querySelector("#regBtnSave");
-        b.addEventListener('click',()=>{
-          let c = document.querySelector("#class");
+    let btn = document.querySelector("#regBtn");
+        btn.addEventListener('click',()=>{
+            let c = document.querySelector("#class");
             let f= document.querySelector("#faculty");
             let s = document.querySelector("#subject");
-                  axios.post('post.php',{
+                axios.post('post.php',{
                     req:'addClassSubject',c:c.value,f:f.value,s:s.value
                 }).then((response)=>{
                   if(response.data=="dup"){
-                      M.toast({html:"Class Assignment Already Exist!"});
+                      M.toast({html:"Course Already Exist!"});
                   }else if(response.data == "fai"){
-                      M.toast({html:"Failed to register class assignment!"});
+                      M.toast({html:"Failed to register course!"});
                   }else if(response.data=='suc'){
                       M.toast({html:"Successfully Added!"});
-                      c.value="";
-                        f.value="";
-                        s.value="";
-                       
+                      
                   }
                 }).catch((error)=>{
                     console.log(error)
