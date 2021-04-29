@@ -95,11 +95,11 @@ require('session.php');
 								</tr>
 							</thead>
 							<tbody>
-								<?php 
-								$i = 1;
-								$class_subject = $db->query("SELECT cs.*,concat(co.course,' ',c.level,'-',c.section) as `class`,s.sub_name,f.name as fname FROM class_subject cs inner join `class` c on c.id = cs.class_id inner join courses co on co.id = c.course_id inner join faculty f on f.id = cs.faculty_id inner join subjects s on s.id = cs.subject_id order by concat(co.course,' ',c.level,'-',c.section) asc");
-								while($row=$class_subject->fetch_assoc()):
-								?>
+              <?php
+                 $i=1;
+                $result = mysqli_query($db,"SELECT cs.*,concat(co.course,' ',c.level,'-',c.section) as `class`,s.subject,f.name as fname FROM class_subject cs inner join `class` c on c.id = cs.class_id inner join courses co on co.id = c.course_id inner join faculty f on f.id = cs.faculty_id inner join subjects s on s.id = cs.subject_id order by concat(co.course,' ',c.level,'-',c.section) asc");
+                 while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                ?>
 								<tr>
 									<td class="text-center"><?php echo $i++ ?></td>
 									<td>
@@ -116,7 +116,9 @@ require('session.php');
                       <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
                     </td>
 								</tr>
-								<?php endwhile; ?>
+                <?php 
+                    } //end while
+                ?>
 							</tbody>
           </table>
           </div>
