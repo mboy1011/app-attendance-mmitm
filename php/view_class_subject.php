@@ -4,37 +4,39 @@ if($_SESSION['utype']==2){
   header("location: ./user/check_attendance.php");
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-     <!-- MCSS Offline -->
-     <link rel="stylesheet" href="../assets/css/materializecss.min.css">
-    <link rel="stylesheet" href="../assets/css/materializecss-icons.css">
-    <!-- Style CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <!-- jQueryMaterializeCSS -->
-    <link rel="stylesheet" href="../assets/css/jq-data-material.css">
-     <!--Let browser know website is optimized for mobile-->
-     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-     <style>
-         #mapid { height: 180px; }
-      header, main, footer {
-        padding-left: 300px;
-      }
-
-      @media only screen and (max-width : 1024px) {
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Register</title>
+            <!-- MCSS Offline -->
+            <link rel="stylesheet" href="../assets/css/materializecss.min.css">
+            <link rel="stylesheet" href="../assets/css/materializecss-icons.css">
+            <!-- Style CSS -->
+            <link rel="stylesheet" href="../assets/css/style.css">
+            <!-- jQueryMaterializeCSS -->
+            <link rel="stylesheet" href="../assets/css/jq-data-material.css">
+            <!--Let browser know website is optimized for mobile-->
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <style>
+          #mapid { height: 180px; }
         header, main, footer {
-          padding-left: 0;
+          padding-left: 300px;
         }
-      }
-     </style>
+
+        @media only screen and (max-width : 1024px) {
+          header, main, footer {
+            padding-left: 0;
+          }
+        }
+      </style>
 </head>
+
 <body>
-<header>
+  <header>
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
@@ -44,7 +46,9 @@ if($_SESSION['utype']==2){
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
               </ul>
           </div>
+
         </nav>
+        
       </div>
       <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
         <li>
@@ -127,7 +131,7 @@ if($_SESSION['utype']==2){
           </div>
         </div>
       </div>
-    </div>
+
     
 
     <!-- modal for adding a class -->
@@ -151,7 +155,7 @@ if($_SESSION['utype']==2){
                  <div class="row">
                     <div class="input-field col s12">
                     <label for="" class="control-label">Class</label>
-                    <select name="class_id" id="class_id">
+                    <select name="class" id="class">
                         <option value=""></option>
                         <?php
                         $class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
@@ -168,7 +172,7 @@ if($_SESSION['utype']==2){
                   <div class="row">
                     <div class="input-field col s12">
                     <label for="" class="control-label">Faculty</label>
-                    <select name="faculty_id" id="faculty_id">
+                    <select name="faculty" id="faculty">
                       <option value=""></option>
                       <?php
                       $class = $db->query("SELECT * FROM faculty order by name asc");
@@ -183,7 +187,7 @@ if($_SESSION['utype']==2){
                   <div class="row">
                     <div class="input-field col s12">
                     <label for="" class="control-label">Subject</label>
-                    <select name="subject_id" id="subject_id">
+                    <select name="subject" id="subject">
                       <option value=""></option>
                       <?php
                       $class = $db->query("SELECT * FROM subjects order by sub_name asc");
@@ -281,9 +285,9 @@ if($_SESSION['utype']==2){
     
     let b = document.querySelector("#regBtnSave");
         b.addEventListener('click',()=>{
-            let c = document.querySelector("#class_id");
-            let f= document.querySelector("#faculty_id");
-            let s = document.querySelector("#subject_id");
+          let c = document.querySelector("#class");
+            let f= document.querySelector("#faculty");
+            let s = document.querySelector("#subject");
                   axios.post('post.php',{
                     req:'addClassSubject',c:c.value,f:f.value,s:s.value
                 }).then((response)=>{
