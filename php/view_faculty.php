@@ -53,9 +53,9 @@ if($_SESSION['utype']==2){
             <div class="background">
               <!-- <img src="" alt="" style="width:100%;"> -->
             </div>
-            <!-- <a href="#user"><img class="circle" src=""></a>
-            <a href="#name"><span class="white-text name">Admin</span></a>
-            <a href="#email"><span class="white-text email">admin@gcc.com</span></a> -->
+            <a href="#user"><img class="circle" src="../assets/img/slogo.png"></a>
+            <a href="#name"><span class="white-text name"><?PHP echo $_SESSION['name'];?></span></a>
+            <a href="#email"><span class="white-text email"><?PHP echo $_SESSION['email'];?></span></a>
           </div>
         </li>
         <!-- menu navigation bar -->
@@ -357,6 +357,9 @@ if($_SESSION['utype']==2){
         }else if(isset($_SESSION['addFac'])){
           echo "M.toast({html:'Succesfully Added!'})";
           unset($_SESSION['addFac']);
+        }else if(isset($_SESSION['upFac'])){
+          echo "M.toast({html:'Succesfully Updated!'})";
+          unset($_SESSION['upFac']);
         }
         ?>
         // 
@@ -385,6 +388,7 @@ if($_SESSION['utype']==2){
 
 
         let upbtn = document.querySelector("#upBtn");
+        let modal = document.querySelectorAll(".modal");
         upbtn.addEventListener('click',()=>{
             let id = document.querySelector("#edit-id");
             let idno = document.querySelector("#edit-idno");
@@ -399,10 +403,14 @@ if($_SESSION['utype']==2){
                     req:'updateFaculty',fn:fn.value,email:email.value,cont:cont.value,add:add.value,id:id.value,idno:idno.value
                 }).then((response)=>{
                     console.log(response.data);
-                    
-                        M.toast({html:"Update Successfully!"});
+                    let obj = response.data;
+                    if(obj=='suc'){
+                      location.reload();
+                    }else{
+                      location.reload();
+                    }
                         
-                        modal[0].M_Modal.close();
+                    modal[0].M_Modal.close();
                     
                 }).catch((error)=>{
                     console.log(error)

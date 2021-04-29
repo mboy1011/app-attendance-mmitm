@@ -195,13 +195,14 @@ if($req=='addUser'){
     require("query.php");
     $oop=new Query();
     $sql=$oop->updateFaculty($fn,$email,$cont,$add,$id,$idno);
-     if($sql==1){
-        echo 'dup';
-    }else if($sql==3){
-        echo 'suc';
-    }else if($sql==2){
-        echo 'fai';
+    if($sql=='fuc'){
+        $_SESSION['upFac']='suc';
+        echo $sql;
+    }else{
+        $_SESSION['upFac']='fai';
+        echo $sql;
     }
+    
 }else if($req=='updateCourse'){
     $id=$data['id'];
     $course=$data['course'];

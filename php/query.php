@@ -8,12 +8,16 @@ class Query {
             if($row['type']==2){
                 session_start();
                 $_SESSION['login_user']=$row['id'];
+                $_SESSION['name']=$row['name'];
+                $_SESSION['email']=$row['username'];
                 $_SESSION['faid'] = $row['faculty_id'];
                 $_SESSION['utype']=$row['type'];
                 header('location:php/user/check_attendance.php');
             }else if(password_verify($pass,$row['password'])){
                 session_start();
                 $_SESSION['login_user']=$row['id'];
+                $_SESSION['name']=$row['name'];
+                $_SESSION['email']=$row['username'];
                 $_SESSION['faid'] = $row['faculty_id'];
                 $_SESSION['utype']=$row['type'];
                 header('location:php/dashboard.php');
@@ -225,6 +229,16 @@ class Query {
         require('config.php');
         $query = mysqli_query($db,"UPDATE users SET username = $user WHERE id=$id");   
         if(!$query){
+            return 'fai';
+        }else{
+            return 'suc';
+        }
+    }
+    public function updateFaculty($fn,$email,$cont,$add,$id,$idno)
+    {
+        require('config.php');
+        $sql = mysqli_query($db,"UPDATE faculty SET `id_no` = '$id', `email` = '$email', `name`='$fn', `contact`='$cont', `address`='$add' WHERE `id`='$idno'");   
+        if($sql!=1){
             return 'fai';
         }else{
             return 'suc';

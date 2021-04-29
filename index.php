@@ -19,6 +19,7 @@
         <div class="container">
             <div class="z-depth-2 y-depth-2 x-depth-2 grey green-text lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px; margin-top: 100px; solid #EEE;">
                 <div class="section"></div>
+                <div class="section"><center><img class="circle" width="100" src="./assets/img/slogo.png"></center></div>
                 <div class="section"><center>Student Attendance Management System</center></div>
                 <div class="section"><i class="mdi-alert-error red-text"></i></div>
                 <form action="" method="post">

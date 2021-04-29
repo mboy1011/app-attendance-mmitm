@@ -50,9 +50,9 @@ if($_SESSION['utype']==2){
             <div class="background">
               <img src="" alt="" style="width:100%;">
             </div>
-            <a href="#user"><img class="circle" src=""></a>
-            <a href="#name"><span class="white-text name">Admin</span></a>
-            <a href="#email"><span class="white-text email">admin@gcc.com</span></a>
+            <a href="#user"><img class="circle" src="../assets/img/slogo.png"></a>
+            <a href="#name"><span class="white-text name"><?PHP echo $_SESSION['name'];?></span></a>
+            <a href="#email"><span class="white-text email"><?PHP echo $_SESSION['email'];?></span></a>
           </div>
         </li>
         <li ><a href="#" class="white-text">Dashboard <i class="small material-icons right white-text">home</i></a></li>
