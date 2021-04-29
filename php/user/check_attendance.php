@@ -10,7 +10,7 @@ if($_SESSION['utype']!=2){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check Attendance</title>
+    <title>Attendance Record</title>
      <!-- MCSS Offline -->
      <link rel="stylesheet" href="../../assets/css/materializecss.min.css">
     <link rel="stylesheet" href="../../assets/css/materializecss-icons.css">
@@ -36,7 +36,7 @@ if($_SESSION['utype']!=2){
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Check Attendance</a>
+              <a href="#!" class="brand-logo center green-text">Attendance Record</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -65,7 +65,39 @@ if($_SESSION['utype']!=2){
       
   </header>
   <main>
-  
+  <div class="container">
+    <div class="row">
+        
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+        <select id="sub" name="sub">
+            
+        </select>
+        <label>Subject</label>
+        </div>
+    </div>
+    <div class="row">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student Name</th>
+                <th>Present</th>
+                <th>Absent</th>
+                <th>Late</th>
+            </tr>
+        </thead>
+        <!-- <input type="hidden" name="" class="pbtn abtn lbtn" data-id="n/a"> -->
+        <tbody id="tbody">
+                 
+        </tbody>
+    </table>
+    </div>
+    <div class="row">
+    <a class="waves-effect waves-light btn" id="subtn">Submit</a>
+    </div>
+  </div>
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -101,7 +133,160 @@ if($_SESSION['utype']!=2){
         //
         // AXIOS AJAX
         // 
+        window.addEventListener('load',(event)=>{
+            axios.post('../post.php',{
+                req:'getSubject',fa:<?php echo $_SESSION['faid'];?>
+            }).then((response)=>{
+                // console.log(response.data);
+                let obj = response.data;
+                let sub = document.querySelector("#sub");
+                sub.M_FormSelect.$selectOptions.empty();
+                sub.M_FormSelect.$selectOptions.remove();
+                let opt1 = document.createElement("option");
+                opt1.setAttribute('disabled','');
+                opt1.setAttribute('selected','');
+                opt1.text = 'Choose Subject';
+                opt1.value = 0;
+                sub.options.add(opt1); 
+                for (let i = 0; i < obj.length; i++) {
+                    // console.log(obj[i].brgyDesc);
+                    let opt = document.createElement("option");
+                    // opt.setAttribute('selected');
+                    opt.text = obj[i].sub_name;
+                    opt.value = obj[i].class_id;
+                    sub.options.add(opt);
+                }
+                // Load Form Select MaterializeCSS
+                var elems = document.querySelectorAll('select');
+                M.FormSelect.init(elems);
+            }).catch((error)=>{
+                console.log(error)
+            });
+        });
+        // 
+
+        // 
+        let sub = document.querySelector("#sub");
+        sub.addEventListener('change',()=>{
+            let tb = document.querySelector("#tbody");
+            if(tb.rows.length>0){
+                document.querySelectorAll("table tbody tr").forEach(function(e){e.remove()})
+                // console.log("not empty!");
+            }
+            // AXIOS
+            axios.post('../post.php',{
+                req:'getStudents',cid:sub.value
+            }).then((response)=>{
+                let datas;
+                // console.log(response.data);
+                let obj = response.data;
+                axios.post('../post.php',{
+                    req:'checkStat',cid:obj[0].cid
+                }).then((response)=>{
+                    datas = response.data;
+                    //
+                    if(datas==1){
+                        M.toast({html:'Attendance already checked!'})
+                    }else{
+                        for (let i = 0; i < obj.length; i++) {
+                            let plb = document.createElement("label");
+                            let psp = document.createElement("span");
+                            let pbtn = document.createElement('input');
+                            let alb = document.createElement("label");
+                            let asp = document.createElement("span");
+                            let abtn = document.createElement('input');
+                            let llb = document.createElement("label");
+                            let lsp = document.createElement("span");
+                            let lbtn = document.createElement('input');
+
+                            pbtn.setAttribute('class','pbtn');
+                            abtn.setAttribute('class','abtn');
+                            lbtn.setAttribute('class','lbtn');
+
+                            pbtn.setAttribute('type','radio');
+                            pbtn.setAttribute('name','group'+i);
+                            abtn.setAttribute('type','radio');
+                            abtn.setAttribute('checked','');
+                            abtn.setAttribute('name','group'+i);
+                            lbtn.setAttribute('type','radio');
+                            lbtn.setAttribute('name','group'+i);
+                            
+                            pbtn.setAttribute('data-sid',obj[i].sid);
+                            pbtn.setAttribute('data-cid',obj[i].cid);
+                            pbtn.setAttribute('data-ty',1);
+                            abtn.setAttribute('data-sid',obj[i].sid);
+                            abtn.setAttribute('data-cid',obj[i].cid);
+                            abtn.setAttribute('data-ty',0);
+                            lbtn.setAttribute('data-sid',obj[i].sid);
+                            lbtn.setAttribute('data-cid',obj[i].cid);
+                            lbtn.setAttribute('data-ty',2);
+                                
+                            tb.insertRow(i);
+                            tb.rows[i].insertCell(0).innerText = i;
+                            tb.rows[i].insertCell(1).innerText = obj[i].name;
+                            tb.rows[i].insertCell(2).appendChild(plb).appendChild(pbtn).parentElement.appendChild(psp);
+                            tb.rows[i].insertCell(3).appendChild(alb).appendChild(abtn).parentElement.appendChild(asp);
+                            tb.rows[i].insertCell(4).appendChild(llb).appendChild(lbtn).parentElement.appendChild(lsp);
+                        }//endfor
+                    }//endif
+                    // 
+                }).catch((error)=>{
+                    datas = error;
+                });
+            }).catch((error)=>{
+                console.log(error);
+            })      
+            
+        });   
+        let subtn = document.querySelector("#subtn");
+        subtn.addEventListener('click',()=>{
+            let radbut = document.querySelectorAll("input[type='radio']");
+            let data = [];
+            for (let i = 0; i < radbut.length; i++) {
+                if(radbut[i].checked==true){
+                    data.push({
+                        "class_id":radbut[i].dataset.cid,
+                        "stud_id":radbut[i].dataset.sid,
+                        "type":radbut[i].dataset.ty
+                    });
+                    // console.log("Type:"+radbut[i].dataset.ty+"|Student ID:"+radbut[i].dataset.sid);
+                    console.log(data);
+                }
+            }
+            if(data.length==0){
+                M.toast({html:"Select a student first before submitting!"});
+            }else{
+                axios.post('../post.php',{
+                    req:'addAttend',data:data
+                }).then((response)=>{
+                    console.log(response.data);
+                    let obj = response.data;
+                    if(obj==1){
+                        M.toast({html:"Attendance already checked!"});
+                        let tb = document.querySelector("#tbody");
+                        if(tb.rows.length>0){
+                            document.querySelectorAll("table tbody tr").forEach(function(e){e.remove()})
+                            // console.log("not empty!");
+                        }
+                    }else if(data.length==obj.length){
+                        M.toast({html:"All students successfully attendend!"});
+                        let tb = document.querySelector("#tbody");
+                        if(tb.rows.length>0){
+                            document.querySelectorAll("table tbody tr").forEach(function(e){e.remove()})
+                            // console.log("not empty!");
+                        }
+                        console.log(data.length);
+                        console.log(obj.length);
+                    }
+                }).catch((error)=>{
+                    console.log(error);
+                })
+            }
+        });
         
+        function check() {
+            
+        }
     </script>
 </body>
 </html>
