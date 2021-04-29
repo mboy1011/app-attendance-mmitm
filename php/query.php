@@ -231,7 +231,7 @@ class Query {
         }
     }
 
-   public function updateSubject($id,$sub,$desc)
+   public function updateSubject($id,$sub,$desc){
    require('config.php');
    $query = mysqli_query($db,"SELECT * FROM students where id_no ='$id_no' ".(!empty($id) ? " and id != {$id} " : ''));
    if($query->num_rows>0){
@@ -248,5 +248,5 @@ class Query {
         return 1;
     }
 }
-
+}
 ?>
