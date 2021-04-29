@@ -1,8 +1,8 @@
 <?php
-require('session.php');
-if($_SESSION['utype']==2){
-    header("location: ./user/check_attendance.php");
-  }
+require('../session.php');
+if($_SESSION['utype']!=2){
+    header("location: ../dashboard.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,12 +10,12 @@ if($_SESSION['utype']==2){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance</title>
+    <title>Attendance Record</title>
      <!-- MCSS Offline -->
-     <link rel="stylesheet" href="../assets/css/materializecss.min.css">
-    <link rel="stylesheet" href="../assets/css/materializecss-icons.css">
+     <link rel="stylesheet" href="../../assets/css/materializecss.min.css">
+    <link rel="stylesheet" href="../../assets/css/materializecss-icons.css">
     <!-- Style CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
      <!--Let browser know website is optimized for mobile-->
      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
      <style>
@@ -36,7 +36,7 @@ if($_SESSION['utype']==2){
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Register</a>
+              <a href="#!" class="brand-logo center green-text">Attendance Record</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -56,19 +56,11 @@ if($_SESSION['utype']==2){
           </div>
         </li>
         <!-- menu navigation bar -->
-        <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
-        <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
-        <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
-        <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>
-          
-        <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>       
-        <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
-        <li><a href="view_class_subject.php" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
-        <li><a href="view_user.php" class="white-text">Users<i class="small material-icons left white-text">school</i></a></li>
-        <li><a href="attendance.php" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
-        <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>
+        <li><a href="#" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
+        <li><a href="check_attendance.php" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
+        <li><a href="#" class="white-text">Class List <i class="small material-icons left white-text">check</i></a></li>
         <li><a href="#" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
-        <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
+        <li><a href="../logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
     </ul>
       
   </header>
@@ -79,7 +71,7 @@ if($_SESSION['utype']==2){
         <select id="fac" name="fac">
             <option value="" disabled selected>Choose Faculty</option>
             <?PHP
-                require("config.php");
+                require("../config.php");
                 $sql = mysqli_query($db, "SELECT * FROM faculty");
                 while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
             ?>
@@ -132,8 +124,8 @@ if($_SESSION['utype']==2){
     </div>
     </footer>
     <!-- MCSS Offline -->
-    <script src="../assets/js/materialize-css.min.js"></script>
-    <script src="../assets/js/axios.min.js"></script>
+    <script src="../../assets/js/materialize-css.min.js"></script>
+    <script src="../../assets/js/axios.min.js"></script>
     <script type="text/javascript" charset="utf-8">
         M.AutoInit();
         //SideNave
@@ -157,7 +149,7 @@ if($_SESSION['utype']==2){
         // 
         let fac = document.querySelector("#fac");
         fac.addEventListener('change',()=>{
-            axios.post('post.php',{
+            axios.post('../post.php',{
                 req:'getSubject',fa:fac.options[fac.selectedIndex].value
             }).then((response)=>{
                 // console.log(response.data);
@@ -197,13 +189,13 @@ if($_SESSION['utype']==2){
                 // console.log("not empty!");
             }
             // AXIOS
-            axios.post('post.php',{
+            axios.post('../post.php',{
                 req:'getStudents',cid:sub.value
             }).then((response)=>{
                 let datas;
                 console.log(response.data);
                 let obj = response.data;
-                axios.post('post.php',{
+                axios.post('../post.php',{
                     req:'checkStat',cid:obj[0].cid
                 }).then((response)=>{
                     datas = response.data;
@@ -279,7 +271,7 @@ if($_SESSION['utype']==2){
             if(data.length==0){
                 M.toast({html:"Select a student first before submitting!"});
             }else{
-                axios.post('post.php',{
+                axios.post('../post.php',{
                     req:'addAttend',data:data
                 }).then((response)=>{
                     console.log(response.data);

@@ -5,9 +5,15 @@ class Query {
         $sql = mysqli_query($db,"SELECT * FROM users WHERE username='$user'");
         $row = mysqli_fetch_array($sql,MYSQLI_ASSOC);
         if($sql->num_rows>0){
-            if(password_verify($pass,$row['password'])){
+            if($row['type']==2){
                 session_start();
                 $_SESSION['login_user']=$row['id'];
+                $_SESSION['utype']=$row['type'];
+                header('location:php/user/check_attendance.php');
+            }else if(password_verify($pass,$row['password'])){
+                session_start();
+                $_SESSION['login_user']=$row['id'];
+                $_SESSION['utype']=$row['type'];
                 header('location:php/dashboard.php');
             }else{
                 return 'incorrect pass';
@@ -82,14 +88,14 @@ class Query {
             }
         }
     }
-    public function addFaculty($idno,$fac,$em,$con,$addr)
+    public function addFaculty($idno,$fac,$em,$con)
     {
         require("config.php");
         $sql = mysqli_query($db,"SELECT * FROM faculty WHERE id_no='$idno' AND email='$em'");
         if($sql->num_rows>0){
             return 1;
         }else{
-            $res = mysqli_query($db,"INSERT INTO faculty(`id_no`,`name`,`email`,`contact`,`address`) VALUES ('".$idno."','".$fac."','".$em."','".$con."','".$addr."')");
+            $res = mysqli_query($db,"INSERT INTO faculty(`id_no`,`name`,`email`,`contact`) VALUES ('".$idno."','".$fac."','".$em."','".$con."')");
             if (!$res) {
                 return 2;
             }else{
@@ -170,25 +176,19 @@ class Query {
                 }
             }
     }
-    public function updateUser($user,$pass,$type,$auth,$id){
 
+    public function updateStudent($id_no,$class_id,$name){
         require('config.php');
-        if($auth == "true"){
-            $enc_pass = password_hash($pass,PASSWORD_BCRYPT);
-            $sql = mysqli_query($db,"UPDATE users SET username='$user', type='$type', password='$enc_pass' WHERE id='$id'");
+        $sql = mysqli_query($db,"SELECT * FROM students WHERE id_no='$id_no'");
+        if(empty($id_no)){
+            $save = $this->db->query("INSERT INTO students set $data");
         }else{
-            $sql = mysqli_query($db,"UPDATE users SET username='$user', type='$type' WHERE id='$id'");
+            $save = $this->db->query("UPDATE students set $data where id = $id_no");
+        }
+        if($save){
+            return 1;
         }
     }
-  
-
- 
-
-
-
-
-
-// query end
     public function addClassSubject($c,$s,$f){
         require('config.php');
         $sql = mysqli_query($db,"SELECT * FROM class_subject where class_id='$c'");
@@ -219,20 +219,14 @@ class Query {
             }
         }
     }
-    
-
-    public function updateFaculty($fn,$email,$cont,$add,$id,$idno){
-        
+    public function updateUser($user,$pass,$type,$id,$test,$auth){
         require('config.php');
-        $sql = mysqli_query($db,"UPDATE faculty SET id_no='$id', name='$fn', address='$add', contact='$cont', email='$email' WHERE id='$idno'");
-       
+        $query = mysqli_query($db,"UPDATE users SET username = $user WHERE id=$id");   
+        if(!$query){
+            return 'fai';
+        }else{
+            return 'suc';
+        }
     }
-    public function updateCourse($cid,$cname,$cdesc){
-        
-        require('config.php');
-        $sql = mysqli_query($db,"UPDATE courses SET id='$cid', course='$cname', description='$cdesc' WHERE id='$cid'");
-       
-    }
-
-}//End of query
+}
 ?>

@@ -203,15 +203,15 @@ if($req=='addUser'){
         echo 'fai';
     }
 }else if($req=='updateCourse'){
-    $cid=$data['id'];
-    $cname=$data['cname'];
-    $cdesc=$data['cdesc'];
+    $id=$data['id'];
+    $course=$data['course'];
+    $desc=$data['desc'];
 
 
     
     require("query.php");
     $oop=new Query();
-    $sql=$oop->updateCourse($cid,$cname,$cdesc);
+    $sql=$oop->updateCourse($id,$course,$desc);
      if($sql==1){
         echo 'dup';
     }else if($sql==3){

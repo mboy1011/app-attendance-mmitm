@@ -1,5 +1,8 @@
 <?php
 require('session.php');
+if($_SESSION['utype']==2){
+  header("location: ./user/check_attendance.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -117,7 +120,7 @@ require('session.php');
                     <td><?PHP echo $row['date_created']?></td>
                    
                     <td>
-                    <a href="#modal-edit" class="waves-effect waves-light btn modal-trigger orange btn-up" data-cname="<?PHP echo $row['course']?>" data-desc="<?PHP echo $row['description']?>"><i class="material-icons white-text">edit</i></a>
+                    <a href="#modal-edit" class="waves-effect waves-light btn modal-trigger orange btn-up" data-id="<?PHP echo $row['id']?>" data-date="<?PHP echo $row['date_created']?>" data-course="<?PHP echo $row['course']?>" data-desc="<?PHP echo $row['description']?>"><i class="material-icons white-text">edit</i></a>
 
                     </td>
                   </tr>
@@ -157,15 +160,23 @@ require('session.php');
                     <label>ID no:</label>
                     <input type="text" name="id" id="edit-id" disabled>
                     <label>Course</label>
-                    <input type="text" name="cname" id="edit-name">
+                    <input type="text" name="cname" id="edit-course">
                     <label>Description</label>
                     <input type="text" name="cdesc" id="edit-desc">
-                    <label>Date Created</label>
-                    <input type="text" name="date" id="edit-date">
-                   
+              
+                    </div>
                 </div>
-  </div>
-
+                <div class="modal-footer">
+                    
+                <button id="upBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Save Changes
+                <i class="material-icons right">done</i>
+            </button>
+                    <a href="#!" class="modal-action 
+                        modal-close btn red darken-1">
+                        Cancel
+                    </a>
+                </div>
+            </div> 
   </div>
 <!-- modal for adding course -->
 <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
@@ -299,6 +310,50 @@ require('session.php');
             }else{
                 M.toast({html:"Empty!"});
             }
+            // console.log("CLICKED");
+        });
+
+
+
+
+        let btnup = document.querySelectorAll(".btn-up");
+   for (let i = 0; i < btnup.length; i++) {
+     
+       btnup[i].addEventListener('click',function(){
+        
+         let edit_id = document.querySelector("#edit-id");
+         edit_id.value = this.dataset.id;
+         let edit_course = document.querySelector("#edit-course");
+         edit_course.value = this.dataset.course;
+         let edit_desc = document.querySelector("#edit-desc");
+         edit_desc.value = this.dataset.desc;
+         
+       // console.log(this.dataset.id);
+     });
+   }
+
+
+        let upbtn = document.querySelector("#upBtn");
+        upbtn.addEventListener('click',()=>{
+            let id = document.querySelector("#edit-id");
+            let desc = document.querySelector("#edit-desc");
+            let course = document.querySelector("#edit-course");
+          
+           
+
+
+                axios.post('post.php',{
+                    req:'updateCourse',id:id.value,course:course.value,desc:desc.value
+                }).then((response)=>{
+                    console.log(response.data);
+                    
+                        M.toast({html:"Update Successfully!"});
+                        modal[0].M_Modal.close();
+                    
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            
             // console.log("CLICKED");
         });
 
