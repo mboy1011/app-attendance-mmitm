@@ -38,16 +38,17 @@ if($_SESSION['utype']==2){
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Subjects</a>
+              <a href="#!" class="brand-logo center green-text">Course</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
-              <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
-                  <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
-              </ul>
+                  <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
+                    <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
+                  </ul>
           </div>
         </nav>
       </div>
+      
       <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
-        <li>
+      <li>
         <div class="user-view">
             <div class="background">
               <!-- <img src="" alt="" style="width:100%;"> -->
@@ -57,12 +58,10 @@ if($_SESSION['utype']==2){
             <a href="#email"><span class="white-text email"><?PHP echo $_SESSION['email'];?></span></a>
           </div>
         </li>
-        <!-- menu navigation bar -->
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
         <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
         <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
-        <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>
-          
+        <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>   
         <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>       
         <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
         <li><a href="view_class_subject.php" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
@@ -72,14 +71,16 @@ if($_SESSION['utype']==2){
         <li><a href="view_attendance_record.php" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
     </ul>
-      
-  </header>
+</header>
+
+
   <main>
+  
   <div class="row">
       <div id="man" class="col s12">
         <div class="card material-table">
             <div class="table-header">
-              <span class="table-title">Subjects</span>
+              <span class="table-title">Courses</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
                 <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
@@ -96,12 +97,13 @@ if($_SESSION['utype']==2){
                         </label>
                       </th>
                       <th>ID</th>
-                      <th>Course</th>
+                      <th>Subject</th>
                       <th>Description</th>
                       <th>Date_Created</th>
+                      <th>Action</th>
                   </tr>
               </thead>
-              <tbody>
+              <tbody id="tbody">
                 <?php
                 $result = mysqli_query($db,"SELECT * FROM subjects");
                 $i=1;
@@ -120,8 +122,8 @@ if($_SESSION['utype']==2){
                     <td><?PHP echo $row['date_created']?></td>
                    
                     <td>
-                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
-                      <!-- <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a> -->
+                    <a href="#modal-edit" class="waves-effect waves-light btn modal-trigger orange btn-up" data-id="<?PHP echo $row['id']?>" data-date="<?PHP echo $row['date_created']?>" data-sub="<?PHP echo $row['sub_name']?>" data-desc="<?PHP echo $row['description']?>"><i class="material-icons white-text">edit</i></a>
+
                     </td>
                   </tr>
                   <?php 
@@ -134,7 +136,51 @@ if($_SESSION['utype']==2){
       </div>
     </div>
 </div>
-<!-- modal for adding subject -->
+<!-- modal for delete -->
+<div id="delMod" class="modal">
+                          <form action="post.php" method="post">
+                          <div class="modal-content">
+                            <h4>Delete Course</h4>
+                              <input type="text" name="arrData" id="arrData" hidden>
+                              Are you sure you want to delete the following data?
+                          </div>
+                          <div class="modal-footer">
+                            <button href="#!" type="submit" name="mulDel" class="modal-close waves-effect waves-green btn-flat">Agree</button>
+                          </div>
+                          </form>
+                        </div>
+
+
+
+<!-- Modal for editing course -->
+<div id="modal-edit" 
+                class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Edit Subject</h4>
+                    <p class="center">
+                    <div class="row">
+                    <label>ID no:</label>
+                    <input type="text" name="id" id="edit-id" disabled>
+                    <label>Subject</label>
+                    <input type="text" name="cname" id="edit-sub">
+                    <label>Description</label>
+                    <input type="text" name="cdesc" id="edit-desc">
+              
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    
+                <button id="upBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Save Changes
+                <i class="material-icons right">done</i>
+            </button>
+                    <a href="#!" class="modal-action 
+                        modal-close btn red darken-1">
+                        Cancel
+                    </a>
+                </div>
+            </div> 
+  </div>
+<!-- modal for adding course -->
 <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
       <div class="modal-content">
                     <h4>Add Subject</h4>
@@ -172,7 +218,10 @@ if($_SESSION['utype']==2){
       </div>
 </div>
   </main>
-  
+
+
+
+
   <footer class="page-footer">
     <div class="container">
       
@@ -183,13 +232,7 @@ if($_SESSION['utype']==2){
         </div>
     </div>
     </footer>
-        
-        
-        
-        
-        
-        
-            <!-- MCSS Offline -->
+    <!-- MCSS Offline -->
     <script src="../assets/js/materialize-css.min.js"></script>
     <script src="../assets/js/axios.min.js"></script>
     <!-- jQueryMaterilizeCSS -->
@@ -254,9 +297,9 @@ if($_SESSION['utype']==2){
                 }).then((response)=>{
                     console.log(response.data);
                     if(response.data=="dup"){
-                        M.toast({html:"Course Already Exist!"});
+                        M.toast({html:"Subject Already Exist!"});
                     }else if(response.data == "fai"){
-                        M.toast({html:"Failed to register course!"});
+                        M.toast({html:"Failed to register subject!"});
                     }else if(response.data=='suc'){
                         M.toast({html:"Successfully Added!"});
                         subject_name.value="";
@@ -271,6 +314,52 @@ if($_SESSION['utype']==2){
             }
             // console.log("CLICKED");
         });
+
+
+
+
+        let btnup = document.querySelectorAll(".btn-up");
+   for (let i = 0; i < btnup.length; i++) {
+     
+       btnup[i].addEventListener('click',function(){
+        
+         let edit_id = document.querySelector("#edit-id");
+         edit_id.value = this.dataset.id;
+         let edit_sub = document.querySelector("#edit-sub");
+         edit_sub.value = this.dataset.sub;
+         let edit_desc = document.querySelector("#edit-desc");
+         edit_desc.value = this.dataset.desc;
+         
+       // console.log(this.dataset.id);
+     });
+   }
+
+
+        let upbtn = document.querySelector("#upBtn");
+        upbtn.addEventListener('click',()=>{
+            let id = document.querySelector("#edit-id");
+            let desc = document.querySelector("#edit-desc");
+            let sub = document.querySelector("#edit-sub");
+          
+           
+
+
+                axios.post('post.php',{
+                    req:'updateSubject',id:id.value,sub:sub.value,desc:desc.value
+                }).then((response)=>{
+                    console.log(response.data);
+                    
+                        M.toast({html:"Update Successfully!"});
+                        modal[0].M_Modal.close();
+                    
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            
+            // console.log("CLICKED");
+        });
+
+
     </script>
 </body>
 </html>
