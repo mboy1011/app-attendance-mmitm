@@ -244,23 +244,16 @@ class Query {
             return 'suc';
         }
     }
-
-   public function updateSubject($id,$sub,$desc){
-   require('config.php');
-   $query = mysqli_query($db,"SELECT * FROM students where id_no ='$id_no' ".(!empty($id) ? " and id != {$id} " : ''));
-   if($query->num_rows>0){
-        return 1;
-        exit;
+    public function updateCourse($id,$course,$desc)
+    {
+        require('config.php');
+        $sql = mysqli_query($db,"UPDATE courses SET `id` = '$id', `course` = '$course', `description`='$desc' WHERE `id`='$id'");   
+        if($sql!=1){
+            return 'fai';
+        }else{
+            return 'suc';
+        }
     }
-    if(empty($id)){
-        $save = mysqli_query($db,"INSERT INTO students where id_no ='$id_no'");
-    }else{
-        $save = mysqli_query($db,"UPDATE students where id = $id");
-    }
-
-    if($save){
-        return 1;
-    }
-}
+   
 }
 ?>
