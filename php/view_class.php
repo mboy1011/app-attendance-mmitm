@@ -105,8 +105,11 @@ if($_SESSION['utype']==2){
               <tbody>
               <?php 
 								$i = 1;
-								$class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class` FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
+                $cname;
+								$class = $db->query("SELECT c.*,concat(co.course,' ',c.level,'-',c.section) as `class`,co.id as `courseID`FROM `class` c inner join courses co on co.id = c.course_id order by concat(co.course,' ',c.level,'-',c.section) asc");
 								while($row=$class->fetch_assoc()):
+                  
+
 								?>
                   <tr>
                     <td>
@@ -115,16 +118,19 @@ if($_SESSION['utype']==2){
                         <span></span>
                       </label>
                     </td>
-                   <td class="text-center"><?php echo $i++ ?></td>
+                   <td class="text-center"><?php echo $row['id'] ?></td>
 									  <td class=""><p><b><?php echo $row['class'] ?></b></p>
 								  </td>
-                   
+                  
                     <td>
-                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
+                      <a href="#modal-edit" class="waves-effect waves-light btn modal-trigger orange btn-up" data-courseid="<?PHP echo $row['courseID']?>" data-hid="<?PHP echo $row['courseID']?>" data-level="<?PHP echo $row['level']?>" data-sect="<?PHP echo $row['section']?>" data-id="<?PHP echo $row['id']?>"><i class="material-icons white-text">edit</i></a>
                       <!-- <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a> -->
                     </td>
                   </tr>
-                  <?php endwhile; ?>
+                  
+                  <?php
+               
+                endwhile; ?>
               </tbody>
           </table>
           </div>
@@ -204,6 +210,60 @@ if($_SESSION['utype']==2){
     </div>
   </div>
     
+
+    <!-- Modal for editing class -->
+    <div id="modal-edit" 
+                class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Edit Class</h4>
+                    <p class="center">
+                    <div class="row">
+                    
+                    <input type="text" name="hid" id="edit-hid" hidden>
+                    <label>ID no:</label>
+                    <input type="text" name="id" id="edit-id" disabled>
+                    <label>Course:</label>
+                    <div class="input-field col s12">
+                    <select name="edit-course" id="edit-course">
+                    
+                    <?PHP 
+                    
+                    $sql = $db->query("SELECT * FROM `courses`");
+                    while($row=$sql->fetch_assoc()):
+                   
+                    ?>
+                    
+                      <option value="<?PHP echo $row['id'];?>"><?PHP echo $row['course'];?></option>
+                    
+                    <?PHP endwhile;?>
+                    </select>
+                    </div>
+                    <input type="text" name="level" id="edit-level">
+                    
+                    <select name="edit-sect" id="edit-sect" class="custom-select select2">
+                        <option value="" disabled selected>Section</option>
+                
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="D">E</option>
+			                </select>
+                   
+                   
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    
+                <button id="upBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Save Changes
+                <i class="material-icons right">done</i>
+            </button>
+                    <a href="#!" class="modal-action 
+                        modal-close btn red darken-1">
+                        Cancel
+                    </a>
+                </div>
+            </div>
 
   </main>
   <footer class="page-footer">
@@ -292,6 +352,73 @@ if($_SESSION['utype']==2){
             
             // console.log("CLICKED");
         });
+
+        let btnup = document.querySelectorAll(".btn-up");
+        let edit_course = document.querySelector("#edit-course");
+        let edit_id = document.querySelector("#edit-id");
+   for (let i = 0; i < btnup.length; i++) {
+     
+       btnup[i].addEventListener('click',function(){
+        
+         
+         edit_id.value = this.dataset.id;
+         
+         console.log(this.dataset.courseid);
+         for (let o = 0; o < edit_course.length; o++) {
+           if(edit_course[o].value == this.dataset.courseid){console.log('this is'+o); 
+            edit_course.selectedIndex=o;
+            M.FormSelect.init(edit_course);  
+              edit_course.selectedIndex=o;
+              
+              
+              break;
+           }
+          }
+         edit_course.value = this.dataset.courseID;
+         let edit_level = document.querySelector("#edit-level");
+         edit_level.value = this.dataset.level;
+         let edit_sect = document.querySelector("#edit-sect");
+         edit_sect.value = this.dataset.sect;
+         let edit_hid = document.querySelector("#edit-hid");
+         edit_hid.value = this.dataset.hid;
+         
+       // console.log(this.dataset.id);
+     });
+   }
+
+   let upbtn = document.querySelector("#upBtn");
+   upbtn.addEventListener('click',()=>{
+            let id = document.querySelector("#edit-id");
+            let course = document.querySelector("#edit-course");
+            let level = document.querySelector("#edit-level");
+            let sect = document.querySelector("#edit-sect");
+            let hid = document.querySelector("#edit-hid");
+           
+           
+
+
+                axios.post('post.php',{
+                    req:'updateClass',id:id.value,course:course.value,level:level.value,sect:sect.value,hid:hid.value
+                }).then((response)=>{
+                    console.log(response.data);
+                    let obj = response.data;
+                    if(obj=='suc'){
+                      location.reload();
+                    }else{
+                      location.reload();
+                    }
+                        
+                    modal[0].M_Modal.close();
+                    
+                }).catch((error)=>{
+                    console.log(error)
+                });
+            
+            // console.log("CLICKED");
+        });
+
+
+
     </script>
 </body>
 </html>

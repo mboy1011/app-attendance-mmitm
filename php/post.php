@@ -235,5 +235,21 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
+}else if($req=='updateClass'){
+    $id=$data['id'];
+    $course=$data['course'];
+    $level=$data['level'];
+    $sect=$data['sect'];
+    $hid=$data['hid'];
+    require("query.php");
+    $oop=new Query();
+    $sql=$oop->updateClass($id,$course,$level,$sect,$hid);
+     if($sql==1){
+        echo 'dup';
+    }else if($sql==3){
+        echo 'suc';
+    }else if($sql==2){
+        echo 'fai';
+    }
 }
 ?>
