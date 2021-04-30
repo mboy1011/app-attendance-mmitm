@@ -215,18 +215,16 @@ if($req=='addUser'){
     $id=$data['id'];
     $course=$data['course'];
     $desc=$data['desc'];
-
-
     
     require("query.php");
     $oop=new Query();
     $sql=$oop->updateCourse($id,$course,$desc);
-     if($sql==1){
-        echo 'dup';
-    }else if($sql==3){
-        echo 'suc';
-    }else if($sql==2){
-        echo 'fai';
+    if($sql=='fuc'){
+        $_SESSION['upFac']='suc';
+        echo $sql;
+    }else{
+        $_SESSION['upFac']='fai';
+        echo $sql;
     }
 }else if($req=='updateSubject'){
     $id=$data['id'];

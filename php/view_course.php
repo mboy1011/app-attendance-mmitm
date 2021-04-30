@@ -7,6 +7,7 @@ if($_SESSION['utype']==2){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,17 +39,16 @@ if($_SESSION['utype']==2){
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Course</a>
+              <a href="#!" class="brand-logo center green-text">Faculty</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
-                  <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
-                    <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
-                  </ul>
+              <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
+                  <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
+              </ul>
           </div>
         </nav>
       </div>
-      
       <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
-      <li>
+        <li>
         <div class="user-view">
             <div class="background">
               <!-- <img src="" alt="" style="width:100%;"> -->
@@ -58,10 +58,12 @@ if($_SESSION['utype']==2){
             <a href="#email"><span class="white-text email"><?PHP echo $_SESSION['email'];?></span></a>
           </div>
         </li>
+        <!-- menu navigation bar -->
         <li><a href="dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
         <li><a href="view_course.php" class="white-text">Courses <i class="small material-icons left white-text">class</i></a></li>
         <li><a href="view_students.php" class="white-text">Students <i class="small material-icons left white-text">people_alt</i></a></li>
-        <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>   
+        <li><a href="view_subject.php" class="white-text">Subjects <i class="small material-icons left white-text">school</i></a></li>
+          
         <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>       
         <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
         <li><a href="view_class_subject.php" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
@@ -71,18 +73,16 @@ if($_SESSION['utype']==2){
         <li><a href="view_attendance_record.php" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
     </ul>
-</header>
-
-
+      
+  </header>
   <main>
-  
   <div class="row">
       <div id="man" class="col s12">
         <div class="card material-table">
             <div class="table-header">
-              <span class="table-title">Courses</span>
+              <span class="table-title">User Accounts</span>
               <div class="actions">
-                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
+                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delCor" href="#dupdate"><i class="material-icons">delete</i></a>
                 <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
@@ -100,6 +100,7 @@ if($_SESSION['utype']==2){
                       <th>Course</th>
                       <th>Description</th>
                       <th>Date_Created</th>
+                      <th>Action</th>
                   </tr>
               </thead>
               <tbody id="tbody">
@@ -115,13 +116,12 @@ if($_SESSION['utype']==2){
                         <span></span>
                       </label>
                     </td>
+                    <td><?PHP echo $row['id']?></td>
                     <td><?PHP echo $row['course']?></td>
                     <td><?PHP echo $row['description']?></td>
                     <td><?PHP echo $row['date_created']?></td>
-                   
                     <td>
-                    <a href="#modal-edit" class="waves-effect waves-light btn modal-trigger orange btn-up" data-id="<?PHP echo $row['id']?>" data-date="<?PHP echo $row['date_created']?>" data-course="<?PHP echo $row['course']?>" data-desc="<?PHP echo $row['description']?>"><i class="material-icons white-text">edit</i></a>
-
+                    <a href="#modal-edit" class="waves-effect waves-light btn modal-trigger orange btn-up" data-id="<?PHP echo $row['id']?>" data-date="<?PHP echo $row['date_created']?>" data-course="<?PHP echo $row['course']?>" data-desc="<?PHP echo $row['description']?>"  href="#mupdate"><i class="material-icons white-text">edit</i></a>
                     </td>
                   </tr>
                   <?php 
@@ -133,9 +133,8 @@ if($_SESSION['utype']==2){
         </div>
       </div>
     </div>
-</div>
-<!-- modal for delete -->
-<div id="delMod" class="modal">
+<!-- Modal Structure -->
+                      <div id="delMod" class="modal">
                           <form action="post.php" method="post">
                           <div class="modal-content">
                             <h4>Delete Course</h4>
@@ -147,48 +146,16 @@ if($_SESSION['utype']==2){
                           </div>
                           </form>
                         </div>
-
-
-
-<!-- Modal for editing course -->
-<div id="modal-edit" 
-                class="modal modal-fixed-footer">
+    <!-- modal for adding a faculty -->
+    <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
                 <div class="modal-content">
-                    <h4>Edit Course</h4>
-                    <p class="center">
-                    <div class="row">
-                    <label>ID no:</label>
-                    <input type="text" name="id" id="edit-id" disabled>
-                    <label>Course</label>
-                    <input type="text" name="cname" id="edit-course">
-                    <label>Description</label>
-                    <input type="text" name="cdesc" id="edit-desc">
-              
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    
-                <button id="upBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Save Changes
-                <i class="material-icons right">done</i>
-            </button>
-                    <a href="#!" class="modal-action 
-                        modal-close btn red darken-1">
-                        Cancel
-                    </a>
-                </div>
-            </div> 
-  </div>
-<!-- modal for adding course -->
-<div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
-      <div class="modal-content">
                     <h4>Add Course</h4>
-                    <p class="center">
+                    
+                    
+                    <div class="row">
+                       <div class="col s12" id="reg-form">
 
-          <div class="row">
-              <div class="col s12" id="reg-form">
-    
-   
-                  <div class="row">
+                       <div class="row">
                     <div class="input-field col s12">
                       <input id="course_name" type="text" class="validate" required>
                       <label for="course_name">Course</label>
@@ -202,24 +169,54 @@ if($_SESSION['utype']==2){
                       </div>
                   </div>
 
-              </div>
-            </div>
-            
 
-                <div class="modal-footer">
-                  <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                    <i class="material-icons right">done</i>
-                  </button>
-                   <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
+                        
+        
+                    </div>
+                  </div>
                 </div>
 
+                <div class="modal-footer">
+                    
+                    <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+                        <i class="material-icons right">done</i>
+                    </button>
+                        <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
+                </div>
+                
       </div>
-</div>
+    </div>
+
+<!-- Modal for editing faculty -->
+    <div id="modal-edit" 
+                class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Edit Course</h4>
+                    <p class="center">
+                    <div class="row">
+                    <label>ID no:</label>
+                    <input type="text" name="id" id="edit-id" disabled>
+                    <label>Course</label>
+                    <input type="text" name="cname" id="edit-course">
+                    <label>Description</label>
+                    <input type="text" name="cdesc" id="edit-desc">
+              
+                   
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    
+                <button id="upBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Save Changes
+                <i class="material-icons right">done</i>
+            </button>
+                    <a href="#!" class="modal-action 
+                        modal-close btn red darken-1">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+
   </main>
-
-
-
-
   <footer class="page-footer">
     <div class="container">
       
@@ -274,28 +271,43 @@ if($_SESSION['utype']==2){
         }
       }
     });
-    let modal = document.querySelectorAll(".modal");
-    let delData = [];
-    let check = (e)=>{
-      for (let i = 0; i < chBx.length; i++) {
-        if(chBx[i].checked == true){
-          delData.push(chBx[i].dataset.id);
-        }          
-      }
-    }
     
-    let btn = document.querySelector("#regBtn");
+    
+    
+    // 
+    let delCor = document.querySelector("#delCor");
+    delCor.addEventListener('click',()=>{
+      let deltoData = [];
+      let check = (e)=>{
+        for (let i = 0; i < chBx.length; i++) {
+          if(chBx[i].checked == true){
+            deltoData.push(chBx[i].dataset.id);
+          }          
+        }
+      }
+      check();
+      let delM = document.querySelector("#delMod");
+      delM.M_Modal.open()
+      let arrD = document.querySelector("#arrData");
+      arrD.value = JSON.stringify(deltoData);
+    });
+    
+    //modal
+ 
+
+
+        // AXIOS AJAX
+        let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
-            let course_name = document.querySelector("#course_name");
+          let course_name = document.querySelector("#course_name");
             let course_desc = document.querySelector("#course_desc");
             
-            if(course_name.value!="" && course_desc.value!=""){
                 axios.post('post.php',{
                     req:'addCourse',course_name:course_name.value,course_desc:course_desc.value
                 }).then((response)=>{
                     console.log(response.data);
                     if(response.data=="dup"){
-                        M.toast({html:"Course Already Exist!"});
+                        M.toast({html:"Already Exist!"});
                     }else if(response.data == "fai"){
                         M.toast({html:"Failed to register course!"});
                     }else if(response.data=='suc'){
@@ -307,21 +319,29 @@ if($_SESSION['utype']==2){
                 }).catch((error)=>{
                     console.log(error)
                 });
-            }else{
-                M.toast({html:"Empty!"});
-            }
-            // console.log("CLICKED");
         });
-
-
-
+        // 
+        <?php
+        if(isset($_SESSION['mulDel'])){
+          echo "let arr =".$_SESSION['mulDel']."; M.toast({html:arr.length+' data has been deleted!'}) ";
+          unset($_SESSION['mulDel']);
+        }else if(isset($_SESSION['addFac'])){
+          echo "M.toast({html:'Succesfully Added!'})";
+          unset($_SESSION['addFac']);
+        }else if(isset($_SESSION['upFac'])){
+          echo "M.toast({html:'Succesfully Updated!'})";
+          unset($_SESSION['upFac']);
+        }
+        ?>
+        // 
 
         let btnup = document.querySelectorAll(".btn-up");
+   
    for (let i = 0; i < btnup.length; i++) {
      
        btnup[i].addEventListener('click',function(){
         
-         let edit_id = document.querySelector("#edit-id");
+        let edit_id = document.querySelector("#edit-id");
          edit_id.value = this.dataset.id;
          let edit_course = document.querySelector("#edit-course");
          edit_course.value = this.dataset.course;
@@ -334,11 +354,11 @@ if($_SESSION['utype']==2){
 
 
         let upbtn = document.querySelector("#upBtn");
+        let modal = document.querySelectorAll(".modal");
         upbtn.addEventListener('click',()=>{
-            let id = document.querySelector("#edit-id");
+          let id = document.querySelector("#edit-id");
             let desc = document.querySelector("#edit-desc");
             let course = document.querySelector("#edit-course");
-          
            
 
 
@@ -346,9 +366,14 @@ if($_SESSION['utype']==2){
                     req:'updateCourse',id:id.value,course:course.value,desc:desc.value
                 }).then((response)=>{
                     console.log(response.data);
-                    
-                        M.toast({html:"Update Successfully!"});
-                        modal[0].M_Modal.close();
+                    let obj = response.data;
+                    if(obj=='suc'){
+                      location.reload();
+                    }else{
+                      location.reload();
+                    }
+                        
+                    modal[0].M_Modal.close();
                     
                 }).catch((error)=>{
                     console.log(error)
@@ -356,6 +381,10 @@ if($_SESSION['utype']==2){
             
             // console.log("CLICKED");
         });
+
+
+
+
 
 
     </script>
