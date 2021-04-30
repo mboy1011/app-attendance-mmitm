@@ -264,6 +264,7 @@ if($_SESSION['utype']==2){
 
     <script type="text/javascript" charset="utf-8">
         M.AutoInit();
+        let modal = document.querySelectorAll(".modal");
         //SideNave
         let men = document.querySelector("#menu");
         let slout = document.querySelector("#slide-out");
@@ -357,9 +358,9 @@ if($_SESSION['utype']==2){
         }else if(isset($_SESSION['addFac'])){
           echo "M.toast({html:'Succesfully Added!'})";
           unset($_SESSION['addFac']);
-        }else if(isset($_SESSION['upFac'])){
+        }else if(isset($_SESSION['addSub'])){
           echo "M.toast({html:'Succesfully Updated!'})";
-          unset($_SESSION['upFac']);
+          unset($_SESSION['addSub']);
         }
         ?>
         // 
@@ -388,7 +389,6 @@ if($_SESSION['utype']==2){
 
 
         let upbtn = document.querySelector("#upBtn");
-        let modal = document.querySelectorAll(".modal");
         upbtn.addEventListener('click',()=>{
             let id = document.querySelector("#edit-id");
             let idno = document.querySelector("#edit-idno");
