@@ -218,23 +218,16 @@ if($_SESSION['utype']==2){
                     <h4>Edit Class</h4>
                     <p class="center">
                     <div class="row">
-                    
-                    <input type="text" name="hid" id="edit-hid" hidden>
                     <label>ID no:</label>
                     <input type="text" name="id" id="edit-id" disabled>
                     <label>Course:</label>
                     <div class="input-field col s12">
                     <select name="edit-course" id="edit-course">
-                    
                     <?PHP 
-                    
                     $sql = $db->query("SELECT * FROM `courses`");
                     while($row=$sql->fetch_assoc()):
-                   
                     ?>
-                    
                       <option value="<?PHP echo $row['id'];?>"><?PHP echo $row['course'];?></option>
-                    
                     <?PHP endwhile;?>
                     </select>
                     </div>
@@ -366,22 +359,16 @@ if($_SESSION['utype']==2){
          console.log(this.dataset.courseid);
          for (let o = 0; o < edit_course.length; o++) {
            if(edit_course[o].value == this.dataset.courseid){console.log('this is'+o); 
-            edit_course.selectedIndex=o;
-            M.FormSelect.init(edit_course);  
               edit_course.selectedIndex=o;
-              
-              
+              M.FormSelect.init(edit_course);  
               break;
            }
           }
-         edit_course.value = this.dataset.courseID;
+        //  edit_course.value = this.dataset.courseID;
          let edit_level = document.querySelector("#edit-level");
          edit_level.value = this.dataset.level;
          let edit_sect = document.querySelector("#edit-sect");
          edit_sect.value = this.dataset.sect;
-         let edit_hid = document.querySelector("#edit-hid");
-         edit_hid.value = this.dataset.hid;
-         
        // console.log(this.dataset.id);
      });
    }
@@ -392,13 +379,8 @@ if($_SESSION['utype']==2){
             let course = document.querySelector("#edit-course");
             let level = document.querySelector("#edit-level");
             let sect = document.querySelector("#edit-sect");
-            let hid = document.querySelector("#edit-hid");
-           
-           
-
-
                 axios.post('post.php',{
-                    req:'updateClass',id:id.value,course:course.value,level:level.value,sect:sect.value,hid:hid.value
+                    req:'updateClass',id:id.value,course:course.value,level:level.value,sect:sect.value
                 }).then((response)=>{
                     console.log(response.data);
                     let obj = response.data;

@@ -248,10 +248,9 @@ if($req=='addUser'){
     $course=$data['course'];
     $level=$data['level'];
     $sect=$data['sect'];
-    $hid=$data['hid'];
     require("query.php");
     $oop=new Query();
-    $sql=$oop->updateClass($id,$course,$level,$sect,$hid);
+    $sql=$oop->updateClass($id,$course,$level,$sect);
      if($sql==1){
         echo 'dup';
     }else if($sql==3){

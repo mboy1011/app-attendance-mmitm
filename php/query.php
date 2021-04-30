@@ -274,29 +274,15 @@ class Query {
             return 'suc';
         }
     }
-    public function updateClass($id,$course,$level,$sect,$hid)
+    public function updateClass($id,$course,$level,$sect)
     {
-        require('config.php');
-
-        if($course < 1){
-            $sql = mysqli_query($db,"UPDATE class SET `course_id` = '$hid', `level` = '$level', `section`='$sect' WHERE `id`='$id'");   
-            if($sql!=1){
-                return 'fai';
-            }else{
-                return 'suc';
-            }
-        }else{
-            $sql = mysqli_query($db,"UPDATE class SET `course_id` = '$course', `level` = '$level', `section`='$sect' WHERE `id`='$id'");   
+        require('config.php');       
+        $sql = mysqli_query($db,"UPDATE class SET `course_id` = '$course', `level` = '$level', `section`='$sect' WHERE `id`='$id'");   
         if($sql!=1){
             return 'fai';
         }else{
             return 'suc';
         }
-        }
-
-
-        
     }
-   
 }
 ?>
