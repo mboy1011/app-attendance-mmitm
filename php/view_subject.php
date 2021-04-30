@@ -82,7 +82,7 @@ if($_SESSION['utype']==2){
             <div class="table-header">
               <span class="table-title">Courses</span>
               <div class="actions">
-                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
+                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delSub"><i class="material-icons">delete</i></a>
                 <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
@@ -138,20 +138,17 @@ if($_SESSION['utype']==2){
 </div>
 <!-- modal for delete -->
 <div id="delMod" class="modal">
-                          <form action="post.php" method="post">
-                          <div class="modal-content">
-                            <h4>Delete Course</h4>
-                              <input type="text" name="arrData" id="arrData" hidden>
-                              Are you sure you want to delete the following data?
-                          </div>
-                          <div class="modal-footer">
-                            <button href="#!" type="submit" name="mulDel" class="modal-close waves-effect waves-green btn-flat">Agree</button>
-                          </div>
-                          </form>
-                        </div>
-
-
-
+  <form action="post.php" method="post">
+  <div class="modal-content">
+    <h4>Delete Course</h4>
+      <input type="text" name="arrData" id="arrData" hidden>
+      Are you sure you want to delete the following data?
+  </div>
+  <div class="modal-footer">
+    <button href="#!" type="submit" name="mulDelSub" class="modal-close waves-effect waves-green btn-flat">Agree</button>
+  </div>
+  </form>
+</div>
 <!-- Modal for editing course -->
 <div id="modal-edit" 
                 class="modal modal-fixed-footer">
@@ -242,6 +239,7 @@ if($_SESSION['utype']==2){
 
     <script type="text/javascript" charset="utf-8">
         M.AutoInit();
+        let modal = document.querySelectorAll(".modal");
         //SideNave
         let men = document.querySelector("#menu");
         let slout = document.querySelector("#slide-out");
@@ -276,7 +274,6 @@ if($_SESSION['utype']==2){
         }
       }
     });
-    let modal = document.querySelectorAll(".modal");
     let delData = [];
     let check = (e)=>{
       for (let i = 0; i < chBx.length; i++) {
@@ -285,7 +282,23 @@ if($_SESSION['utype']==2){
         }          
       }
     }
-    
+    // Delete Button 
+    let delSub = document.querySelector("#delSub");
+    delSub.addEventListener('click',()=>{
+      let deltoData = [];
+      let check = (e)=>{
+        for (let i = 0; i < chBx.length; i++) {
+          if(chBx[i].checked == true){
+            deltoData.push(chBx[i].dataset.id);
+          }          
+        }
+      }
+      check();
+      modal[0].M_Modal.open();
+      let arrD = document.querySelector("#arrData");
+      arrD.value = JSON.stringify(deltoData);
+    });
+    // 
     let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
             let subject_name = document.querySelector("#subject_name");
@@ -304,7 +317,8 @@ if($_SESSION['utype']==2){
                         M.toast({html:"Successfully Added!"});
                         subject_name.value="";
                         subject_desc.value="";
-                       
+                        let obj = response.data;
+                        location.reload();
                     }
                 }).catch((error)=>{
                     console.log(error)
@@ -333,33 +347,35 @@ if($_SESSION['utype']==2){
        // console.log(this.dataset.id);
      });
    }
-
-
         let upbtn = document.querySelector("#upBtn");
         upbtn.addEventListener('click',()=>{
             let id = document.querySelector("#edit-id");
             let desc = document.querySelector("#edit-desc");
             let sub = document.querySelector("#edit-sub");
-          
-           
-
-
-                axios.post('post.php',{
-                    req:'updateSubject',id:id.value,sub:sub.value,desc:desc.value
-                }).then((response)=>{
-                    console.log(response.data);
-                    
-                        M.toast({html:"Update Successfully!"});
-                        modal[0].M_Modal.close();
-                    
-                }).catch((error)=>{
-                    console.log(error)
-                });
-            
+            axios.post('post.php',{
+                req:'updateSubject',id:id.value,sub:sub.value,desc:desc.value
+            }).then((response)=>{
+                console.log(response.data);
+                
+                    M.toast({html:"Update Successfully!"});
+                    modal[0].M_Modal.close();
+                
+            }).catch((error)=>{
+                console.log(error)
+            });
             // console.log("CLICKED");
         });
-
-
+        // 
+        <?php
+        if(isset($_SESSION['mulDelSub'])){
+          echo "let arr =".$_SESSION['mulDelSub']."; M.toast({html:arr.length+' data has been deleted!'}) ";
+          unset($_SESSION['mulDelSub']);
+        }else if(isset($_SESSION['mulDelSub'])){
+          echo "M.toast({html:'Successfully Added!'})";
+          unset($_SESSION['mulDelSub']);
+        }
+        ?>
+        // 
     </script>
 </body>
 </html>

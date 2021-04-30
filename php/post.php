@@ -156,6 +156,13 @@ if($req=='addUser'){
     $sql = $oop->remFac($arr);
     $_SESSION['mulDel']=$sql;
     header("location:view_faculty.php");
+}else if(isset($_POST['mulDelSub'])){
+    require("query.php");
+    $oop = new Query();
+    $arr = json_decode($_POST['arrData']);
+    $sql = $oop->remSub($arr);
+    $_SESSION['mulDelSub']=$sql;
+    header("location:view_subject.php");
 }else if($req=='addClassSubject'){
     $c=$data['c'];
     $f=$data['f'];
@@ -180,6 +187,7 @@ if($req=='addUser'){
      if($sql==1){
         echo 'dup';
     }else if($sql==3){
+        $_SESSION['addSub']='suc';
         echo 'suc';
     }else if($sql==2){
         echo 'fai';

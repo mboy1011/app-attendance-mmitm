@@ -157,6 +157,26 @@ class Query {
             return 'suc';
         }
     }
+    public function remSub($arr)
+    {
+        require("config.php");
+        $values = array();
+        for ($i=0; $i < count($arr); $i++) { 
+            $mdel = $this->deleteSubject($arr[$i]);
+            $values[] = $mdel;
+        }
+        return json_encode($values);
+    }
+    public function deleteSubject($id)
+    {
+        require("config.php");
+        $sql = mysqli_query($db,"DELETE FROM `subjects` WHERE id='$id'");
+        if(!$sql){
+            return 'fai';
+        }else{
+            return 'suc';
+        }
+    }
     public function addRecord($at_id,$sid,$ty)
     {
         require('config.php');
