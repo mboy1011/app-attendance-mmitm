@@ -284,5 +284,15 @@ class Query {
             return 'suc';
         }
     }
+    public function updateSubject($id,$sub,$desc)
+    {
+        require('config.php');       
+        $sql = mysqli_query($db,"UPDATE subjects SET `sub_name` = '$sub', `description` = '$desc' WHERE `id`='$id'");   
+        if($sql!=1){
+            return 'fai';
+        }else{
+            return 'suc';
+        }
+    }
 }
 ?>

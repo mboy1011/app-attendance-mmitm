@@ -231,8 +231,18 @@ if($_SESSION['utype']==2){
                     <?PHP endwhile;?>
                     </select>
                     </div>
-                    <input type="text" name="level" id="edit-level">
-                    
+                    <div class="input-field col s12">
+                    <select name="edit-level" id="edit-level" class="custom-select select2">
+                        <option value="" disabled selected>Section</option>
+                
+                        <option value="1">I</option>
+                        <option value="2">II</option>
+                        <option value="3">III</option>
+                        <option value="4">IV</option>
+                        
+			                </select>
+                   </div>
+                    <div class="input-field col s12">
                     <select name="edit-sect" id="edit-sect" class="custom-select select2">
                         <option value="" disabled selected>Section</option>
                 
@@ -242,7 +252,7 @@ if($_SESSION['utype']==2){
                         <option value="D">D</option>
                         <option value="D">E</option>
 			                </select>
-                   
+                   </div>
                    
                     </div>
                 </div>

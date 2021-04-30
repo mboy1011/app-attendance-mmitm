@@ -228,7 +228,7 @@ if($req=='addUser'){
     }
 }else if($req=='updateSubject'){
     $id=$data['id'];
-    $sub=$data['sub_name'];
+    $sub=$data['sub'];
     $desc=$data['desc'];
 
 
