@@ -172,7 +172,7 @@ class Query {
         require("config.php");
         $values = array();
         for ($i=0; $i < count($arr); $i++) { 
-            $mdel = $this->deleteFaculty($arr[$i]);
+            $mdel = $this->deleteUser($arr[$i]);
             $values[] = $mdel;
         }
         return json_encode($values);
