@@ -11,12 +11,14 @@ if($req=='addUser'){
     require("query.php");
     $oop = new Query();
     $sql = $oop->addUser($name,$un,$pw,$id,$ty);
-    if ($sql==1) {
-        echo 'exists';
+    
+    if($sql==1){
+        echo $sql;
     }else if($sql==2){
-        echo 'failed';
-    }else if($sql==3){
-        echo 'success';
+        echo $sql;
+    }else {
+        $_SESSION['addUser']='suc';
+        echo $sql;
     }
 }else if($req=='addCourse'){
     $course_name=$data['course_name'];

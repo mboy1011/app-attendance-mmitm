@@ -365,17 +365,12 @@ if($_SESSION['utype']==2){
                     req:'addUser',nm:fac[fac.selectedIndex].text,un:fac[fac.selectedIndex].value,pw:pw.value,id:fac[fac.selectedIndex].getAttribute('data-id'),ty:ty[ty.selectedIndex].value
                 }).then((response)=>{
                     console.log(response);
-                    if(response.data=="exists"){
+                    if(response.data==1){
                         M.toast({html:"Email Already Exist!"});
-                    }else if(response.data == "failed"){
+                    }else if(response.data == 2){
                         M.toast({html:"Failed to register user!"});
-                    }else if(response.data=='success'){
-                        M.toast({html:"Successfully Registered!"});
-                        nm.value="";
-                        un.value="";
-                        pw.value="";
-                        pwc.value="";
-                        modal[0].M_Modal.close();
+                    }else if(response.data==3){
+                        location.reload();
                     }
                 }).catch((error)=>{
                     console.log(error)
@@ -425,13 +420,10 @@ if($_SESSION['utype']==2){
           echo "let arr =".$_SESSION['mulDelUser']."; M.toast({html:arr.length+' data has been deleted!'}) ;";
           unset($_SESSION['mulDelUser']);
         }
-        // else if(isset($_SESSION['addFac'])){
-        //   echo "M.toast({html:'Succesfully Added!'})";
-        //   unset($_SESSION['addFac']);
-        // }else if(isset($_SESSION['addSub'])){
-        //   echo "M.toast({html:'Succesfully Updated!'})";
-        //   unset($_SESSION['addSub']);
-        // }
+        else if(isset($_SESSION['addUser'])){
+          echo "M.toast({html:'Succesfully Added!'})";
+          unset($_SESSION['addUser']);
+        }
         ?>
     </script>
 </body> 
