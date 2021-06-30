@@ -121,7 +121,7 @@ if($_SESSION['utype']==2){
                     <td><?PHP echo $row['date_created'];?></td>
                     <td>
                       <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
-                      <a class="waves-effect waves-light btn modal-trigger blue btn-view" href="#mviews" data-id="<?PHP echo $row['atl_id'];?>" ><i class="material-icons white-text">details</i></a>
+                      <a class="waves-effect waves-light btn modal-trigger blue btn-view" href="#mview" data-id="<?PHP echo $row['atl_id'];?>" ><i class="material-icons white-text">details</i></a>
                     </td>
                   </tr>
                   <?php 
@@ -138,6 +138,7 @@ if($_SESSION['utype']==2){
   <div id="mview" class="modal bottom-sheet">
     <div class="modal-content">
       <h4>Attendance Details</h4>
+      <p id="modal_details"></p>
       <div class="row">
         <table>
             <thead>
@@ -180,15 +181,32 @@ if($_SESSION['utype']==2){
         M.AutoInit();
         // AXIOS AJAX
         // View Details
+        let tb = document.querySelector("#tbody");
+        if(tb.rows.length>0){
+            document.querySelectorAll("table tbody tr").forEach(function(e){e.remove()})
+            // console.log("not empty!");
+        }
+        let pbtn = document.createElement('button');
+        let icon = document.createElement('I');
+        let text = document.createTextNode("check");
+        icon.setAttribute('class','material-icons left')
+        pbtn.setAttribute('class','btn new green white-text');
+        pbtn.textContent = 'Present';
+        tb.insertRow(0);
+        tb.rows[0].insertCell(0).innerText = 1;
+        tb.rows[0].insertCell(1).innerText = 'Lyjieme Barro';
+        tb.rows[0].insertCell(2).appendChild(pbtn).appendChild(icon).appendChild(text);
         let bView = document.querySelectorAll(".btn-view");
         for (let i = 0; i < bView.length; i++) {
           bView[i].addEventListener('click',()=>{
-            function getID(){
-              return this.dataset.id;
-            }
-            getID();
+            axios.post('post.php',{
+              req:'viewDetails'
+            }).then((response)=>{
+              console.log(response.data);
+            }).catch((error)=>{
+              console.log(error);
+            })
           });  
-          console.log(i);        
         }
         //SideNave
         let men = document.querySelector("#menu");

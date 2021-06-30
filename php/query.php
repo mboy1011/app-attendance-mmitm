@@ -247,7 +247,7 @@ class Query {
     }
     public function addClassSubject($c,$s,$f){
         require('config.php');
-        $sql = mysqli_query($db,"SELECT * FROM class_subject where class_id='$c' and faculty_id='$f'");
+        $sql = mysqli_query($db,"SELECT * FROM class_subject where class_id='$c' and faculty_id='$f' and subject_id='$s'");
         if($sql->num_rows>0){
             return 1;
         }else{

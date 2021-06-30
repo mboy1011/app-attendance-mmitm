@@ -148,8 +148,8 @@ if($_SESSION['utype']==2){
                     if(isset($_GET['id'])){
                     $qry = $db>query("SELECT * FROM class_subject where id= ".$_GET['id']);
                     foreach($qry->fetch_array() as $k => $val){
-                      $$k=$val;
-                  }
+                      $k=$val;
+                    }
                   }
                   ?>
      
