@@ -336,16 +336,13 @@ if($_SESSION['utype']==2){
                     req:'addFaculty',id:id.value,fac:fac.value,em:em.value,con:con.value,addr:addr.value
                 }).then((response)=>{
                     console.log(response.data);
-                    if(response.data=="dup"){
-                        M.toast({html:"Already Exist!"});
-                    }else if(response.data == "fai"){
-                        M.toast({html:"Failed to register course!"});
-                    }else if(response.data=='suc'){
-                        M.toast({html:"Successfully Added!"});
-                        // course_name.value="";
-                        // course_desc.value="";
-                       
+                    let obj = response.data;
+                    if(obj=='suc'){
+                      location.reload();
+                    }else{
+                      location.reload();
                     }
+                    modal[0].M_Modal.close();
                 }).catch((error)=>{
                     console.log(error)
                 });
