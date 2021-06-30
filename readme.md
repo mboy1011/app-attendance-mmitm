@@ -1,0 +1,12 @@
+# SAMS
+> <i>This branch was made for development purposes and we will merge everything from the main branch which is using the CodeIgniter Framework.</i><br>
+<b>Student Attendance Monitoring System or SAMS </b> is a Web Based application to check attendance of each students from the respective courses scheduled by the school.  
+> System Requirements
+* Windows, Linux, MacOS
+* XAMPP, LAMPP, MAMP
+
+
+## Installation
+> Download and Install [XAMPP](https://www.apachefriends.org/download.html)
+> Clone this repository to htdocs directory of your XAMPP: <code> git clone https://github.com/mboy1011/app-attendance-mmitm</code>
+> Change the branch from main to scratch: <code> git checkout scracth </code>
