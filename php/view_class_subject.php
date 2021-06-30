@@ -82,7 +82,7 @@ if($_SESSION['utype']==2){
             <div class="table-header">
               <span class="table-title">Classes</span>
               <div class="actions">
-                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
+                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#delMod"><i class="material-icons">delete</i></a>
                 <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
@@ -155,7 +155,6 @@ if($_SESSION['utype']==2){
      
             <div class="row">
               <div class="input-field col s12">
-                    <label for="" class="control-label">Class</label>
                     <select name="class" id="class">
                         <option value=""></option>
                         <?php
@@ -165,12 +164,12 @@ if($_SESSION['utype']==2){
                         <option value="<?php echo $row['id'] ?>" <?php echo isset($c) && $c == $row['id'] ? 'selected' : '' ?>><?php echo $row['class'] ?></option>
                         <?php endwhile; ?>
                     </select>
+                    <label for="class" class="control-label">Class</label>
                 </div>
               </div>
 
             <div class="row">
               <div class="input-field col s12">
-                    <label for="" class="control-label">Faculty</label>
                     <select name="faculty" id="faculty">
                       <option value=""></option>
                       <?php
@@ -180,12 +179,12 @@ if($_SESSION['utype']==2){
                       <option value="<?php echo $row['id'] ?>" <?php echo isset($f) && $f == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['name']) ?></option>
                       <?php endwhile; ?>
                     </select>
+                    <label for="faculty" class="control-label">Faculty</label>
               </div>
             </div>
      
             <div class="row">
-              <div class="input-field col s12">
-                    <label for="" class="control-label">Subject</label>
+              <div class="input-field col s12">                    
                     <select name="subject" id="subject">
                       <option value=""></option>
                       <?php
@@ -195,27 +194,33 @@ if($_SESSION['utype']==2){
                       <option value="<?php echo $row['id'] ?>" <?php echo isset($s) && $s == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['sub_name']) ?></option>
                       <?php endwhile; ?>
                   </select>
+                  <label for="" class="control-label">Subject</label>
               </div>
             </div>
-                 
-            <div class="row">
-              <div class="input-field col s12">
-                
-              </div>
             </div> 
-
-  </div> 
-  </div>
-                  <div class="modal-footer">
-                  <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                    <i class="material-icons right">done</i>
-                  </button>
-                   <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
-                </div>
+          </div>                  
+        </div>
+        <div class="modal-footer">
+          <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+            <i class="material-icons right">done</i>
+          </button>
+            <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
         </div>
     </div>
-    
-
+  <!-- Delete Modal -->
+  <div id="delMod" class="modal">
+    <form action="post.php" method="post">
+    <div class="modal-content">
+      <h4>Delete User</h4>
+        <input type="text" name="arrData" id="arrData" hidden>
+        Are you sure you want to delete the following data?
+    </div>
+    <div class="modal-footer">
+      <button href="#!" type="submit" name="mulDelUser" class="modal-close waves-effect waves-green btn-flat">Agree</button>
+    </div>
+    </form>
+  </div>
+  <!-- END -->
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -294,15 +299,38 @@ if($_SESSION['utype']==2){
                   }else if(response.data == "fai"){
                       M.toast({html:"Failed to register course!"});
                   }else if(response.data=='suc'){
-                      M.toast({html:"Successfully Added!"});
-                      
+                      location.reload();
                   }
                 }).catch((error)=>{
                     console.log(error)
-                });
-            
+                });                                 
             // console.log("CLICKED");
         });
+        // Multiple Deletion Button
+        let delBtn = document.querySelector("#delBtn");       
+        let mulDel = document.querySelector("#mulDel");
+        delBtn.addEventListener('click',(e)=>{
+        let deltoData = [];
+        let check = (e)=>{
+            for (let i = 0; i < chBx.length; i++) {
+              if(chBx[i].checked == true){
+                deltoData.push(chBx[i].dataset.id);
+              }          
+            }
+          }
+          check();
+          let arrD = document.querySelector("#arrData");
+          arrD.value = JSON.stringify(deltoData);
+          // console.log(JSON.stringify(deltoData));
+        });
+        <?php
+        if(isset($_SESSION['addClassSubject'])){
+          echo "M.toast({html:'Successfully Added!'})";
+          unset($_SESSION['addClassSubject']);
+        }else if(isset($_SESSION[''])){
+          
+        }
+        ?> 
     </script>
 </body>
 </html>

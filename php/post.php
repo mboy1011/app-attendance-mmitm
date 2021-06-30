@@ -176,6 +176,7 @@ if($req=='addUser'){
      if($sql==1){
         echo 'dup';
     }else if($sql==3){
+        $_SESSION['addClassSubject']=$sql;
         echo 'suc';
     }else if($sql==2){
         echo 'fai';

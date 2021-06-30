@@ -200,13 +200,12 @@ if($_SESSION['utype']==2){
 
               </div>
             </div>          
-                  
-            <div class="modal-footer">
-                  <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                    <i class="material-icons right">done</i>
-                  </button>
-                   <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
-                </div>
+    </div>
+    <div class="modal-footer">
+      <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+        <i class="material-icons right">done</i>
+      </button>
+      <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
     </div>
   </div>
     

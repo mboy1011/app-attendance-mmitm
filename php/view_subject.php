@@ -371,8 +371,11 @@ if($_SESSION['utype']==2){
           echo "let arr =".$_SESSION['mulDelSub']."; M.toast({html:arr.length+' data has been deleted!'}) ";
           unset($_SESSION['mulDelSub']);
         }else if(isset($_SESSION['mulDelSub'])){
-          echo "M.toast({html:'Successfully Added!'})";
+          echo "M.toast({html:'Successfully Deleted!'})";
           unset($_SESSION['mulDelSub']);
+        }else if(isset($_SESSION['addSub'])){
+          echo "M.toast({html:'Successfully Added!'})";
+          unset($_SESSION['addSub']);
         }
         ?>
         // 
