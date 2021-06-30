@@ -1,5 +1,15 @@
 <?php
 class Query {
+    public function get_viewCSC()
+    {
+        require("config.php");
+        $sql  = mysqli_query($db,"SELECT * FROM count_student_courses");
+        $data = array();
+        while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
+            array_push($data,$row);
+        }
+        return json_encode($data);
+    }
     public function login($user, $pass){
         require('config.php');
         $sql = mysqli_query($db,"SELECT * FROM users WHERE username='$user'");

@@ -75,13 +75,7 @@ if($req=='addUser'){
         echo 'suc';
     }else if($sql==2){
         echo 'fai';
-    }
-    // // $oop = new Query();
-    // $course_name = $data['course_name'];
-    // $year = $data['year'];
-    // $section = $data['section'];
-    // $sql = $oop->addClass($course_name, $year, $section);
-    // echo $sql;    
+    } 
 }else if($req=="addAttend"){
     require('query.php');
     $oop = new Query();
@@ -258,5 +252,10 @@ if($req=='addUser'){
     }else if($sql==2){
         echo 'fai';
     }
+}else if($req=='getCSC'){
+    require("query.php");
+    $oop = new Query();
+    $sql = $oop->get_viewCSC();
+    echo $sql;
 }
 ?>
