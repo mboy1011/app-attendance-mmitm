@@ -38,7 +38,7 @@ if($_SESSION['utype']==2){
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Course</a>
+              <a href="#!" class="brand-logo center green-text">Attendance Record</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -96,33 +96,32 @@ if($_SESSION['utype']==2){
                         </label>
                       </th>
                       <th>ID</th>
-                      <th>Course</th>
-                      <th>Description</th>
+                      <th>Subject</th>
+                      <th>Faculty</th>
                       <th>Date_Created</th>
                       <th>Action</th>
                   </tr>
               </thead>
               <tbody>
                 <?php
-                $result = mysqli_query($db,"SELECT * FROM attendance_record");
+                $result = mysqli_query($db,"select al.id as atl_id,sub.sub_name as subname,fac.name as facname,al.date_created from attendance_list as al inner join class_subject as cs on cs.id=al.class_subject_id LEFT JOIN subjects as sub on sub.id=cs.subject_id RIGHT join faculty as fac on fac.id=cs.faculty_id");
                 $i=1;
                 while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
                 ?>
                   <tr>
                     <td>
                       <label>
-                        <input type="checkbox" class="chBx" data-id="<?PHP echo $row['id']?>" />
+                        <input type="checkbox" class="chBx" data-id="<?PHP echo $row['atl_id']?>" />
                         <span></span>
                       </label>
                     </td>
-                    <td><?PHP echo $row['attendance_id']?></td>
-                    <td><?PHP echo $row['student_id']?></td>  
-                    <td><?PHP echo $row['type']?></td>
-                    <td><?PHP echo $row['date_created']?></td>
-                   
+                    <td><?PHP echo $row['atl_id'];?></td>
+                    <td><?PHP echo $row['subname'];?></td>  
+                    <td><?PHP echo $row['facname'];?></td>
+                    <td><?PHP echo $row['date_created'];?></td>
                     <td>
                       <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
-                      <a class="waves-effect waves-light btn modal-trigger red" href="#mdelete"><i class="material-icons white-text">delete</i></a>
+                      <a class="waves-effect waves-light btn modal-trigger blue btn-view" href="#mviews" data-id="<?PHP echo $row['atl_id'];?>" ><i class="material-icons white-text">details</i></a>
                     </td>
                   </tr>
                   <?php 
@@ -135,45 +134,31 @@ if($_SESSION['utype']==2){
       </div>
     </div>
 </div>
-<!-- modal for adding course -->
-<div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
-      <div class="modal-content">
-                    <h4>Add Subject</h4>
-                    <p class="center">
-
-          <div class="row">
-              <div class="col s12" id="reg-form">
-    
-   
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input id="subject_name" type="text" class="validate" required>
-                      <label for="subject_name">Subject</label>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                      <div class="input-field col s12">
-                        <input id="subject_desc" type="text" class="validate" required>
-                        <label for="subject_desc">Description</label>
-                      </div>
-                  </div>
-
-              </div>
-            </div>
-            
-
-                <div class="modal-footer">
-                  <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                    <i class="material-icons right">done</i>
-                  </button>
-                   <a href="#!" class="modal-action  modal-close btn red darken-1">Cancel</a>
-                </div>
-
+<!-- View Details Modal -->
+  <div id="mview" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Attendance Details</h4>
+      <div class="row">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                    
+            </tbody>
+        </table>
       </div>
-</div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+  <!-- MODAL END -->
   </main>
-  
   <footer class="page-footer">
     <div class="container">
       
@@ -184,22 +169,27 @@ if($_SESSION['utype']==2){
         </div>
     </div>
     </footer>
-        
-        
-        
-        
-        
-        
-            <!-- MCSS Offline -->
+    <!-- MCSS Offline -->
     <script src="../assets/js/materialize-css.min.js"></script>
     <script src="../assets/js/axios.min.js"></script>
     <!-- jQueryMaterilizeCSS -->
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/js/jquery.dataTables.min.js"></script>
     <script src="../assets/js/jq-data-material.js"></script>
-
     <script type="text/javascript" charset="utf-8">
         M.AutoInit();
+        // AXIOS AJAX
+        // View Details
+        let bView = document.querySelectorAll(".btn-view");
+        for (let i = 0; i < bView.length; i++) {
+          bView[i].addEventListener('click',()=>{
+            function getID(){
+              return this.dataset.id;
+            }
+            getID();
+          });  
+          console.log(i);        
+        }
         //SideNave
         let men = document.querySelector("#menu");
         let slout = document.querySelector("#slide-out");
@@ -217,61 +207,31 @@ if($_SESSION['utype']==2){
         }
         })
         //
-        // AXIOS AJAX
-        
         // 
         // CheckBox
-    let mChBx = document.querySelector("#mChBx");
-    let chBx = document.querySelectorAll(".chBx");
-    mChBx.addEventListener('click',function(){
-      if(mChBx.checked == true){
-        for (let i = 0; i < chBx.length; i++) {
-          chBx[i].checked = true;            
-        }
-      }else{
-        for (let i = 0; i < chBx.length; i++) {
-          chBx[i].checked = false;            
-        }
-      }
-    });
-    let modal = document.querySelectorAll(".modal");
-    let delData = [];
-    let check = (e)=>{
-      for (let i = 0; i < chBx.length; i++) {
-        if(chBx[i].checked == true){
-          delData.push(chBx[i].dataset.id);
-        }          
-      }
-    }
-    
-    let btn = document.querySelector("#regBtn");
-        btn.addEventListener('click',()=>{
-            let subject_name = document.querySelector("#subject_name");
-            let subject_desc = document.querySelector("#subject_desc");
-            
-            if(subject_name.value!="" && subject_desc.value!=""){
-                axios.post('post.php',{
-                    req:'addSubject',subject_name:subject_name.value,subject_desc:subject_desc.value
-                }).then((response)=>{
-                    console.log(response.data);
-                    if(response.data=="dup"){
-                        M.toast({html:"Course Already Exist!"});
-                    }else if(response.data == "fai"){
-                        M.toast({html:"Failed to register course!"});
-                    }else if(response.data=='suc'){
-                        M.toast({html:"Successfully Added!"});
-                        subject_name.value="";
-                        subject_desc.value="";
-                       
-                    }
-                }).catch((error)=>{
-                    console.log(error)
-                });
-            }else{
-                M.toast({html:"Empty!"});
+        let mChBx = document.querySelector("#mChBx");
+        let chBx = document.querySelectorAll(".chBx");
+        mChBx.addEventListener('click',function(){
+          if(mChBx.checked == true){
+            for (let i = 0; i < chBx.length; i++) {
+              chBx[i].checked = true;            
             }
-            // console.log("CLICKED");
+          }else{
+            for (let i = 0; i < chBx.length; i++) {
+              chBx[i].checked = false;            
+            }
+          }
         });
+        let modal = document.querySelectorAll(".modal");
+        let delData = [];
+        let check = (e)=>{
+          for (let i = 0; i < chBx.length; i++) {
+            if(chBx[i].checked == true){
+              delData.push(chBx[i].dataset.id);
+            }          
+          }
+        }
+        
     </script>
 </body>
 </html>

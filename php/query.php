@@ -57,7 +57,7 @@ class Query {
     public function getSubject($id)
     {
         require('config.php');
-        $sql = mysqli_query($db,"SELECT class_subject.id as 'class_id',subjects.sub_name FROM class_subject join subjects on class_subject.subject_id=subjects.id left join faculty on faculty.id=class_subject.faculty_id WHERE faculty_id='$id'");
+        $sql = mysqli_query($db,"SELECT class_subject.id as 'id', class_subject.class_id as 'class_id',subjects.sub_name FROM class_subject join subjects on class_subject.subject_id=subjects.id left join faculty on faculty.id=class_subject.faculty_id WHERE faculty_id='$id'");
         $data=array();
         while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
             array_push($data,$row);
@@ -67,7 +67,7 @@ class Query {
     public function getStudents($id)
     {
         require('config.php');
-        $sql = mysqli_query($db,"SELECT s.id as 'sid',s.class_id as 'cid',s.name  FROM students as s join class_subject as cs on cs.id=s.class_id where s.class_id='$id'");
+        $sql = mysqli_query($db,"SELECT s.id as 'sid',s.class_id as 'cid',s.name,cs.id as id  FROM students as s join class_subject as cs on cs.class_id=s.class_id where cs.id='$id'");
         $data=array();
         while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
             array_push($data,$row);
