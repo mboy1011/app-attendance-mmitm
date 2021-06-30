@@ -12,6 +12,6 @@
 
 
 ## Installation
-> Download and Install [XAMPP](https://www.apachefriends.org/download.html)
-> Clone this repository to htdocs directory of your XAMPP: <code> git clone https://github.com/mboy1011/app-attendance-mmitm</code>
-> Change the branch from main to scratch: <code> git checkout scracth </code>
+> * Download and Install [XAMPP](https://www.apachefriends.org/download.html)
+> * Clone this repository to htdocs directory of your XAMPP: <code> git clone https://github.com/mboy1011/app-attendance-mmitm</code>
+> * Change the branch from main to scratch: <code> git checkout scracth </code>
