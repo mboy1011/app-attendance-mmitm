@@ -236,13 +236,13 @@ if($_SESSION['utype']==2){
                             lbtn.setAttribute('name','group'+i);
                             
                             pbtn.setAttribute('data-sid',obj[i].sid);
-                            pbtn.setAttribute('data-cid',obj[i].cid);
+                            pbtn.setAttribute('data-cid',obj[i].id);
                             pbtn.setAttribute('data-ty',1);
                             abtn.setAttribute('data-sid',obj[i].sid);
-                            abtn.setAttribute('data-cid',obj[i].cid);
+                            abtn.setAttribute('data-cid',obj[i].id);
                             abtn.setAttribute('data-ty',0);
                             lbtn.setAttribute('data-sid',obj[i].sid);
-                            lbtn.setAttribute('data-cid',obj[i].cid);
+                            lbtn.setAttribute('data-cid',obj[i].id);
                             lbtn.setAttribute('data-ty',2);
                                 
                             tb.insertRow(i);
