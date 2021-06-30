@@ -324,5 +324,15 @@ class Query {
             return 'suc';
         }
     }
+    public function viewDetails($id)
+    {
+        require('config.php');       
+        $sql = mysqli_query($db,"SELECT ar.id, ar.attendance_id, s.name, s.id as 'sid',ar.type as 'stat' FROM `attendance_record` as ar inner join students as s on s.id=ar.student_id where ar.attendance_id='$id'");   
+        $data = array();
+        while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
+            array_push($data,$row);
+        }
+        return json_encode($data);
+    }
 }
 ?>

@@ -10,7 +10,7 @@ if($_SESSION['utype']==2){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Attendance Records</title>
      <!-- MCSS Offline -->
      <link rel="stylesheet" href="../assets/css/materializecss.min.css">
     <link rel="stylesheet" href="../assets/css/materializecss-icons.css">
@@ -121,7 +121,7 @@ if($_SESSION['utype']==2){
                     <td><?PHP echo $row['date_created'];?></td>
                     <td>
                       <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
-                      <a class="waves-effect waves-light btn modal-trigger blue btn-view" href="#mview" data-id="<?PHP echo $row['atl_id'];?>" ><i class="material-icons white-text">details</i></a>
+                      <a data-position="bottom" data-tooltip="View Details" class="waves-effect waves-light btn tooltipped modal-trigger blue btn-view" href="#mview" data-id="<?PHP echo $row['atl_id'];?>" ><i class="material-icons white-text">details</i></a>
                     </td>
                   </tr>
                   <?php 
@@ -140,7 +140,7 @@ if($_SESSION['utype']==2){
       <h4>Attendance Details</h4>
       <p id="modal_details"></p>
       <div class="row">
-        <table>
+        <table id="table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -179,30 +179,64 @@ if($_SESSION['utype']==2){
     <script src="../assets/js/jq-data-material.js"></script>
     <script type="text/javascript" charset="utf-8">
         M.AutoInit();
+        const elems = document.querySelectorAll('.tooltipped');
+        const instances = M.Tooltip.init(elems);
         // AXIOS AJAX
         // View Details
-        let tb = document.querySelector("#tbody");
-        if(tb.rows.length>0){
-            document.querySelectorAll("table tbody tr").forEach(function(e){e.remove()})
-            // console.log("not empty!");
+        let emptyTable = (e)=>{
+          let tbody = document.querySelectorAll("tbody");
+          if(tbody[1].rows.length>0){
+              for (let o = 0; o < tbody[1].rows.length; o++) {
+                tbody[1].deleteRow(o);                    
+              }                     
+          }
         }
-        let pbtn = document.createElement('button');
-        let icon = document.createElement('I');
-        let text = document.createTextNode("check");
-        icon.setAttribute('class','material-icons left')
-        pbtn.setAttribute('class','btn new green white-text');
-        pbtn.textContent = 'Present';
-        tb.insertRow(0);
-        tb.rows[0].insertCell(0).innerText = 1;
-        tb.rows[0].insertCell(1).innerText = 'Lyjieme Barro';
-        tb.rows[0].insertCell(2).appendChild(pbtn).appendChild(icon).appendChild(text);
         let bView = document.querySelectorAll(".btn-view");
-        for (let i = 0; i < bView.length; i++) {
-          bView[i].addEventListener('click',()=>{
+        for (let p = 0; p < bView.length; p++) {
+          bView[p].addEventListener('click',()=>{
+            emptyTable();
+            let tbody = document.querySelectorAll("tbody");
+            if(tbody[1].rows.length>0){
+                for (let o = 0; o < tbody[1].rows.length; o++) {
+                  tbody[1].deleteRow(o);                    
+                }                     
+            }
             axios.post('post.php',{
-              req:'viewDetails'
+              req:'viewDetails',atlid:bView[p].dataset.id
             }).then((response)=>{
-              console.log(response.data);
+              let obj = response.data;
+              let tb = document.querySelector("#tbody");
+              for (let i= 0; i < obj.length; i++) {
+                let pbtn = document.createElement('button');
+                let abtn = document.createElement('button');
+                let lbtn = document.createElement('button');
+                let picon = document.createElement('I');
+                let aicon = document.createElement('I');
+                let licon = document.createElement('I');
+                let ptext = document.createTextNode("check");
+                let atext = document.createTextNode("close");
+                let ltext = document.createTextNode("watch_later");
+                picon.setAttribute('class','material-icons left')
+                pbtn.setAttribute('class','btn green white-text ');
+                pbtn.textContent = 'Present';
+                aicon.setAttribute('class','material-icons left')
+                abtn.setAttribute('class','btn red white-text ');
+                abtn.textContent = 'Absent';
+                licon.setAttribute('class','material-icons left')
+                lbtn.setAttribute('class','btn yellow white-text ');
+                lbtn.textContent = 'Late';
+                tb.insertRow(i);
+                tb.rows[i].insertCell(0).innerText = i+1;
+                tb.rows[i].insertCell(1).innerText = obj[i].name;
+                if(obj[i].stat==1){
+                  tb.rows[i].insertCell(2).appendChild(pbtn).appendChild(picon).appendChild(ptext);
+                }else if(obj[i].stat==2){
+                  tb.rows[i].insertCell(2).appendChild(lbtn).appendChild(licon).appendChild(ltext);
+                }else{
+                  tb.rows[i].insertCell(2).appendChild(abtn).appendChild(aicon).appendChild(atext);
+                }
+                
+              }
             }).catch((error)=>{
               console.log(error);
             })

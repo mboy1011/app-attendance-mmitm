@@ -267,5 +267,11 @@ if($req=='addUser'){
     $oop = new Query();
     $sql = $oop->get_viewCSC();
     echo $sql;
+}else if($req=='viewDetails'){
+    require("query.php");
+    $id=$data['atlid'];
+    $oop = new Query();
+    $sql = $oop->viewDetails($id);
+    echo $sql;
 }
 ?>
