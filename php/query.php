@@ -167,6 +167,26 @@ class Query {
             return 'suc';
         }
     }
+    public function remUser($arr)
+    {
+        require("config.php");
+        $values = array();
+        for ($i=0; $i < count($arr); $i++) { 
+            $mdel = $this->deleteFaculty($arr[$i]);
+            $values[] = $mdel;
+        }
+        return json_encode($values);
+    }
+    public function deleteUser($id)
+    {
+        require("config.php");
+        $sql = mysqli_query($db,"DELETE FROM `users` WHERE id='$id'");
+        if(!$sql){
+            return 'fai';
+        }else{
+            return 'suc';
+        }
+    }
     public function remSub($arr)
     {
         require("config.php");

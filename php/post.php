@@ -157,6 +157,13 @@ if($req=='addUser'){
     $sql = $oop->remSub($arr);
     $_SESSION['mulDelSub']=$sql;
     header("location:view_subject.php");
+}else if(isset($_POST['mulDelUser'])){
+    require("query.php");
+    $oop = new Query();
+    $arr = json_decode($_POST['arrData']);
+    $sql = $oop->remUser($arr);
+    $_SESSION['mulDelUser']=$sql;
+    header("location:view_user.php");
 }else if($req=='addClassSubject'){
     $c=$data['c'];
     $f=$data['f'];

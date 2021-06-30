@@ -80,7 +80,7 @@ if($_SESSION['utype']==2){
             <div class="table-header">
               <span class="table-title">User Accounts</span>
               <div class="actions">
-                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
+                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delBtn" href="#delMod"><i class="material-icons">delete</i></a>
                 <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
                 <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
               </div>
@@ -134,7 +134,7 @@ if($_SESSION['utype']==2){
         </div>
       </div>
     </div>
-
+    <!-- AddUser -->
     <div id="demo-modal-fixed-footer" class="modal modal-fixed-footer">
       <div class="modal-content">
         <h4>Add User</h4>
@@ -158,88 +158,102 @@ if($_SESSION['utype']==2){
         <label>Faculty</label>
         </div>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <select id="ty" name="ty">
-                <option value="" disabled selected>Choose Type</option>
-                <option  value="1">Administrator</option>
-                <option  value="2">Faculty</option>
-            </select>
-            <label>Type</label>
+            <div class="row">
+                <div class="input-field col s12">
+                <select id="ty" name="ty">
+                    <option value="" disabled selected>Choose Type</option>
+                    <option  value="1">Administrator</option>
+                    <option  value="2">Faculty</option>
+                </select>
+                <label>Type</label>
+                </div>
             </div>
+            <div class="row">
+                <div class="input-field col s12">
+                <input id="password" type="password" class="validate" minlength="6" required>
+                <label for="password">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                <input id="password-conf" type="password" class="validate" minlength="6" required>
+                <label for="password-conf">Password Confirm</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                
+                </div>
+            </div>
+          </div>
+          </div>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="password" type="password" class="validate" minlength="6" required>
-            <label for="password">Password</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-            <input id="password-conf" type="password" class="validate" minlength="6" required>
-            <label for="password-conf">Password Confirm</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-            
-            </div>
+        <div class="modal-footer">
+            <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
+            <i class="material-icons right">done</i>
+              </button>
+            <a href="#!" class="modal-action 
+                modal-close btn red darken-1">
+                Cancel
+            </a>
         </div>
     </div>
+    <!-- END -->
+        <!-- EDIT User -->
+        <div id="modal-edit" 
+            class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>Edit User</h4>
+                <p class="center">
+                <div class="row">
+                <label>ID:</label>
+                <input type="text" name="user" id="edit-id" disabled>
+                <label>Username:</label>
+                <input type="text" name="user" id="edit-us">
+                
+                <label>Password:</label>
+                <input type="text" name="pass" id="edit-pass" disabled>
+                <div class="input-field col s12">
+                  <select id="edit-type">
+                    
+                    <option value="0">Administrator</option>
+                    <option value="1">Faculty</option>
+                  </select>
+                  <label>Change Type</label>
+                  
+                </div> 
+                <label>
+                  <input type="checkbox" id="auth" value=""/>
+                  <span><b>Check if you want to change the password?</b></span>
+                </label> 
+                </div>
+            </div>
+            <div class="modal-footer">
+                
+            <button id="upBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Save Changes
+            <i class="material-icons right">done</i>
+        </button>
+                <a href="#!" class="modal-action 
+                    modal-close btn red darken-1">
+                    Cancel
+                </a>
+            </div>
+        </div>
+        <!-- END -->
+  <!-- Delete Modal -->
+  <div id="delMod" class="modal">
+    <form action="post.php" method="post">
+    <div class="modal-content">
+      <h4>Delete User</h4>
+        <input type="text" name="arrData" id="arrData" hidden>
+        Are you sure you want to delete the following data?
     </div>
+    <div class="modal-footer">
+      <button href="#!" type="submit" name="mulDelUser" class="modal-close waves-effect waves-green btn-flat">Agree</button>
+    </div>
+    </form>
   </div>
-                <div class="modal-footer">
-                    
-                    <button id="regBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Register
-                    <i class="material-icons right">done</i>
-                      </button>
-                    <a href="#!" class="modal-action 
-                        modal-close btn red darken-1">
-                        Cancel
-                    </a>
-                </div>
-            </div>
-            
-            <div id="modal-edit" 
-                class="modal modal-fixed-footer">
-                <div class="modal-content">
-                    <h4>Edit User</h4>
-                    <p class="center">
-                    <div class="row">
-                    <label>ID:</label>
-                    <input type="text" name="user" id="edit-id" disabled>
-                    <label>Username:</label>
-                    <input type="text" name="user" id="edit-us">
-                    
-                    <label>Password:</label>
-                    <input type="text" name="pass" id="edit-pass" disabled>
-                    <div class="input-field col s12">
-                      <select id="edit-type">
-                        
-                        <option value="0">Administrator</option>
-                        <option value="1">Faculty</option>
-                      </select>
-                      <label>Change Type</label>
-                      
-                    </div> 
-                    <label>
-                      <input type="checkbox" id="auth" value=""/>
-                      <span><b>Check if you want to change the password?</b></span>
-                    </label> 
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    
-                <button id="upBtn" class="btn btn-small btn-register waves-effect waves-light" type="submit" name="action">Save Changes
-                <i class="material-icons right">done</i>
-            </button>
-                    <a href="#!" class="modal-action 
-                        modal-close btn red darken-1">
-                        Cancel
-                    </a>
-                </div>
-            </div>
-
+  <!-- END -->
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -329,11 +343,6 @@ if($_SESSION['utype']==2){
     }
     // console.log('click');
   });
-
-
-
-
-
     let modal = document.querySelectorAll(".modal");
     let delData = [];
     let check = (e)=>{
@@ -342,13 +351,8 @@ if($_SESSION['utype']==2){
           delData.push(chBx[i].dataset.id);
         }          
       }
-    }
-    
+    }   
     // 
-
-   
-
-
         // AXIOS AJAX
         let btn = document.querySelector("#regBtn");
         btn.addEventListener('click',()=>{
@@ -381,9 +385,6 @@ if($_SESSION['utype']==2){
             }
             // console.log("CLICKED");
         });
-
-
-
         let upbtn = document.querySelector("#upBtn");
         upbtn.addEventListener('click',()=>{
             let user = document.querySelector("#edit-us");
@@ -391,24 +392,47 @@ if($_SESSION['utype']==2){
             let type = document.querySelector("#edit-type");
             let auth = document.querySelector("#auth");
             let id = document.querySelector("#edit-id");
-           
-
-
-                axios.post('post.php',{
-                    req:'updateUser',user:user.value,pass:pass.value,type:type.value,auth:auth.value,id:id.value
-                }).then((response)=>{
-                    console.log(response.data);
-                    
-                        M.toast({html:"Update Successfully!"});
-                        
-                        modal[0].M_Modal.close();
-                    
-                }).catch((error)=>{
-                    console.log(error)
-                });
-            
+            axios.post('post.php',{
+                req:'updateUser',user:user.value,pass:pass.value,type:type.value,auth:auth.value,id:id.value
+            }).then((response)=>{
+                console.log(response.data);
+                M.toast({html:"Update Successfully!"});
+                modal[0].M_Modal.close();
+            }).catch((error)=>{
+                console.log(error)
+            });
             // console.log("CLICKED");
         });
+        // Multiple Deletion Button
+        let delBtn = document.querySelector("#delBtn");       
+        let mulDel = document.querySelector("#mulDel");
+        delBtn.addEventListener('click',(e)=>{
+        let deltoData = [];
+        let check = (e)=>{
+            for (let i = 0; i < chBx.length; i++) {
+              if(chBx[i].checked == true){
+                deltoData.push(chBx[i].dataset.id);
+              }          
+            }
+          }
+          check();
+          let arrD = document.querySelector("#arrData");
+          arrD.value = JSON.stringify(deltoData);
+          // console.log(JSON.stringify(deltoData));
+        });
+        <?php
+        if(isset($_SESSION['mulDelUser'])){
+          echo "let arr =".$_SESSION['mulDelUser']."; M.toast({html:arr.length+' data has been deleted!'}) ;";
+          unset($_SESSION['mulDelUser']);
+        }
+        // else if(isset($_SESSION['addFac'])){
+        //   echo "M.toast({html:'Succesfully Added!'})";
+        //   unset($_SESSION['addFac']);
+        // }else if(isset($_SESSION['addSub'])){
+        //   echo "M.toast({html:'Succesfully Updated!'})";
+        //   unset($_SESSION['addSub']);
+        // }
+        ?>
     </script>
 </body> 
 </html>
