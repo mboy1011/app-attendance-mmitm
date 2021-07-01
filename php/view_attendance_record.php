@@ -38,7 +38,7 @@ if($_SESSION['utype']==2){
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Attendance Record</a>
+              <a href="#!" class="brand-logo center green-text">Attendance&nbspRecord</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -68,7 +68,6 @@ if($_SESSION['utype']==2){
         <li><a href="view_class_subject.php" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
         <li><a href="view_user.php" class="white-text">Users<i class="small material-icons left white-text">school</i></a></li>
         <li><a href="attendance.php" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
-        <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>
         <li><a href="view_attendance_record.php" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
     </ul>
@@ -137,7 +136,7 @@ if($_SESSION['utype']==2){
 <!-- View Details Modal -->
   <div id="mview" class="modal bottom-sheet">
     <div class="modal-content">
-      <h4>Attendance Details <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a></h4>
+      <h4>Attendance Details <a href="#!" class="modal-close right-align red white-text waves-effect waves-green btn-flat"><i class="material-icons">close</i></a></h4>
       <p id="modal_details"></p>
       <div class="row">
         <table id="table">

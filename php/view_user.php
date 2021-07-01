@@ -66,9 +66,8 @@ if($_SESSION['utype']==2){
         <li><a href="view_class.php" class="white-text">Class <i class="small material-icons left white-text">school</i></a></li>       
         <li><a href="view_faculty.php" class="white-text">Faculty <i class="small material-icons left white-text">assignment_ind</i></a></li>
         <li><a href="view_class_subject.php" class="white-text">Class per Subject <i class="small material-icons left white-text">school</i></a></li>
-        <li><a href="view_user.php" class="white-text">Users<i class="small material-icons left white-text">school</i></a></li>
+        <li class="active"><a href="view_user.php" class="white-text">Users<i class="small material-icons left white-text">school</i></a></li>
         <li><a href="attendance.php" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
-        <li><a href="#" class="white-text">Attendance List <i class="small material-icons left white-text">check</i></a></li>
         <li><a href="view_attendance_record.php" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
     </ul>
