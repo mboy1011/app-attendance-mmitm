@@ -38,7 +38,7 @@
     <main>
         <div class="row">
         <div class="col s12 l4 offset-l4">
-            <div class="card grey lighten-3">
+            <div class="card green lighten-5">
             <div class="card-content">
                 <h4 class="card-title center-align">
                     <img class="circle green white-text" width="100" src="./assets/img/slogo.png"><br>
@@ -61,7 +61,7 @@
                         <span class="helper-text" data-error="Empty Password" data-success=""></span>
                     </div>
                 </div>
-                <div class="row center-align">
+                <div class="row left-align">
                     <button class="btn-large green waves-effect waves-light" type="submit" name="login">Login
                         <i class="material-icons right">power_settings_new</i>
                     </button>
