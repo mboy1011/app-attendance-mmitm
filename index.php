@@ -78,6 +78,8 @@
     <script src="assets/js/axios.min.js"></script>
     <script type="text/javascript" charset="utf-8">
         M.AutoInit();
+        let inVP = '<span class="white-text">THE PASSWORD IS INVALID</span><i class="material-icons right yellow-text small">warning</i>';
+        let inVUP = '<span class="white-text">THE USERNAME AND PASSWORD IS INVALID </span><i class="material-icons right red-text small">warning</i>'
     <?php
     include("php/config.php");
     if(isset($_POST['login'])){
@@ -86,8 +88,10 @@
         require("php/query.php");
         $oop = new Query();
         $sql = $oop->login($user,$pass);
-        if(!$sql){
-            echo "M.toast({html:'Invalid Username & Password!'});";
+        if($sql==1){
+            echo 'M.toast({html:inVP});';
+        }else{
+            echo 'M.toast({html:inVUP});';
         }
     }
     ?>

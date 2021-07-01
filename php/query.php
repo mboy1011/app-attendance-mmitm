@@ -42,10 +42,10 @@ class Query {
                 $_SESSION['utype']=$row['type'];
                 header('location:php/dashboard.php');
             }else{
-                return 'incorrect pass';
+                return 1;
             }
         }else{
-            return false;
+            return 0;
         }
     }
     public function addUser($name,$uname,$passwd,$id,$ty)
