@@ -10,7 +10,7 @@ if($_SESSION['utype']!=2){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance Record</title>
+    <title>Check Attendance</title>
      <!-- MCSS Offline -->
      <link rel="stylesheet" href="../../assets/css/materializecss.min.css">
     <link rel="stylesheet" href="../../assets/css/materializecss-icons.css">
@@ -36,7 +36,7 @@ if($_SESSION['utype']!=2){
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper white">
-              <a href="#!" class="brand-logo center green-text">Attendance Record</a>
+              <a href="#!" class="brand-logo center green-text">Check Attendance</a>
               <a href="#" data-target="slide-out" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
               <ul id="nav-mobile" class="left hide-on-med-and-down green-text">
                   <li><a href="#" id="menu" class="green-text"><i class="material-icons green-text">menu</i></a></li>
@@ -53,13 +53,13 @@ if($_SESSION['utype']!=2){
             <a href="#user"><img class="circle" src="../../assets/img/slogo.png"></a>
             <a href="#name"><span class="white-text name"><?PHP echo $_SESSION['name'];?></span></a>
             <a href="#email"><span class="white-text email"><?PHP echo $_SESSION['email'];?></span></a>
-          </div>
+        </div>
         </li>
         <!-- menu navigation bar -->
-        <li><a href="#" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
-        <li><a href="check_attendance.php" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
-        <li><a href="#" class="white-text">Class List <i class="small material-icons left white-text">check</i></a></li>
-        <li><a href="#" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
+        <li><a href="./user_dashboard.php" class="white-text">Dashboard <i class="small material-icons left white-text">home</i></a></li>
+        <li class="active"><a href="./check_attendance.php" class="white-text">Check Attendance <i class="small material-icons left white-text">event_available</i></a></li>
+        <li><a href="./class_list.php" class="white-text">Class List <i class="small material-icons left white-text">check</i></a></li>
+        <li><a href="./attendance_record.php" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="../logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
     </ul>
       
