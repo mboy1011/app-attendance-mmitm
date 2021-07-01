@@ -16,6 +16,8 @@ if($_SESSION['utype']!=2){
     <link rel="stylesheet" href="../../assets/css/materializecss-icons.css">
     <!-- Style CSS -->
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- jQueryMaterializeCSS -->
+    <link rel="stylesheet" href="../../assets/css/jq-data-material.css">
      <!--Let browser know website is optimized for mobile-->
      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
      <style>
@@ -44,7 +46,7 @@ if($_SESSION['utype']!=2){
           </div>
         </nav>
       </div>
-    <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
+      <ul id="slide-out" class="sidenav collapsible sidenav-fixed green darken-2 ">
         <li>
         <div class="user-view">
             <div class="background">
@@ -61,11 +63,96 @@ if($_SESSION['utype']!=2){
         <li class="active"><a href="./class_list.php" class="white-text">Class List <i class="small material-icons left white-text">check</i></a></li>
         <li><a href="./attendance_record.php" class="white-text">Attendance Record <i class="small material-icons left white-text">grade</i></a></li>
         <li><a href="../logout.php" class="white-text">Logout<i class="small material-icons left white-text">logout</i></a></li>
-    </ul>
+      </ul>
       
   </header>
   <main>
-  
+  <div class="row">
+      <div id="man" class="col s12">
+        <div class="card material-table">
+            <div class="table-header">
+              <span class="table-title">Class Subjects List</span>
+              <div class="actions">
+                <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
+                <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
+                <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+              </div>
+            </div>
+        <table id="datatable" class="responsive-table">
+              <thead>
+                  <tr>
+                      <th>
+                        <label>
+                          <input type="checkbox" id="mChBx" />
+                          <span>Select All</span>
+                        </label>
+                      </th>
+                      <th>ID</th>
+                      <th>Subject</th>
+                      <th>Students Courses</th>
+                      <th>Date_Created</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <?php
+                $fid = $_SESSION['faid'];
+                $result = mysqli_query($db,"SELECT class_subject.id as 'cs_id', class_subject.class_id as 'class_cid',subjects.id as `sub_id`,subjects.sub_name as `sub_name`,subjects.description as `sub_desc`,faculty.id as facID,class.level as `yr`,courses.course as `course`,class.section as section,class_subject.date_created as date_created FROM class_subject join subjects on class_subject.subject_id=subjects.id left join faculty on faculty.id=class_subject.faculty_id inner join class on class.id=class_subject.class_id join courses on courses.id=class.course_id WHERE faculty.id='$fid'");
+                // echo var_dump($result);
+                $i=1;
+                while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                ?>
+                  <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" class="chBx" data-id="<?PHP echo $row['cs_id']?>" />
+                        <span></span>
+                      </label>
+                    </td>
+                    <td><?PHP echo $i;?></td>
+                    <td><?PHP echo $row['sub_name'].' - '.$row['sub_desc'];?></td>  
+                    <td><?PHP echo $row['course'].' - '.$row['yr'].' '.$row['section'];?></td>
+                    <td><?PHP echo $row['date_created'];?></td>
+                    <td>
+                      <a class="waves-effect waves-light btn modal-trigger orange" href="#mupdate"><i class="material-icons white-text">edit</i></a>
+                      <a data-position="bottom" data-tooltip="View Students" class="waves-effect waves-light btn tooltipped modal-trigger blue btn-view" href="#mview" data-fid="<?PHP echo $row['facID'];?>" data-sub="<?PHP echo $row['sub_id'];?>" data-id="<?PHP echo $row['class_cid'];?>" ><i class="material-icons white-text">details</i></a>
+                    </td>
+                  </tr>
+                  <?php 
+                    } //end while
+                ?>
+              </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- View Details Modal -->
+  <div id="mview" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>View Students<a href="#!" class="modal-close right waves-effect waves-green red white-text btn-flat"><i class="material-icons">close</i></a></h4>
+      <p id="modal_details"></p>
+      <div class="row">
+        <table id="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                    
+            </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+
+    </div>
+  </div>
+  <!-- MODAL END -->
   </main>
   <footer class="page-footer">
     <div class="container">
@@ -80,11 +167,54 @@ if($_SESSION['utype']!=2){
     <!-- MCSS Offline -->
     <script src="../../assets/js/materialize-css.min.js"></script>
     <script src="../../assets/js/axios.min.js"></script>
+    <!-- jQueryMaterilizeCSS -->
+    <script src="../../assets/js/jquery.min.js"></script>
+    <script src="../../assets/js/jquery.dataTables.min.js"></script>
+    <script src="../../assets/js/jq-data-material.js"></script>
     <script type="text/javascript" charset="utf-8">
         M.AutoInit();
+        const elems = document.querySelectorAll('.tooltipped');
+        const instances = M.Tooltip.init(elems);
+        // AXIOS AJAX
+        // View Details
+        let emptyTable = (e)=>{
+          let tbody = document.querySelectorAll("tbody");
+          if(tbody[1].rows.length>0){
+              for (let o = 0; o < tbody[1].rows.length; o++) {
+                tbody[1].deleteRow(o);                    
+              }                     
+          }
+        }
+        let bView = document.querySelectorAll(".btn-view");
+        for (let p = 0; p < bView.length; p++) {
+          bView[p].addEventListener('click',()=>{
+            emptyTable();
+            let tbody = document.querySelectorAll("tbody");
+            if(tbody[1].rows.length>0){
+                for (let o = 0; o < tbody[1].rows.length; o++) {
+                  tbody[1].deleteRow(o);                    
+                }                     
+            }
+            axios.post('../post.php',{
+              req:'getFacStudList',fac_id:bView[p].dataset.fid,sub_id:bView[p].dataset.sub,cl_id:bView[p].dataset.id
+            }).then((response)=>{
+              let obj = response.data;
+              // console.log(JSON.stringify(response.data));
+              let tb = document.querySelector("#tbody");
+              for (let i= 0; i < obj.length; i++) {
+                tb.insertRow(i);
+                tb.rows[i].insertCell(0).innerText = i+1;
+                tb.rows[i].insertCell(1).innerText = obj[i].id_no;
+                tb.rows[i].insertCell(2).innerText = obj[i].name;
+              }
+            }).catch((error)=>{
+              console.log(error);
+            })
+          });  
+        }
         //SideNave
-        let slout = document.querySelector("#slide-out");
         let men = document.querySelector("#menu");
+        let slout = document.querySelector("#slide-out");
         men.addEventListener('click',()=>{
         if(slout.M_Sidenav.isOpen == false){
             slout.M_Sidenav.open(); 
@@ -92,16 +222,38 @@ if($_SESSION['utype']!=2){
             document.getElementsByTagName('main')[0].style.paddingLeft = "300px";
             document.getElementsByTagName('header')[0].style.paddingLeft = "300px";
         }else if(slout.M_Sidenav.isOpen == true){
-        slout.M_Sidenav.close();
+            slout.M_Sidenav.close();
             document.getElementsByTagName('footer')[0].style.paddingLeft = 0;
             document.getElementsByTagName('main')[0].style.paddingLeft = 0;
             document.getElementsByTagName('header')[0].style.paddingLeft = 0;
         }
         })
         //
-        // AXIOS AJAX
         // 
-       
+        // CheckBox
+        let mChBx = document.querySelector("#mChBx");
+        let chBx = document.querySelectorAll(".chBx");
+        mChBx.addEventListener('click',function(){
+          if(mChBx.checked == true){
+            for (let i = 0; i < chBx.length; i++) {
+              chBx[i].checked = true;            
+            }
+          }else{
+            for (let i = 0; i < chBx.length; i++) {
+              chBx[i].checked = false;            
+            }
+          }
+        });
+        let modal = document.querySelectorAll(".modal");
+        let delData = [];
+        let check = (e)=>{
+          for (let i = 0; i < chBx.length; i++) {
+            if(chBx[i].checked == true){
+              delData.push(chBx[i].dataset.id);
+            }          
+          }
+        }
+        
     </script>
 </body>
 </html>

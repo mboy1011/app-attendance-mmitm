@@ -273,5 +273,13 @@ if($req=='addUser'){
     $oop = new Query();
     $sql = $oop->viewDetails($id);
     echo $sql;
+}else if($req=='getFacStudList'){
+    require("query.php");
+    $fid = $data['fac_id'];
+    $cid = $data['cl_id'];
+    $sid = $data['sub_id'];
+    $oop = new Query();
+    $sql = $oop->getFacStudList($fid,$cid,$sid);
+    echo $sql;
 }
 ?>

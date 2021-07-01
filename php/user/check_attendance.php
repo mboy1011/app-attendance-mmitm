@@ -153,7 +153,7 @@ if($_SESSION['utype']!=2){
                     let opt = document.createElement("option");
                     // opt.setAttribute('selected');
                     opt.text = obj[i].sub_name;
-                    opt.value = obj[i].class_id;
+                    opt.value = obj[i].id;
                     sub.options.add(opt);
                 }
                 // Load Form Select MaterializeCSS
@@ -222,7 +222,7 @@ if($_SESSION['utype']!=2){
                             lbtn.setAttribute('data-ty',2);
                                 
                             tb.insertRow(i);
-                            tb.rows[i].insertCell(0).innerText = i;
+                            tb.rows[i].insertCell(0).innerText = i+1;
                             tb.rows[i].insertCell(1).innerText = obj[i].name;
                             tb.rows[i].insertCell(2).appendChild(plb).appendChild(pbtn).parentElement.appendChild(psp);
                             tb.rows[i].insertCell(3).appendChild(alb).appendChild(abtn).parentElement.appendChild(asp);

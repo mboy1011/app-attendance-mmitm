@@ -1,5 +1,15 @@
 <?php
 class Query {
+    public function getFacStudList($fac_id,$cl_id,$sub_id)
+    {
+        require("config.php");
+        $sql  = mysqli_query($db,"SELECT class_subject.id as 'id', class_subject.class_id as 'class_id',students.id_no,students.name,students.id as studID,faculty.id as facID, class_subject.subject_id as `sub_id` FROM class_subject join subjects on class_subject.subject_id=subjects.id left join faculty on faculty.id=class_subject.faculty_id inner join students on students.class_id=class_subject.class_id WHERE faculty.id='$fac_id' AND class_subject.class_id='$cl_id' AND class_subject.subject_id='$sub_id'");
+        $data = array();
+        while($row = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
+            array_push($data,$row);
+        }
+        return json_encode($data);
+    }
     public function get_viewCSC()
     {
         require("config.php");

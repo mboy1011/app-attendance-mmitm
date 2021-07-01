@@ -137,7 +137,7 @@ if($_SESSION['utype']==2){
 <!-- View Details Modal -->
   <div id="mview" class="modal bottom-sheet">
     <div class="modal-content">
-      <h4>Attendance Details</h4>
+      <h4>Attendance Details <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a></h4>
       <p id="modal_details"></p>
       <div class="row">
         <table id="table">
@@ -155,7 +155,7 @@ if($_SESSION['utype']==2){
       </div>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+
     </div>
   </div>
   <!-- MODAL END -->

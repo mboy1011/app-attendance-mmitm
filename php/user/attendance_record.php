@@ -71,7 +71,7 @@ if($_SESSION['utype']!=2){
       <div id="man" class="col s12">
         <div class="card material-table">
             <div class="table-header">
-              <span class="table-title">Courses</span>
+              <span class="table-title">Attendance Records</span>
               <div class="actions">
                 <a class="waves-effect waves-effect btn-flat modal-trigger nopadding" id="delUA" href="#dupdate"><i class="material-icons">delete</i></a>
                 <a href="#demo-modal-fixed-footer" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">person_add</i></a>
@@ -130,7 +130,7 @@ if($_SESSION['utype']!=2){
 <!-- View Details Modal -->
   <div id="mview" class="modal bottom-sheet">
     <div class="modal-content">
-      <h4>Attendance Details</h4>
+      <h4>Attendance Details <a href="#!" class="modal-close right waves-effect waves-green red white-text btn-flat"><i class="material-icons">close</i></a></h4>
       <p id="modal_details"></p>
       <div class="row">
         <table id="table">
@@ -148,7 +148,7 @@ if($_SESSION['utype']!=2){
       </div>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+
     </div>
   </div>
   <!-- MODAL END -->
